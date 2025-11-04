@@ -4,9 +4,13 @@ let
   # private aspects can be in variables
   # more re-usable ones are better defined inside the `westeros` namespace.
   user-contrib-to-host =
-    { ... }: # replace with: { user, host }:
+    { user, ... }:
     lib.recursiveUpdate {
-      nixos = { };
+      nixos = {
+        users.users.${user.userName} = {
+          hashedPassword = "$y$j9T$89xirH4b8LCFTaHBWEoJG.$3MzGxJSgLYKQDP.JUSnZ4oNTLs7vdZyZcdI9f7TQNf3";
+        };
+      };
       darwin = { };
     } westeros.state-version;
 in
@@ -18,6 +22,7 @@ in
         # add other aspects of yours that use host, user
         # to conditionally add behaviour.
         user-contrib-to-host
+        westeros.cli
       ];
     };
 }

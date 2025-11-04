@@ -1,12 +1,15 @@
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
 {
   flake-file.inputs.disko.url = "github:nix-community/disko";
 
-  imports = [
-    inputs.disko.flakeModules.default
-  ];
+  den.aspects.winterfell.nixos = {
+    imports = [
+      inputs.disko.nixosModules.default
+    ];
 
-  westeros.disko = {
     disko.devices = {
       disk.main = {
         type = "disk";

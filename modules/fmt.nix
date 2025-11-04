@@ -12,7 +12,7 @@
           # nix
           nixfmt.enable = true;
           deadnix.enable = true;
-          # nixf-diagnose.enable = true;
+          nixf-diagnose.enable = true;
 
           prettier.enable = true;
           yamlfmt.enable = true;
@@ -27,7 +27,7 @@
         ];
 
         settings.formatter = {
-          nixf-diagnose = {};
+          nixf-diagnose = { };
           prettier = {
             includes = [
               "*.md"

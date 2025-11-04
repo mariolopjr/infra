@@ -9,5 +9,5 @@
   # setup for read
   _module.args.westeros = config.den.aspects.profile.provides;
   # optionally expose outside your flake.
-  # flake.pro = config.den.aspects.profile.provides;
+  flake.westeros = config.den.aspects.profile.provides;
 }

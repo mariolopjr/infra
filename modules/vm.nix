@@ -6,7 +6,7 @@
       packages.vm = pkgs.writeShellApplication {
         name = "vm";
         text = ''
-          ${inputs.self.nixosConfigurations.winterfell-vm.config.system.build.vm}/bin/run-winterfell-vm-vm "$@"
+          ${inputs.self.nixosConfigurations.winterfell-vm.config.system.build.vmWithDisko}/bin/disko-vm "$@"
         '';
       };
     };

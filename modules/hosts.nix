@@ -1,6 +1,7 @@
 { den, ... }:
 {
   den.hosts.x86_64-linux.winterfell.users.mario = { };
+  den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
   den.homes.aarch64-darwin.mario = { };
 
   den.default.host._.host.includes = [

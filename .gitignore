@@ -9,5 +9,12 @@ devenv.local.yaml
 # direnv
 .direnv
 
+# vms
+*.qcow2
+
 # pre-commit
 .pre-commit-config.yaml
+
+# build
+result
+*.fd

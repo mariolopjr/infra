@@ -1,8 +1,8 @@
-{ den, ... }:
+{ ... }:
 {
   den.aspects.desktop = {
     # darwin = ...;
     # nixos  = ...; #
-    includes = with den.aspects; [ ];
+    # includes = with den.aspects; [ ];
   };
 }
