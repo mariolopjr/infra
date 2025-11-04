@@ -3,8 +3,6 @@
   ...
 }:
 {
-  flake-file.inputs.disko.url = "github:nix-community/disko";
-
   den.aspects.winterfell-vm.nixos = {
     imports = [
       inputs.disko.nixosModules.default
