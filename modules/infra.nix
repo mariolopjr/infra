@@ -1,13 +1,13 @@
 # Profiles are just aspects whose only job is to include other aspects
 # based on the properties (context) of the host/user they are included in.
 #
-# Profiles are all concentrated under the `westeros` namespace
-{ den, westeros, ... }:
+# Profiles are all concentrated under the `infra` namespace
+{ den, infra, ... }:
 {
 
   # install profiles as parametric aspects on all hosts/users
-  den.default.host._.host.includes = [ westeros.by-host ];
-  den.default.user._.user.includes = [ westeros.by-user ];
+  den.default.host._.host.includes = [ infra.by-host ];
+  den.default.user._.user.includes = [ infra.by-user ];
 
   # `by-host { host }`
   #
@@ -22,13 +22,13 @@
   #
   # Also, remember that aspects can form a tree structure by using their
   # `provides` attribute, not all aspects need to exist at same level.
-  westeros.by-host =
+  infra.by-host =
     { host }:
     {
       includes = [
-        (westeros.${host.system} or { })
-        (westeros.host-name host)
-        westeros.state-version
+        (infra.${host.system} or { })
+        (infra.host-name host)
+        infra.state-version
       ];
     };
 
@@ -48,7 +48,7 @@
   # Since both host and user types are freeforms, you might add custom attributes
   # to them and your parametric aspects can use those attributes to conditionally add
   # features into the host or user level.
-  westeros.by-user =
+  infra.by-user =
     { host, user }:
     {
       includes =
@@ -57,11 +57,11 @@
           apply = f: f { inherit host user; };
         in
         map apply [
-          (westeros."${user.name}@${host.name}" or noop)
+          (infra."${user.name}@${host.name}" or noop)
           (den.aspects.${host.name}._.common-user-env or noop)
           (den.aspects.${user.name}._.common-host-env or noop)
 
-          westeros.single-user-is-admin
+          infra.single-user-is-admin
         ];
     };
 

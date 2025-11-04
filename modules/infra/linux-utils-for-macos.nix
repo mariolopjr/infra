@@ -1,5 +1,5 @@
 {
-  westeros.aarch64-darwin.darwin =
+  infra.aarch64-darwin.darwin =
     { pkgs, ... }:
     {
       environment.systemPackages = [

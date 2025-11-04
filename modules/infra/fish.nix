@@ -1,5 +1,5 @@
 {
-  westeros.fish =
+  infra.fish =
     { user, ... }:
     {
       nixos =

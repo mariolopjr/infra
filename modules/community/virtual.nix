@@ -1,5 +1,5 @@
 {
-  westeros.virtual.nixos = {
+  infra.virtual.nixos = {
     boot.initrd.availableKernelModules = [
       "ahci"
       "xhci_pci"

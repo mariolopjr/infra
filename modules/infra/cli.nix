@@ -1,5 +1,5 @@
 {
-  westeros.cli = _: {
+  infra.cli = _: {
     homeManager =
       { pkgs, ... }:
       {

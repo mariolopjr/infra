@@ -1,5 +1,5 @@
 {
-  westeros.kvm-amd.nixos =
+  infra.kvm-amd.nixos =
     { lib, config, ... }:
     {
       boot.kernelModules = [ "kvm-amd" ];

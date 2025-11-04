@@ -1,5 +1,5 @@
 {
-  westeros.host-name = host: {
+  infra.host-name = host: {
     ${host.class}.networking.hostName = host.hostName;
   };
 }

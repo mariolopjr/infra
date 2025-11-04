@@ -1,5 +1,5 @@
 {
-  westeros.nix = _: {
+  infra.nix = _: {
     homeManager =
       { pkgs, ... }:
       {

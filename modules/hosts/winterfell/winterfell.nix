@@ -1,31 +1,31 @@
-{ westeros, ... }:
+{ infra, ... }:
 {
   den.aspects.winterfell = {
     includes = [
-      westeros.winterfell._.base
-      westeros.winterfell._.hw
+      infra.winterfell._.base
+      infra.winterfell._.hw
     ];
   };
 
   den.aspects.winterfell-vm = {
     includes = [
-      westeros.winterfell._.base
-      westeros.winterfell._.vm
+      infra.winterfell._.base
+      infra.winterfell._.vm
     ];
   };
 
-  westeros.winterfell.provides = {
+  infra.winterfell.provides = {
     hw.includes = [
-      westeros.kvm-amd
+      infra.kvm-amd
     ];
 
     vm.includes = [
-      westeros.virtual
+      infra.virtual
     ];
 
     base.includes = [
-      westeros.bootable
-      westeros.hw-detect
+      infra.bootable
+      infra.hw-detect
     ];
   };
 }

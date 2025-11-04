@@ -1,5 +1,5 @@
 {
-  westeros.fonts = _: {
+  infra.fonts = _: {
     nixos =
       { pkgs, ... }:
       {

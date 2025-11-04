@@ -1,18 +1,19 @@
-# An aspect that contributes to any operating system where fido is a user.
-{ westeros, lib, ... }:
+# An aspect that contributes to any operating system where `mario` is a user.
+{ infra, lib, ... }:
 let
   # private aspects can be in variables
-  # more re-usable ones are better defined inside the `westeros` namespace.
+  # more re-usable ones are better defined inside the `infra` namespace.
   user-contrib-to-host =
     { user, ... }:
     lib.recursiveUpdate {
       nixos = {
         users.users.${user.userName} = {
+          # TODO: change this from temp password to one encrypted by sops
           hashedPassword = "$y$j9T$89xirH4b8LCFTaHBWEoJG.$3MzGxJSgLYKQDP.JUSnZ4oNTLs7vdZyZcdI9f7TQNf3";
         };
       };
       darwin = { };
-    } westeros.state-version;
+    } infra.state-version;
 in
 {
   den.aspects.mario._.common-host-env =
@@ -22,7 +23,7 @@ in
         # add other aspects of yours that use host, user
         # to conditionally add behaviour.
         user-contrib-to-host
-        westeros.cli
+        infra.cli
       ];
     };
 }

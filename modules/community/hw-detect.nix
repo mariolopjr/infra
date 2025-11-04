@@ -1,5 +1,5 @@
 {
-  westeros.hw-detect.nixos =
+  infra.hw-detect.nixos =
     { modulesPath, ... }:
     {
       imports = [

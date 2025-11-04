@@ -5,9 +5,10 @@
   # create a sub-tree of provided aspects.
   den.aspects.profile.provides = { };
   # setup for write
-  imports = [ (lib.mkAliasOptionModule [ "westeros" ] [ "den" "aspects" "profile" "provides" ]) ];
+  imports = [ (lib.mkAliasOptionModule [ "infra" ] [ "den" "aspects" "profile" "provides" ]) ];
   # setup for read
-  _module.args.westeros = config.den.aspects.profile.provides;
+  _module.args.infra = config.den.aspects.profile.provides;
   # optionally expose outside your flake.
-  flake.westeros = config.den.aspects.profile.provides;
+  # TODO: disable this after debugging
+  flake.infra = config.den.aspects.profile.provides;
 }

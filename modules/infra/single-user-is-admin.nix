@@ -1,7 +1,7 @@
 { den, lib, ... }:
 {
   # When a host includes *ONLY* one user, make that user the admin.
-  westeros.single-user-is-admin =
+  infra.single-user-is-admin =
     { host, user }@ctx:
     let
       one-user = 1 == builtins.length (builtins.attrValues host.users);
