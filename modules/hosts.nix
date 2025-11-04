@@ -3,7 +3,7 @@
   den.hosts.x86_64-linux.winterfell.users.mario = { };
 
   den.default.host._.host.includes = [
-    westeros.host-profile
+    # westeros.host-profile
     den._.home-manager
     (den._.import-tree._.host { root = ../non-den/hosts; })
   ];
