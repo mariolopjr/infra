@@ -1,0 +1,14 @@
+keys:
+  - &users:
+    - &mario age1ghexn9y0540mdac9ncfgzg98uz5gh9h44gfjppx9z6pjqep5yv3slrc63y
+  - &hosts:
+    - &winterfell TBD
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *mario
+  - path_regex: secrets/winterfell/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *mario
