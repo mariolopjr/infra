@@ -14,6 +14,7 @@
     # for real-world hw machine
     hw.includes = [
       westeros.bootable
+      # westeros.disko
       westeros.kvm-amd
     ];
 

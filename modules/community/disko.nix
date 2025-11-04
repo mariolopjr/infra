@@ -7,8 +7,8 @@
     };
   };
 
-  flake.modules.nixos.disko = {
-    imports = [
+  westeros.disko.nixos = {
+    disko.imports = [
       inputs.disko.nixosModules.disko
     ];
   };
