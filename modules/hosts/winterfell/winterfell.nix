@@ -5,10 +5,10 @@
     westeros.winterfell._.hw
   ];
 
-  # westeros.winterfell-vm.includes = [
-  #   westeros.nargun._.base
-  #   westeros.nargun._.vm
-  # ];
+  westeros.winterfell-vm.includes = [
+    westeros.winterfell._.base
+    westeros.winterfell._.vm
+  ];
 
   westeros.winterfell.provides = {
     hw.includes = [
