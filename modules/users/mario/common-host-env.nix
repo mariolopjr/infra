@@ -5,12 +5,10 @@ let
   # more re-usable ones are better defined inside the `westeros` namespace.
   user-contrib-to-host =
     { ... }: # replace with: { user, host }:
-    lib.recursiveUpdate
-    {
+    lib.recursiveUpdate {
       nixos = { };
       darwin = { };
-    }
-    westeros.state-version;
+    } westeros.state-version;
 in
 {
   den.aspects.mario._.common-host-env =

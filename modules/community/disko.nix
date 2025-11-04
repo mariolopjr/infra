@@ -26,7 +26,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["defaults"];
+                mountOptions = [ "defaults" ];
               };
             };
             swap = {
@@ -44,37 +44,39 @@
                 settings = {
                   allowDiscards = true;
                 };
-                content = let
-                  mountOptions = [
-                    "compress=zstd"
-                    "ssd"
-                    "noatime"
-                    "discard=async"
-                  ];
-                in {
-                  type = "btrfs";
-                  extraArgs = ["-f"];
-                  postCreateHook = ''
-                    MNTPOINT=$(mktemp -d)
-                    mount "/dev/mapper/cryptroot" "$MNTPOINT" -o subvol=/
-                    trap 'umount $MNTPOINT; rm -rf $MNTPOINT' EXIT
-                    btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
-                  '';
-                  subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      inherit mountOptions;
-                    };
-                    "/persist" = {
-                      mountpoint = "/persist";
-                      inherit mountOptions;
-                    };
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      inherit mountOptions;
+                content =
+                  let
+                    mountOptions = [
+                      "compress=zstd"
+                      "ssd"
+                      "noatime"
+                      "discard=async"
+                    ];
+                  in
+                  {
+                    type = "btrfs";
+                    extraArgs = [ "-f" ];
+                    postCreateHook = ''
+                      MNTPOINT=$(mktemp -d)
+                      mount "/dev/mapper/cryptroot" "$MNTPOINT" -o subvol=/
+                      trap 'umount $MNTPOINT; rm -rf $MNTPOINT' EXIT
+                      btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
+                    '';
+                    subvolumes = {
+                      "/root" = {
+                        mountpoint = "/";
+                        inherit mountOptions;
+                      };
+                      "/persist" = {
+                        mountpoint = "/persist";
+                        inherit mountOptions;
+                      };
+                      "/nix" = {
+                        mountpoint = "/nix";
+                        inherit mountOptions;
+                      };
                     };
                   };
-                };
               };
             };
           };

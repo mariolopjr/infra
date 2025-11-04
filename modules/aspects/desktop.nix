@@ -1,4 +1,4 @@
-{ westeros, den, ... }:
+{ den, ... }:
 {
   den.aspects.desktop = {
     # darwin = ...;

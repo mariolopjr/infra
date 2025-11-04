@@ -1,4 +1,4 @@
-{ westeros, den, inputs, ... }:
+{ den, ... }:
 {
   den.hosts.x86_64-linux.winterfell.users.mario = { };
   den.homes.aarch64-darwin.mario = { };
