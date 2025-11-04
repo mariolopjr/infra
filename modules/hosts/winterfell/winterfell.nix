@@ -11,10 +11,9 @@
   # ];
 
   westeros.winterfell.provides = {
-    # for real-world hw machine
     hw.includes = [
       westeros.bootable
-      # westeros.disko
+      westeros.disko
       westeros.kvm-amd
     ];
 
@@ -23,7 +22,7 @@
     ];
 
     base.includes = [
-      # westeros.dev-laptop
+      westeros.hw-detect
     ];
   };
 }

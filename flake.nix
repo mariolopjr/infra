@@ -9,11 +9,6 @@
       url = "github:vic/den";
     };
     disko = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
       url = "github:nix-community/disko";
     };
     flake-aspects = {
