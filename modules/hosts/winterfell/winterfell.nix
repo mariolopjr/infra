@@ -26,6 +26,8 @@
     base.includes = [
       infra.bootable
       infra.hw-detect
+
+      infra.desktop
     ];
   };
 }

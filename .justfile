@@ -2,6 +2,7 @@ hostname := shell("hostname -s")
 
 alias up := update
 alias fmt := format
+alias c := check
 alias wf := write-flake
 alias bm := build
 
@@ -13,6 +14,9 @@ default:
 [group("local")]
 update *inputs:
     nix flake update {{ inputs }}
+
+check *inputs:
+    nix flake check {{ inputs }}
 
 write-flake *inputs:
     nix run .#write-flake

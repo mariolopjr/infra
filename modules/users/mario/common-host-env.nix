@@ -24,6 +24,9 @@ in
         # to conditionally add behaviour.
         user-contrib-to-host
         infra.cli
+        infra.fish
+        infra.fonts
+        infra.nix
       ];
     };
 }

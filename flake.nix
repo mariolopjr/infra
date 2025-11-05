@@ -33,6 +33,9 @@
       };
       url = "github:nix-community/home-manager";
     };
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+    };
     import-tree = {
       url = "github:vic/import-tree";
     };

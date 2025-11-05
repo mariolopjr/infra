@@ -4,7 +4,6 @@
       { pkgs, ... }:
       {
         home.packages = [
-          pkgs.nix-search-cli
           pkgs.nixd
           pkgs.cachix
         ];
