@@ -4,14 +4,15 @@
       { pkgs, ... }:
       {
         home.packages = [
-          pkgs.fzf
-          pkgs.ripgrep # grep
           pkgs.bat # cat
           pkgs.bottom
-          pkgs.htop
+          pkgs.devenv
           pkgs.eza # ls
           pkgs.fd # find
+          pkgs.fzf
+          pkgs.htop
           pkgs.jq
+          pkgs.ripgrep # grep
         ];
       };
   };

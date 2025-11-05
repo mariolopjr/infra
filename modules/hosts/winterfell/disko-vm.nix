@@ -16,11 +16,6 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              name = "boot";
-              size = "1M";
-              type = "EF02";
-            };
             esp = {
               size = "512M";
               type = "EF00";
@@ -46,6 +41,11 @@
                 settings = {
                   allowDiscards = true;
                 };
+                passwordFile = "/tmp/secret.key";
+                # TODO: redo this with a sops-encrypted key
+                preCreateHook = ''
+                  echo -n 'secret' > /tmp/secret.key
+                '';
                 content =
                   let
                     mountOptions = [
