@@ -2,12 +2,21 @@
 # based on the properties (context) of the host/user they are included in.
 #
 # Profiles are all concentrated under the `infra` namespace
-{ den, infra, ... }:
+{ infra, ... }:
 {
+  # set global static settings
+  den.default = {
+    darwin.system.stateVersion = 6;
+    nixos.system.stateVersion = "25.11";
+    homeManager.home.stateVersion = "25.11";
+  };
 
   # install profiles as parametric aspects on all hosts/users
-  den.default.host._.host.includes = [ infra.by-host ];
-  den.default.user._.user.includes = [ infra.by-user ];
+  den.default.includes = [
+    infra.by-host
+    infra.by-user
+    infra.host-name
+  ];
 
   # `by-host { host }`
   #
@@ -23,12 +32,12 @@
   # Also, remember that aspects can form a tree structure by using their
   # `provides` attribute, not all aspects need to exist at same level.
   infra.by-host =
-    { host }:
+    { ... }:
     {
       includes = [
-        (infra.${host.system} or { })
-        (infra.host-name host)
-        infra.state-version
+        # (infra.${host.system} or { })
+        # (infra.host-name host)
+        # infra.state-version
       ];
     };
 
@@ -53,16 +62,14 @@
     {
       includes =
         let
-          noop = _: { };
           apply = f: f { inherit host user; };
         in
         map apply [
-          (infra."${user.name}@${host.name}" or noop)
-          (den.aspects.${host.name}._.common-user-env or noop)
-          (den.aspects.${user.name}._.common-host-env or noop)
+          # (infra."${user.name}@${host.name}" or noop)
+          # (den.aspects.${host.name}._.common-user-env or noop)
+          # (den.aspects.${user.name}._.common-host-env or noop)
 
           infra.single-user-is-admin
         ];
     };
-
 }

@@ -14,13 +14,20 @@
     ];
   };
 
-  infra.winterfell.provides = {
+  infra.winterfell._ = {
     hw.includes = [
       infra.kvm-amd
+      (infra.disko {
+        device = "/dev/nvme0n1";
+      })
     ];
 
     vm.includes = [
       infra.virtual
+      (infra.disko {
+        device = "/dev/nvme0n1";
+        imageSize = "40G";
+      })
     ];
 
     base.includes = [

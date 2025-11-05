@@ -4,9 +4,8 @@
   den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
   den.hosts.aarch64-darwin.targaryen.users.mario = { };
 
-  den.default.host._.host.includes = [
+  den.default.includes = [
     den._.home-manager
-    (den._.import-tree._.host { root = ../non-den/hosts; })
   ];
 
   flake-file.inputs.home-manager = {

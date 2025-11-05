@@ -1,11 +1,13 @@
 # An aspect that contributes to any operating system where `mario` is a user.
-{ infra, lib, ... }:
+{ infra, ... }:
 let
   # private aspects can be in variables
   # more re-usable ones are better defined inside the `infra` namespace.
   user-contrib-to-host =
+    # { user, ... }:
     { user, ... }:
-    lib.recursiveUpdate {
+    {
+      # lib.recursiveUpdate {
       nixos = {
         users.users.${user.userName} = {
           # TODO: change this from temp password to one encrypted by sops
@@ -13,7 +15,8 @@ let
         };
       };
       darwin = { };
-    } infra.state-version;
+      # } infra.state-version;
+    };
 in
 {
   den.aspects.mario._.common-host-env =

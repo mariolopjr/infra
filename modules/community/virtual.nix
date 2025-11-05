@@ -1,6 +1,7 @@
+{ lib, ... }:
 {
   infra.virtual.nixos = {
-    boot.initrd.availableKernelModules = [
+    boot.initrd.availableKernelModules = lib.mkForce [
       "ahci"
       "xhci_pci"
       "virtio_pci"
