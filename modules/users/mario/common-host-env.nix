@@ -4,10 +4,8 @@ let
   # private aspects can be in variables
   # more re-usable ones are better defined inside the `infra` namespace.
   user-contrib-to-host =
-    # { user, ... }:
     { user, ... }:
     {
-      # lib.recursiveUpdate {
       nixos = {
         users.users.${user.userName} = {
           # TODO: change this from temp password to one encrypted by sops
@@ -15,7 +13,6 @@ let
         };
       };
       darwin = { };
-      # } infra.state-version;
     };
 in
 {
@@ -32,8 +29,6 @@ in
         infra.ghostty
         infra.hyprland
         infra.nix
-
-        # infra.preservation
       ];
     };
 }

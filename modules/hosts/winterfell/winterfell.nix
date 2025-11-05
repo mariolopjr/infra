@@ -25,7 +25,7 @@
     vm.includes = [
       infra.virtual
       (infra.disko {
-        device = "/dev/nvme0n1";
+        device = "/dev/vda";
         imageSize = "40G";
       })
     ];
