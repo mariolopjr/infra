@@ -14,6 +14,7 @@
           deadnix.enable = true;
           nixf-diagnose.enable = true;
 
+          just.enable = true;
           prettier.enable = true;
           yamlfmt.enable = true;
         };

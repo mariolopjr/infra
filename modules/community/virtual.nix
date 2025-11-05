@@ -1,4 +1,3 @@
-{ ... }:
 {
   infra.virtual.nixos = {
     boot.initrd.availableKernelModules = [
