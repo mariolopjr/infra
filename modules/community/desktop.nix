@@ -5,7 +5,6 @@
     nixos = { };
     includes = [
       infra.greetd
-      infra.hyprland
     ];
   };
 }

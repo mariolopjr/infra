@@ -5,6 +5,7 @@ alias fmt := format
 alias c := check
 alias wf := write-flake
 alias bm := build
+alias r := repl
 
 [private]
 default:
@@ -15,11 +16,17 @@ default:
 update *inputs:
     nix flake update {{ inputs }}
 
+[group("local")]
 check *inputs:
     nix flake check {{ inputs }}
 
+[group("local")]
 write-flake *inputs:
     nix run .#write-flake
+
+[group("local")]
+repl *input:
+    nix repl .#
 
 [group("local")]
 build *args:

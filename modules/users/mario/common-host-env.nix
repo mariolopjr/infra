@@ -26,6 +26,8 @@ in
         infra.cli
         infra.fish
         infra.fonts
+        infra.ghostty
+        infra.hyprland
         infra.nix
       ];
     };

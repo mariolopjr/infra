@@ -9,6 +9,5 @@
   # setup for read
   _module.args.infra = config.den.aspects.profile.provides;
   # optionally expose outside your flake.
-  # TODO: disable this after debugging
-  flake.infra = config.den.aspects.profile.provides;
+  # flake.infra = config.den.aspects.profile.provides;
 }

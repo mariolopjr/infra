@@ -25,6 +25,9 @@
       };
       url = "github:hercules-ci/flake-parts";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
     home-manager = {
       inputs = {
         nixpkgs = {
@@ -35,6 +38,31 @@
     };
     hyprland = {
       url = "github:hyprwm/hyprland";
+    };
+    hyprland-contrib = {
+      inputs = {
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+      };
+      url = "github:hyprwm/contrib";
+    };
+    hyprpicker = {
+      inputs = {
+        hyprutils = {
+          follows = "hyprland/hyprutils";
+        };
+        hyprwayland-scanner = {
+          follows = "hyprland/hyprwayland-scanner";
+        };
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+        systems = {
+          follows = "hyprland/systems";
+        };
+      };
+      url = "github:hyprwm/hyprpicker";
     };
     import-tree = {
       url = "github:vic/import-tree";
