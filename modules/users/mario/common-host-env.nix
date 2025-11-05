@@ -29,6 +29,8 @@ in
         infra.ghostty
         infra.hyprland
         infra.nix
+
+        # infra.preservation
       ];
     };
 }

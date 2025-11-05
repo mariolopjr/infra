@@ -81,6 +81,9 @@
     nixpkgs-lib = {
       follows = "nixpkgs";
     };
+    preservation = {
+      url = "github:nix-community/preservation";
+    };
     systems = {
       url = "github:nix-systems/default";
     };
