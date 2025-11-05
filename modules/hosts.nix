@@ -2,7 +2,7 @@
 {
   den.hosts.x86_64-linux.winterfell.users.mario = { };
   den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
-  den.homes.aarch64-darwin.mario = { };
+  den.hosts.aarch64-darwin.targaryen.users.mario = { };
 
   den.default.host._.host.includes = [
     den._.home-manager
@@ -11,6 +11,11 @@
 
   flake-file.inputs.home-manager = {
     url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  flake-file.inputs.darwin = {
+    url = "github:nix-darwin/nix-darwin/master";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 }

@@ -1,4 +1,4 @@
-hostname := shell("hostname -s")
+hostname := if os() == "macos" { trim(shell('scutil --get "LocalHostName"')) } else { trim(shell('hostname -s')) }
 
 alias up := update
 alias fmt := format
@@ -42,5 +42,11 @@ vm *args:
 
 # ---------- machine ---------- #
 [group("machine")]
+[linux]
 build-machine hostname=hostname *args:
     nh os build . --hostname "{{ hostname }}" --diff always {{ args }}
+
+[group("machine")]
+[macos]
+build-machine hostname=hostname *args:
+    nh darwin build . --hostname "{{ hostname }}" --diff always {{ args }}
