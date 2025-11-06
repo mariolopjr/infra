@@ -18,7 +18,7 @@ in
         imports = [ inputs.sops-nix.nixosModules.sops ];
 
         sops = defaults // {
-          # TODO: actual path for this for impermenance
+          # TODO: actual path for this for impermanence
           # sops.age.keyFile = "/persist/var/lib/sops-nix/key.txt";
           age.keyFile = "/var/lib/sops-nix/key.txt";
           secrets."${user.userName}-password".neededForUsers = true;
@@ -29,7 +29,7 @@ in
         imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
         sops = defaults // {
-          # TODO: actual path for this for impermenance
+          # TODO: actual path for this for impermanence
           age.keyFile = "/home/${user.userName}/.config/sops/age/key.txt";
         };
       };

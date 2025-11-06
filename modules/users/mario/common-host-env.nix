@@ -29,7 +29,7 @@ in
         infra.ghostty
         infra.hyprland
         infra.nix
-        # infra.nix-direnv
+        infra.nix-direnv
         infra.sops-nix
 
         # infra.preservation
