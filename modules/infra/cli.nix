@@ -9,7 +9,7 @@
           pkgs.devenv
           pkgs.eza # ls
           pkgs.fd # find
-          pkgs.fzf
+          pkgs.git
           pkgs.htop
           pkgs.jq
           pkgs.ripgrep # grep
