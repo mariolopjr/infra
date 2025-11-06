@@ -92,6 +92,9 @@
     preservation = {
       url = "github:nix-community/preservation";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
     systems = {
       url = "github:nix-systems/default";
     };
