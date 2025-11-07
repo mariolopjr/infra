@@ -16,8 +16,19 @@
     ];
 
     nixos = {
-      disko.devices.disk.main.device = "/dev/vda";
-      disko.devices.disk.main.imageSize = "40G";
+      disko.devices.disk.main = {
+        device = "/dev/vda";
+        imageSize = "40G";
+
+        content.partitions.luks.content = {
+          passwordFile = "/tmp/secret.key";
+          # TODO: redo this with a sops-encrypted key
+          preCreateHook = ''
+            echo -n 'secret' > /tmp/secret.key
+          '';
+        };
+      };
+
     };
   };
 

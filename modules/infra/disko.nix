@@ -3,6 +3,8 @@
   ...
 }:
 {
+  flake-file.inputs.disko.url = "github:nix-community/disko";
+
   infra.disko.nixos = {
     imports = [
       inputs.disko.nixosModules.default
