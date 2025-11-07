@@ -24,15 +24,17 @@ in
         # to conditionally add behaviour.
         user-contrib-to-host
         infra.cli
+        infra.command-not-found
         infra.fish
         infra.fonts
         infra.ghostty
         infra.hyprland
         infra.nix
         infra.nix-direnv
+        infra.ssh
         infra.sops-nix
 
-        # infra.preservation
+        infra.impermanence
       ];
     };
 }

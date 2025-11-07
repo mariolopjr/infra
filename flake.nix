@@ -72,6 +72,9 @@
       };
       url = "github:hyprwm/hyprpicker";
     };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
     import-tree = {
       url = "github:vic/import-tree";
     };
@@ -82,6 +85,9 @@
         };
       };
       url = "github:fzakaria/nix-auto-follow";
+    };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
     };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";

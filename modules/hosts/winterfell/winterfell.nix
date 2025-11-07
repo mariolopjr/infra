@@ -24,11 +24,7 @@
     ];
 
     base.includes = [
-      infra.bootable
-      infra.hw-detect
-      infra.substituters
-
-      infra.desktop
+      infra.base
     ];
   };
 }
