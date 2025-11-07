@@ -4,9 +4,14 @@
 # Profiles are all concentrated under the `infra` namespace
 { den, infra, ... }:
 {
+  flake-file.inputs.home-manager.url = "github:nix-community/home-manager";
+  flake-file.inputs.darwin.url = "github:nix-darwin/nix-darwin/master";
 
   # install profiles as parametric aspects on all hosts/users
-  den.default.host._.host.includes = [ infra.by-host ];
+  den.default.host._.host.includes = [
+    den._.home-manager
+    infra.by-host
+  ];
   den.default.user._.user.includes = [ infra.by-user ];
 
   # `by-host { host }`

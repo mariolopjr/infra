@@ -8,6 +8,7 @@
       infra.documentation
       infra.hw-detect
       infra.greetd
+      infra.plymouth
       infra.substituters
       infra.warn-dirty
     ];

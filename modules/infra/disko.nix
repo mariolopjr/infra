@@ -3,7 +3,9 @@
   ...
 }:
 {
-  den.aspects.winterfell-vm.nixos = {
+  flake-file.inputs.disko.url = "github:nix-community/disko";
+
+  infra.disko.nixos = {
     imports = [
       inputs.disko.nixosModules.default
     ];
@@ -11,26 +13,17 @@
     disko.devices = {
       disk.main = {
         type = "disk";
-        device = "/dev/vda";
-        imageSize = "40G";
         content = {
           type = "gpt";
           partitions = {
-            esp = {
+            ESP = {
               size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "defaults" ];
-              };
-            };
-            swap = {
-              size = "4G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
+                mountOptions = [ "umask=0077" ];
               };
             };
             luks = {
@@ -41,11 +34,6 @@
                 settings = {
                   allowDiscards = true;
                 };
-                passwordFile = "/tmp/secret.key";
-                # TODO: redo this with a sops-encrypted key
-                preCreateHook = ''
-                  echo -n 'secret' > /tmp/secret.key
-                '';
                 content =
                   let
                     mountOptions = [
@@ -76,6 +64,9 @@
                       "/nix" = {
                         mountpoint = "/nix";
                         inherit mountOptions;
+                      };
+                      "/swap" = {
+                        mountpoint = "/.swapvol";
                       };
                     };
                   };

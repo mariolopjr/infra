@@ -21,26 +21,29 @@ let
     } infra.state-version;
 in
 {
-  den.aspects.mario._.common-host-env =
-    { host, user }:
-    {
-      includes = map (f: f { inherit host user; }) [
-        # add other aspects of yours that use host, user
-        # to conditionally add behaviour.
-        user-contrib-to-host
-        infra.catppuccin
-        infra.cli
-        infra.command-not-found
-        infra.fish
-        infra.fonts
-        infra.ghostty
-        infra.hyprland
-        infra.nix
-        infra.nix-direnv
-        infra.ssh
-        infra.sops-nix
+  den.aspects.mario = {
+    _.common-host-env =
+      { host, user }:
+      {
+        includes = map (f: f { inherit host user; }) [
+          # add other aspects of yours that use host, user
+          # to conditionally add behaviour.
+          user-contrib-to-host
+          infra.catppuccin
+          infra.cli
+          infra.command-not-found
+          infra.fish
+          infra.fonts
+          infra.ghostty
+          infra.hyprland
+          infra.nix
+          infra.nix-direnv
+          infra.neovim
+          infra.ssh
+          infra.sops-nix
 
-        infra.impermanence
-      ];
-    };
+          infra.impermanence
+        ];
+      };
+  };
 }
