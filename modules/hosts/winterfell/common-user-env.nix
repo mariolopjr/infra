@@ -2,7 +2,7 @@
 { ... }:
 let
   # private aspects can be let-bindings
-  # more re-usable ones are better defined inside the `westeros` namespace.
+  # more re-usable ones are better defined inside the `infra` namespace.
   host-contrib-to-user =
     { ... }: # replace with { user, host }:
     {

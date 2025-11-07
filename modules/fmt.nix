@@ -28,7 +28,20 @@
         ];
 
         settings.formatter = {
-          nixf-diagnose = { };
+          nixf-diagnose = {
+            # Ensure nixfmt cleans up after nixf-diagnose.
+            priority = -1;
+            options = [
+              "--auto-fix"
+              # Rule names can currently be looked up here:
+              # https://github.com/nix-community/nixd/blob/main/libnixf/src/Basic/diagnostic.py
+              # TODO: Remove the following and fix things.
+              "--ignore=sema-unused-def-lambda-noarg-formal"
+              "--ignore=sema-unused-def-lambda-witharg-arg"
+              "--ignore=sema-unused-def-lambda-witharg-formal"
+              "--ignore=sema-unused-def-let"
+            ];
+          };
           prettier = {
             includes = [
               "*.md"

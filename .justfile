@@ -4,41 +4,47 @@ alias up := update
 alias fmt := format
 alias c := check
 alias wf := write-flake
-alias bm := build
+alias fm := metadata
 alias r := repl
+alias bm := build
 
 [private]
 default:
     @just --list
 
-# ---------- local ---------- #
-[group("local")]
+# ---------- nix ---------- #
+[group("nix")]
 update *inputs:
     nix flake update {{ inputs }}
 
-[group("local")]
+[group("nix")]
 check *inputs:
     nix flake check {{ inputs }}
 
-[group("local")]
+[group("nix")]
+metadata flake-url="." *inputs:
+    nix flake metadata {{ flake-url }} {{ inputs }}
+
+[group("nix")]
 write-flake *inputs:
     nix run .#write-flake
 
-[group("local")]
+[group("nix")]
 repl *input:
     nix repl .#
 
-[group("local")]
-build *args:
-    @just build-machine {{ hostname }} {{ args }}
-
-[group("local")]
+[group("nix")]
 format *args:
     nix run .#fmt
 
-[group("local")]
+[group("nix")]
 vm *args:
     nix run .#vm
+
+# ---------- local ---------- #
+[group("local")]
+build *args:
+    @just build-machine {{ hostname }} {{ args }}
 
 # ---------- machine ---------- #
 [group("machine")]

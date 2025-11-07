@@ -1,4 +1,4 @@
-# creates a `westeros` aspect namespace.
+# creates a `infra` aspect namespace.
 #
 { config, lib, ... }:
 {

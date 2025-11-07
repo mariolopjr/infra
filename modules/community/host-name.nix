@@ -1,5 +1,7 @@
 {
-  infra.host-name = host: {
-    ${host.class}.networking.hostName = host.hostName;
-  };
+  infra.host-name =
+    { host }:
+    {
+      ${host.class}.networking.hostName = host.hostName;
+    };
 }
