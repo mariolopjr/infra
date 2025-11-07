@@ -7,6 +7,11 @@ let
     { user, ... }:
     lib.recursiveUpdate {
       nixos = {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
+
         users.users.${user.userName} = {
           # TODO: change this from temp password to one encrypted by sops
           hashedPassword = "$y$j9T$89xirH4b8LCFTaHBWEoJG.$3MzGxJSgLYKQDP.JUSnZ4oNTLs7vdZyZcdI9f7TQNf3";
@@ -23,6 +28,7 @@ in
         # add other aspects of yours that use host, user
         # to conditionally add behaviour.
         user-contrib-to-host
+        infra.catppuccin
         infra.cli
         infra.command-not-found
         infra.fish
