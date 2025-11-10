@@ -54,7 +54,7 @@
                 (fishPlugin pkgs.fishPlugins.tide)
               ];
 
-            functions = {};
+            functions = { };
 
             shellAbbrs = {
               d = "cd ~/dotfiles";

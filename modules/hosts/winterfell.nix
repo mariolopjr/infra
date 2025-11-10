@@ -49,8 +49,11 @@ in
     ];
 
     nixos = {
-      boot.initrd.kernelModules = ["hv_vmbus" "hv_storvsc"];
-      boot.kernelParams = ["video=hyperv_fb:800x600"];
+      boot.initrd.kernelModules = [
+        "hv_vmbus"
+        "hv_storvsc"
+      ];
+      boot.kernelParams = [ "video=hyperv_fb:800x600" ];
       boot.kernel.sysctl."vm.overcommit_memory" = "1";
 
       disko.devices.disk.main = {

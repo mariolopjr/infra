@@ -16,5 +16,14 @@
 
         kernelPackages = pkgs.linuxPackages_latest;
       };
+
+      services.xserver.xkb = {
+        layout = "us";
+      };
+
+      console = {
+        earlySetup = true;
+        useXkbConfig = true;
+      };
     };
 }
