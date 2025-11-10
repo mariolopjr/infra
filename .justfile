@@ -6,6 +6,7 @@ alias c := check
 alias wf := write-flake
 alias bm := build
 alias r := repl
+alias s := switch
 
 [private]
 default:
@@ -33,6 +34,10 @@ build *args:
     @just build-machine {{ hostname }} {{ args }}
 
 [group("local")]
+switch *args:
+    @just switch-machine {{ hostname }} {{ args }}
+
+[group("local")]
 format *args:
     nix run .#fmt
 
@@ -50,3 +55,8 @@ build-machine hostname=hostname *args:
 [macos]
 build-machine hostname=hostname *args:
     nh darwin build . --hostname "{{ hostname }}" --diff always {{ args }}
+
+[group("machine")]
+[linux]
+switch-machine hostname=hostname *args:
+    nh os switch . --hostname "{{ hostname }}" --diff always {{ args }}
