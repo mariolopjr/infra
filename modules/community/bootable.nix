@@ -12,6 +12,8 @@
           "xhci_pci"
           "usb_storage"
           "sd_mod"
+          "uhci_hcd"
+          "ehci_pci"
         ];
 
         kernelPackages = pkgs.linuxPackages_latest;

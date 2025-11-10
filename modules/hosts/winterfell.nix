@@ -45,7 +45,7 @@ in
   den.aspects.winterfell-hv = {
     includes = [
       infra.winterfell._.base
-      infra.winterfell._.hw
+      infra.winterfell._.hv
     ];
 
     nixos = {
@@ -55,6 +55,8 @@ in
       ];
       boot.kernelParams = [ "video=hyperv_fb:800x600" ];
       boot.kernel.sysctl."vm.overcommit_memory" = "1";
+
+      virtualisation.hypervGuest.enable = true;
 
       disko.devices.disk.main = {
         device = "/dev/sda";
@@ -95,6 +97,10 @@ in
   infra.winterfell.provides = {
     hw.includes = [
       infra.kvm-amd
+    ];
+
+    hv.includes = [
+      infra.virtual
     ];
 
     vm.includes = [
