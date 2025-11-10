@@ -26,6 +26,7 @@
             "CTRL SHIFT, D, Deafen on vesktop, pass, class:^(vesktop)$"
 
             # hypr
+            "$mainMod ALT, L, Start hyprlock, exec, hyprlock"
             "$mainMod SHIFT, Q, Exit hyprland, exit,"
           ];
       };

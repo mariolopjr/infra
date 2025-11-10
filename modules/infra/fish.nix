@@ -14,7 +14,10 @@
         {
           programs.fzf.enable = true;
           programs.fzf.enableFishIntegration = true;
-          programs.fastfetch.enable = true;
+
+          home.packages = with pkgs; [
+            microfetch
+          ];
 
           programs.fish = {
             enable = true;
@@ -30,6 +33,8 @@
                 set fish_cursor_visual block # visual mode
 
                 set fish_cursor_external line # in commands
+
+                set fish_greeting
               '';
 
             plugins =
@@ -49,15 +54,7 @@
                 (fishPlugin pkgs.fishPlugins.tide)
               ];
 
-            functions = {
-              fish_greeting =
-                #fish
-                ''
-                  if not test -n "$IN_NIX_SHELL"
-                    ${pkgs.fastfetch}/bin/fastfetch;
-                  end
-                '';
-            };
+            functions = {};
 
             shellAbbrs = {
               d = "cd ~/dotfiles";

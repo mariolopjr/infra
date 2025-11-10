@@ -21,6 +21,7 @@ in
 {
   # set up hosts with users
   den.hosts.x86_64-linux.winterfell.users.mario = { };
+  den.hosts.x86_64-linux.winterfell-hv.users.mario = { };
   den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
 
   den.aspects.winterfell = {
@@ -34,6 +35,28 @@ in
         device = "/dev/nvme0n1";
         content.partitions.luks.content = {
           content.subvolumes."/swap".swap.swapfile.size = "16G";
+        };
+      };
+    };
+
+    _.common-user-env = common-user-env;
+  };
+
+  den.aspects.winterfell-hv = {
+    includes = [
+      infra.winterfell._.base
+      infra.winterfell._.hw
+    ];
+
+    nixos = {
+      boot.initrd.kernelModules = ["hv_vmbus" "hv_storvsc"];
+      boot.kernelParams = ["video=hyperv_fb:800x600"];
+      boot.kernel.sysctl."vm.overcommit_memory" = "1";
+
+      disko.devices.disk.main = {
+        device = "/dev/sda";
+        content.partitions.luks.content = {
+          content.subvolumes."/swap".swap.swapfile.size = "4G";
         };
       };
     };
