@@ -1,9 +1,7 @@
 { inputs, ... }:
 {
   # TODO: tighten permissions
-  flake-file.inputs = {
-    preservation.url = "github:nix-community/preservation";
-  };
+  flake-file.inputs.preservation.url = "github:nix-community/preservation";
 
   infra.preservation =
     { user, ... }:
