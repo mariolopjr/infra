@@ -94,9 +94,6 @@
     nvf = {
       url = "github:notashelf/nvf";
     };
-    preservation = {
-      url = "github:nix-community/preservation";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
     };

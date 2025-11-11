@@ -34,6 +34,7 @@ in
           infra.command-not-found
           infra.fish
           infra.fonts
+          infra.git
           infra.ghostty
           infra.hyprland
           infra.nix
@@ -45,13 +46,5 @@ in
           infra.impermanence
         ];
       };
-
-    homeManager = {
-      programs.git = {
-        enable = true;
-        userName = "Mario";
-        userEmail = "mariolopjr@users.noreply.github.com";
-      };
-    };
   };
 }

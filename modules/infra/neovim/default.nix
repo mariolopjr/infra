@@ -11,46 +11,44 @@
       programs.nvf = {
         enable = true;
 
-        settings = {
-          vim = {
-            viAlias = false;
-            vimAlias = true;
-            globals = {
-              mapleader = " ";
-              maplocalleader = " ";
-              have_nerd_font = true;
-              loaded_netrw = 1;
-              loaded_netrwPlugin = 1;
-            };
+        settings.vim = {
+          viAlias = false;
+          vimAlias = true;
+          globals = {
+            mapleader = " ";
+            maplocalleader = " ";
+            have_nerd_font = true;
+            loaded_netrw = 1;
+            loaded_netrwPlugin = 1;
+          };
 
-            # lang support
-            languages = {
-              enableTreesitter = true;
-              nix.enable = true;
-            };
-            lsp = {
-              enable = true;
-              formatOnSave = true;
-            };
-            treesitter.enable = true;
+          # lang support
+          languages = {
+            enableTreesitter = true;
+            nix.enable = true;
+          };
+          lsp = {
+            enable = true;
+            formatOnSave = true;
+          };
+          treesitter.enable = true;
 
-            # Editor enhancements (mini.nvim plugins)
-            mini = {
-              comment.enable = true;
-              hipatterns.enable = true;
-              pairs.enable = true;
-              sessions.enable = true;
-              snippets.enable = true;
-              surround.enable = true;
-            };
+          # Editor enhancements (mini.nvim plugins)
+          mini = {
+            comment.enable = true;
+            hipatterns.enable = true;
+            pairs.enable = true;
+            sessions.enable = true;
+            snippets.enable = true;
+            surround.enable = true;
+          };
 
-            ui.noice = {
-              enable = true;
-              setupOpts.presets = {
-                bottom_search = true;
-                command_palette = true;
-                long_message_to_split = true;
-              };
+          ui.noice = {
+            enable = true;
+            setupOpts.presets = {
+              bottom_search = true;
+              command_palette = true;
+              long_message_to_split = true;
             };
           };
         };
