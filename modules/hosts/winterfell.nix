@@ -109,6 +109,7 @@ in
   infra.winterfell.provides = {
     hw.includes = [
       infra.kvm-amd
+      infra.nvidia
     ];
 
     hv.includes = [

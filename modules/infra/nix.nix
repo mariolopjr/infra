@@ -7,6 +7,13 @@
       imports = [
         inputs.determinate.nixosModules.default
       ];
+
+      nixpkgs.config.allowUnfree = true;
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+      };
     };
 
     homeManager =
@@ -19,6 +26,8 @@
 
         programs.nh.enable = true;
         programs.home-manager.enable = true;
+
+        nixpkgs.config.allowUnfree = true;
       };
   };
 }
