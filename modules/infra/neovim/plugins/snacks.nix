@@ -34,7 +34,8 @@
                       indent = 2;
                       padding = 1;
                     }
-                    { section = "startup"; }
+                    # TODO: recreate snacks startup, with using stats and plugins loaded via nvf
+                    # { section = "startup"; }
                   ];
                 };
 
