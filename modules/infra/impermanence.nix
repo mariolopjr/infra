@@ -25,8 +25,7 @@
 
           files = [
             "/etc/machine-id"
-            # TODO: use this for age keyfile
-            # { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+            { file = "/var/lib/sops-nix/key.txt"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
           ];
 
           users.${user.userName} = {
