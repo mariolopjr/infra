@@ -7,6 +7,8 @@ alias wf := write-flake
 alias bm := build
 alias r := repl
 alias s := switch
+alias b := boot
+alias t := test
 
 [private]
 default:
@@ -38,6 +40,14 @@ switch *args:
     @just switch-machine {{ hostname }} {{ args }}
 
 [group("local")]
+boot *args:
+    @just boot-machine {{ hostname }} {{ args }}
+
+[group("local")]
+test *args:
+    @just test-machine {{ hostname }} {{ args }}
+
+[group("local")]
 format *args:
     nix run .#fmt
 
@@ -65,3 +75,13 @@ build-machine hostname=hostname *args:
 [linux]
 switch-machine hostname=hostname *args:
     nh os switch . --hostname "{{ hostname }}" --diff always {{ args }}
+
+[group("machine")]
+[linux]
+boot-machine hostname=hostname *args:
+    nh os boot . --hostname "{{ hostname }}" --diff always {{ args }}
+
+[group("machine")]
+[linux]
+test-machine hostname=hostname *args:
+    nh os test . --hostname "{{ hostname }}" --diff always {{ args }}
