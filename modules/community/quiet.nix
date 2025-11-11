@@ -1,5 +1,5 @@
 {
-  infra.plymouth.nixos = {
+  infra.quiet.nixos = {
     boot = {
       consoleLogLevel = 3;
       kernelParams = [
@@ -9,8 +9,6 @@
         "udev.log_priority=3"
         "loglevel=0"
       ];
-
-      plymouth.enable = true;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ infra, ... }:
+{ infra, inputs, ... }:
 let
   # private aspects can be let-bindings
   # more re-usable ones are better defined inside the `westeros` namespace.
@@ -19,6 +19,8 @@ let
     };
 in
 {
+  flake-file.inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
+
   # set up hosts with users
   den.hosts.x86_64-linux.winterfell.users.mario = { };
   den.hosts.x86_64-linux.winterfell-hv.users.mario = { };
@@ -50,6 +52,7 @@ in
     ];
 
     nixos = {
+      imports = [ inputs.vscode-server.nixosModules.default ];
       boot.initrd.kernelModules = [
         "hv_vmbus"
         "hv_storvsc"

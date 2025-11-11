@@ -111,6 +111,9 @@
       };
       url = "github:numtide/treefmt-nix";
     };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+    };
   };
 
 }
