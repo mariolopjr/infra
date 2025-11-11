@@ -119,7 +119,7 @@
               gcl = "git clone";
               gclean = "git clean -di";
               "gclean!" = "git clean -dfx";
-              "gclean!!" = "git reset --hard; and = 'git clean -dfx'";
+              "gclean!!" = "git reset --hard; and git clean -dfx";
               gcount = "git shortlog -sn";
               gcp = "git cherry-pick";
               gcpa = "git cherry-pick --abort";
@@ -136,7 +136,7 @@
               gignore = "git update-index --assume-unchanged";
               gf = "git fetch";
               gfa = "git fetch --all --prune";
-              gfm = "git fetch origin (__git.default_branch) --prune; and = 'git merge FETCH_HEAD'";
+              gfm = "git fetch origin (__git.default_branch) --prune; and git merge FETCH_HEAD";
               gfo = "git fetch origin";
               gl = "git pull";
               ggl = "git pull origin \(__git.current_branch\)";
@@ -163,8 +163,8 @@
               ggp = "git push origin \(__git.current_branch\)";
               "ggp!" = "git push origin \(__git.current_branch\) --force-with-lease";
               gpu = "git push origin \(__git.current_branch\) --set-upstream";
-              gpoat = "git push origin --all; and = 'git push origin --tags'";
-              ggpnp = "git pull origin (__git.current_branch); and = 'git push origin (__git.current_branch)'";
+              gpoat = "git push origin --all; and git push origin --tags";
+              ggpnp = "git pull origin (__git.current_branch); and git push origin (__git.current_branch)";
               gr = "git remote -vv";
               gra = "git remote add";
               grb = "git rebase";
@@ -174,9 +174,9 @@
               grbm = "git rebase \(__git.default_branch\)";
               grbmi = "git rebase \(__git.default_branch\) --interactive";
               grbmia = "git rebase \(__git.default_branch\) --interactive --autosquash";
-              grbom = "git fetch origin (__git.default_branch); and = 'git rebase FETCH_HEAD'";
-              grbomi = "git fetch origin (__git.default_branch); and = 'git rebase FETCH_HEAD --interactive'";
-              grbomia = "git fetch origin (__git.default_branch); and = 'git rebase FETCH_HEAD --interactive --autosquash'";
+              grbom = "git fetch origin (__git.default_branch); and git rebase FETCH_HEAD";
+              grbomi = "git fetch origin (__git.default_branch); and git rebase FETCH_HEAD --interactive";
+              grbomia = "git fetch origin (__git.default_branch); and git rebase FETCH_HEAD --interactive --autosquash";
               grbd = "git rebase develop";
               grbdi = "git rebase develop --interactive";
               grbdia = "git rebase develop --interactive --autosquash";
