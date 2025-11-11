@@ -55,7 +55,7 @@
               ];
 
             functions = {
-              __git.default_branch.fish = {
+              "__git.default_branch" = {
                 body =
                   #fish
                   ''
