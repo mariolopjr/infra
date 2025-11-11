@@ -25,7 +25,12 @@
 
           files = [
             "/etc/machine-id"
-            { file = "/var/lib/sops-nix/key.txt"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+            {
+              file = "/var/lib/sops-nix/key.txt";
+              parentDirectory = {
+                mode = "u=rwx,g=,o=";
+              };
+            }
           ];
 
           users.${user.userName} = {
