@@ -45,6 +45,11 @@ format *args:
 vm *args:
     nix run .#vm
 
+# TODO: use nh to build iso in the future
+[group("local")]
+iso *args:
+    nix build .#nixosConfigurations.winterfell-iso.config.system.build.isoImage {{ args }}
+
 # ---------- machine ---------- #
 [group("machine")]
 [linux]

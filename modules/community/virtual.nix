@@ -4,7 +4,6 @@
       "ahci"
       "xhci_pci"
       "sr_mod"
-      "sr_mod"
 
       "virtio"
       "virtio_blk"

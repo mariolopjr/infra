@@ -23,6 +23,7 @@ in
   den.hosts.x86_64-linux.winterfell.users.mario = { };
   den.hosts.x86_64-linux.winterfell-hv.users.mario = { };
   den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
+  den.hosts.x86_64-linux.winterfell-iso.users.mario = { };
 
   den.aspects.winterfell = {
     includes = [
@@ -55,6 +56,8 @@ in
       ];
       boot.kernelParams = [ "video=hyperv_fb:800x600" ];
       boot.kernel.sysctl."vm.overcommit_memory" = "1";
+
+      services.vscode-server.enable = true;
 
       virtualisation.hypervGuest.enable = true;
 
@@ -94,6 +97,12 @@ in
     };
   };
 
+  den.aspects.winterfell-iso = {
+    includes = [
+      infra.winterfell._.iso
+    ];
+  };
+
   infra.winterfell.provides = {
     hw.includes = [
       infra.kvm-amd
@@ -105,6 +114,10 @@ in
 
     vm.includes = [
       infra.virtual
+    ];
+
+    iso.includes = [
+      infra.iso
     ];
 
     base.includes = [
