@@ -10,7 +10,6 @@
           pkgs.devenv
           pkgs.eza # ls
           pkgs.fd # find
-          pkgs.git
           pkgs.htop
           pkgs.jq
           pkgs.lazygit

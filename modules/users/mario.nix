@@ -45,5 +45,13 @@ in
           infra.impermanence
         ];
       };
+
+    homeManager = {
+      programs.git = {
+        enable = true;
+        userName = "Mario";
+        userEmail = "mariolopjr@users.noreply.github.com";
+      };
+    };
   };
 }
