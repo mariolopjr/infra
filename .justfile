@@ -9,6 +9,7 @@ alias r := repl
 alias s := switch
 alias b := boot
 alias t := test
+alias fnp := find-non-persisted-files
 
 [private]
 default:
@@ -59,6 +60,10 @@ vm *args:
 [group("local")]
 iso *args:
     nix build .#nixosConfigurations.winterfell-iso.config.system.build.isoImage {{ args }}
+
+[group("local")]
+find-non-persisted-files:
+    ./scripts/find-non-persisted-files.sh
 
 # ---------- machine ---------- #
 [group("machine")]
