@@ -127,6 +127,7 @@ in
     base.includes = [
       infra.base
       infra.disko
+      infra.gaming
     ];
   };
 }
