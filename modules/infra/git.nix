@@ -13,34 +13,39 @@ let
   ignore = lib.concatStringsSep "\n" [ ide ];
 in
 {
-  infra.git = _: {
-    homeManager =
-      { pkgs, ... }:
-      {
-        programs.git = {
-          enable = true;
-          lfs.enable = true;
+  infra.git =
+    { ... }:
+    {
+      homeManager =
+        { pkgs, ... }:
+        {
+          programs.delta = {
+            enable = true;
+            enableGitIntegration = true;
+          };
 
-          ignores = map (v: "${toString v}") (builtins.split "\n" ignore);
+          programs.git = {
+            enable = true;
+            lfs.enable = true;
 
-          settings = {
-            core.pager = "delta";
+            ignores = map (v: "${toString v}") (builtins.split "\n" ignore);
 
-            user.name = "Mario";
-            user.email = "mariolopjr@users.noreply.github.com";
-            # TODO: allow configuring this to 1Password
-            user.signingkey = "~/.ssh/id_ed25519.pub";
+            settings = {
+              user.name = "Mario";
+              user.email = "mariolopjr@users.noreply.github.com";
+              # TODO: allow configuring this to 1Password
+              user.signingkey = "~/.ssh/id_ed25519.pub";
 
-            gpg.format = "ssh";
-            gpg.ssh.allowedSignersFile = ''${pkgs.writeText "allowed_signers" ''${allowedSigners}''}'';
-            commit.gpgsign = true;
-            tag.gpgsign = true;
+              gpg.format = "ssh";
+              gpg.ssh.allowedSignersFile = "${pkgs.writeText "allowed_signers" allowedSigners}";
+              commit.gpgsign = true;
+              tag.gpgsign = true;
 
-            init.defaultBranch = "main";
-            pull.rebase = true;
-            push.autoSetupRemote = true;
+              init.defaultBranch = "main";
+              pull.rebase = true;
+              push.autoSetupRemote = true;
+            };
           };
         };
-      };
-  };
+    };
 }

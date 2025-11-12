@@ -1,9 +1,10 @@
 {
   infra.hyprland = _: {
     homeManager = {
+      # credit to bibjaw99/workstation: https://github.com/bibjaw99/workstation/tree/master/config_dotfiles/config/waybar_configs
       wayland.windowManager.hyprland.settings = {
         monitor = [
-          ",preferred,auto,auto"
+          ",preferred,auto,1.5"
         ];
 
         # workspace = [
@@ -14,7 +15,8 @@
 
         exec-once = [
           # finalize startup
-          "uwsm finalize"
+          #"uwsm finalize"
+          "waybar &"
           # mute volume on login
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
         ];

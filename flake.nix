@@ -9,6 +9,11 @@
       url = "github:catppuccin/nix";
     };
     darwin = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "github:nix-darwin/nix-darwin/master";
     };
     den = {
@@ -38,6 +43,11 @@
       url = "github:ghostty-org/ghostty";
     };
     home-manager = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "github:nix-community/home-manager";
     };
     hyprland = {

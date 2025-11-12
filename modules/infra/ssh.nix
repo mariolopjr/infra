@@ -3,6 +3,13 @@
     nixos = {
       services.openssh = {
         enable = true;
+
+        settings = {
+          PermitRootLogin = "no";
+          # TODO: uncomment
+          # PasswordAuthentication = false;
+          # KbdInteractiveAuthentication = false;
+        };
       };
     };
     homeManager = {

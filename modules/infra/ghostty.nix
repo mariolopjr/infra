@@ -69,6 +69,7 @@
 
               # other
               "super+alt+enter=new_split:auto"
+              "super+k=clear_screen"
               "global:ctrl+`=toggle_quick_terminal"
             ];
           };

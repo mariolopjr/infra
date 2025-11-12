@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# credit richardgill/nix: https://github.com/richardgill/nix/blob/main/scripts/find-impermanent-files.sh 
 set -euo pipefail
+
+# credit richardgill/nix: https://github.com/richardgill/nix/blob/main/scripts/find-impermanent-files.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
