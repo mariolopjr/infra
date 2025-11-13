@@ -48,9 +48,6 @@
           enable = true;
           systemd.enable = false;
 
-          # package = null;
-          # portalPackage = null;
-          #
           settings.permission = builtins.map (
             plugin: plugin + "/lib/lib${plugin.pname}.so, plugin, allow"
           ) cfg.plugins;

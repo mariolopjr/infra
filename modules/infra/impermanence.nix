@@ -21,6 +21,10 @@
             "/var/lib/nixos"
             "/var/lib/systemd/coredump"
             "/etc/NetworkManager/system-connections"
+            "/etc/ssh/ssh_host_ed25519_key"
+            "/etc/ssh/ssh_host_ed25519_key.pub"
+            "/etc/ssh/ssh_host_rsa_key"
+            "/etc/ssh/ssh_host_rsa_key.pub"
           ];
 
           files = [
@@ -67,6 +71,8 @@
             # TODO: fish history, what about fish autocomplete and plugin data?
             files = [
               ".bash_history"
+              ".local/share/fish/fish_history"
+              ".local/share/nix/repl-history"
             ];
           };
         };

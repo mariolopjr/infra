@@ -1,6 +1,7 @@
 {
   infra.hyprland = _: {
     homeManager = {
+      # credit to bibjaw99/workstation: https://github.com/bibjaw99/workstation/tree/master/config_dotfiles/config/waybar_configs
       programs.waybar = {
         enable = true;
         settings = {
@@ -168,11 +169,14 @@
               box-shadow: none;
             }
 
-            /* the whole window */
+            #window {
+              border: 3px solid #d3869b;
+            }
+
             window#waybar {
               color: #ebdbb2;
               background: none;
-              font-family: IosevkaTerm Nerd Font Propo;
+              font-family: Monaspace Neon;
               font-size: 16px;
               font-weight: 900;
             }
@@ -181,10 +185,9 @@
             .modules-center,
             .modules-right {
               padding: 5px;
-              background: #222222;
+              background: transparent;
             }
 
-            #custom-rofi,
             #window,
             #disk,
             #cpu,
@@ -199,14 +202,13 @@
             #battery.warning,
             #network,
             #clock {
-              padding-right: 8;
+              padding: 0 2px;
             }
 
             #custom-rofi {
-              color: #000000;
-              border: 3px solid #458588;
-              background: #83a598;
-              padding: 0px 8px;
+              color: #83a598;
+              border: 3px solid #83a598;
+              padding: 0 8px;
             }
 
             #workspaces button {
@@ -222,31 +224,25 @@
             }
 
             #workspaces button:hover {
-              color: #222222;
-              background: #d3869b;
-              border: 3px solid #b26286;
+              color: #d3869b;
+              border: 3px solid #d3869b;
             }
 
             #workspaces button.visible,
             #workspaces button.visible:hover,
             #workspaces button.active,
             #workspaces button.active:hover {
-              color: #000000;
-              border: 3px solid #689d68;
-              background: #8ec07c;
+              color: #8ec07c;
+              border: 3px solid #8ec07c;
             }
 
             #workspaces button.urgent {
-              color: #222222;
-              border: 3px solid #cc241d;
-              background: #ea6962;
-            }
-
-            #window {
-              border: 3px solid #d3869b;
+              color: #ea6962;
+              border: 3px solid #ea6962;
             }
 
             #tray {
+              background: #222222;
               border: 3px solid #e78a4e;
               padding: 0 8;
             }
@@ -311,8 +307,9 @@
 
             #mode,
             #submap {
-              color: #83a598;
-              border: 3px solid #83a598;
+              background: transparent;
+              color: @text;
+              border: @surface0;
               padding: 0 10;
             }
           '';

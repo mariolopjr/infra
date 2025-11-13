@@ -8,7 +8,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 hostname=$(hostname)
 user=$(whoami)
 
-persistence_data=$(nix eval --json "$PROJECT_ROOT#nixosConfigurations.$hostname.config.environment.persistence.\"/persistent\"" 2>/dev/null || echo "{}")
+persistence_data=$(nix eval --json "$PROJECT_ROOT#nixosConfigurations.$hostname.config.environment.persistence.\"/persist\"" 2>/dev/null || echo "{}")
 
 # Extract system-level and user-level persisted directory paths from nix configuration
 persist_dirs=$(echo "$persistence_data" | jq -r --arg user "$user" '
@@ -37,6 +37,7 @@ persist_files=$(echo "$persistence_data" | jq -r --arg user "$user" '
 ')
 
 additional_excludes=(
+  "/etc/sudoers"
   "/persist"
   "/nix"
   "/tmp"
