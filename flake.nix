@@ -5,6 +5,9 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
+    catppuccin = {
+      url = "github:catppuccin/nix";
+    };
     darwin = {
       inputs = {
         nixpkgs = {
@@ -15,6 +18,9 @@
     };
     den = {
       url = "github:vic/den";
+    };
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     };
     disko = {
       url = "github:nix-community/disko";
@@ -44,6 +50,23 @@
       };
       url = "github:nix-community/home-manager";
     };
+    hypridle = {
+      inputs = {
+        hyprutils = {
+          follows = "hyprland/hyprutils";
+        };
+        hyprwayland-scanner = {
+          follows = "hyprland/hyprwayland-scanner";
+        };
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+        systems = {
+          follows = "hyprland/systems";
+        };
+      };
+      url = "github:hyprwm/hypridle";
+    };
     hyprland = {
       url = "github:hyprwm/hyprland";
     };
@@ -54,6 +77,23 @@
         };
       };
       url = "github:hyprwm/contrib";
+    };
+    hyprlock = {
+      inputs = {
+        hyprutils = {
+          follows = "hyprland/hyprutils";
+        };
+        hyprwayland-scanner = {
+          follows = "hyprland/hyprwayland-scanner";
+        };
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+        systems = {
+          follows = "hyprland/systems";
+        };
+      };
+      url = "github:hyprwm/hyprlock";
     };
     hyprpicker = {
       inputs = {
@@ -72,6 +112,9 @@
       };
       url = "github:hyprwm/hyprpicker";
     };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
     import-tree = {
       url = "github:vic/import-tree";
     };
@@ -83,14 +126,20 @@
       };
       url = "github:fzakaria/nix-auto-follow";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+    };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
     nixpkgs-lib = {
       follows = "nixpkgs";
     };
-    preservation = {
-      url = "github:nix-community/preservation";
+    nvf = {
+      url = "github:notashelf/nvf";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
     };
     systems = {
       url = "github:nix-systems/default";
@@ -102,6 +151,9 @@
         };
       };
       url = "github:numtide/treefmt-nix";
+    };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
     };
   };
 

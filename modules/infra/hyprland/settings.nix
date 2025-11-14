@@ -3,7 +3,7 @@
     homeManager = {
       wayland.windowManager.hyprland.settings = {
         monitor = [
-          ",preferred,auto,auto"
+          ",preferred,auto,1.5"
         ];
 
         # workspace = [
@@ -12,9 +12,11 @@
 
         "$mainMod" = "SUPER";
 
+        "$resetSubmap" = "hyprctl dispatch submap reset";
+
+        # migrate these to systemd
         exec-once = [
-          # finalize startup
-          "uwsm finalize"
+          "waybar &"
           # mute volume on login
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
         ];

@@ -4,7 +4,6 @@
       wayland.windowManager.hyprland.settings = {
         bindd =
           let
-
             terminal = "ghostty +new-window";
             # TODO: add options to user object
             # if meta.programs.terminal == "ghostty"
@@ -26,7 +25,9 @@
             "CTRL SHIFT, D, Deafen on vesktop, pass, class:^(vesktop)$"
 
             # hypr
-            "$mainMod SHIFT, Q, Exit hyprland, exit,"
+            "$mainMod ALT, L, Start hyprlock, exec, hyprlock"
+            "$mainMod, Q, Close window, killactive,"
+            #"$mainMod SHIFT, Q, Exit window (kill), exit,"
           ];
       };
     };
