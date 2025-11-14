@@ -21,10 +21,6 @@
             "/var/lib/nixos"
             "/var/lib/systemd/coredump"
             "/etc/NetworkManager/system-connections"
-            "/etc/ssh/ssh_host_ed25519_key"
-            "/etc/ssh/ssh_host_ed25519_key.pub"
-            "/etc/ssh/ssh_host_rsa_key"
-            "/etc/ssh/ssh_host_rsa_key.pub"
           ];
 
           files = [
@@ -35,6 +31,10 @@
                 mode = "u=rwx,g=,o=";
               };
             }
+            "/etc/ssh/ssh_host_ed25519_key"
+            "/etc/ssh/ssh_host_ed25519_key.pub"
+            "/etc/ssh/ssh_host_rsa_key"
+            "/etc/ssh/ssh_host_rsa_key.pub"
           ];
 
           users.${user.userName} = {
@@ -104,7 +104,7 @@
               mount -o subvol=/ /dev/mapper/cryptroot /mnt
 
               # While we're tempted to just delete /root and create
-              # a new snapshot from /root-blank, however if root is
+              # a new snapshot from /root-blank, if root is
               # populated with subvolumes,
               # `btrfs subvolume delete` will fail.
 

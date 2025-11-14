@@ -10,8 +10,8 @@
       isoImage = {
         makeEfiBootable = lib.mkDefault true;
         makeUsbBootable = lib.mkDefault true;
-        edition = lib.mkDefault "winterfell-iso";
-        volumeID = lib.mkDefault "WINTERFELL_ISO";
+        edition = lib.mkDefault "westeros";
+        volumeID = lib.mkDefault "WESTEROS";
       };
     };
 }

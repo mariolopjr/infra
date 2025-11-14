@@ -33,14 +33,18 @@ in
       infra.winterfell._.hw
     ];
 
-    nixos = {
-      disko.devices.disk.main = {
-        device = "/dev/nvme0n1";
-        content.partitions.luks.content = {
-          content.subvolumes."/swap".swap.swapfile.size = "16G";
+    nixos =
+      { pkgs, ... }:
+      {
+        boot.kernelPackages = pkgs.linuxPackages_latest;
+
+        disko.devices.disk.main = {
+          device = "/dev/nvme0n1";
+          content.partitions.luks.content = {
+            content.subvolumes."/swap".swap.swapfile.size = "16G";
+          };
         };
       };
-    };
 
     _.common-user-env = common-user-env;
   };
@@ -51,26 +55,33 @@ in
       infra.winterfell._.hv
     ];
 
-    nixos = {
-      imports = [ inputs.vscode-server.nixosModules.default ];
-      boot.initrd.kernelModules = [
-        "hv_vmbus"
-        "hv_storvsc"
-      ];
-      boot.kernelParams = [ "video=hyperv_fb:800x600" ];
-      boot.kernel.sysctl."vm.overcommit_memory" = "1";
+    nixos =
+      { pkgs, ... }:
+      {
+        imports = [ inputs.vscode-server.nixosModules.default ];
+        boot.initrd.kernelModules = [
+          "hv_vmbus"
+          "hv_storvsc"
+        ];
+        boot.kernelParams = [ "video=hyperv_fb:800x600" ];
+        boot.kernel.sysctl."vm.overcommit_memory" = "1";
+        boot.kernelPackages = pkgs.linuxPackages_latest;
 
-      services.vscode-server.enable = true;
+        services.vscode-server.enable = true;
 
-      virtualisation.hypervGuest.enable = true;
+        virtualisation.hypervGuest.enable = true;
 
-      disko.devices.disk.main = {
-        device = "/dev/sda";
-        content.partitions.luks.content = {
-          content.subvolumes."/swap".swap.swapfile.size = "4G";
+        environment.sessionVariables = {
+          WLR_NO_HARDWARE_CURSORS = "1";
+        };
+
+        disko.devices.disk.main = {
+          device = "/dev/sda";
+          content.partitions.luks.content = {
+            content.subvolumes."/swap".swap.swapfile.size = "4G";
+          };
         };
       };
-    };
 
     _.common-user-env = common-user-env;
   };
@@ -81,23 +92,27 @@ in
       infra.winterfell._.vm
     ];
 
-    nixos = {
-      # TODO: determine reason for duplicate systemd swap unit file
-      disko.devices.disk.main = {
-        device = "/dev/vda";
-        imageSize = "40G";
-        # TODO: redo this with a sops-encrypted key
-        preCreateHook = ''
-          echo -n 'secret' > /tmp/secret.key
-        '';
+    nixos =
+      { pkgs, ... }:
+      {
+        boot.kernelPackages = pkgs.linuxPackages_latest;
 
-        content.partitions.luks.content = {
-          passwordFile = "/tmp/secret.key";
+        # TODO: determine reason for duplicate systemd swap unit file
+        disko.devices.disk.main = {
+          device = "/dev/vda";
+          imageSize = "40G";
+          # TODO: redo this with a sops-encrypted key
+          preCreateHook = ''
+            echo -n 'secret' > /tmp/secret.key
+          '';
 
-          content.subvolumes."/swap".swap.swapfile.size = "4G";
+          content.partitions.luks.content = {
+            passwordFile = "/tmp/secret.key";
+
+            content.subvolumes."/swap".swap.swapfile.size = "4G";
+          };
         };
       };
-    };
   };
 
   den.aspects.winterfell-iso = {
@@ -122,6 +137,9 @@ in
 
     iso.includes = [
       infra.iso
+      infra.nvidia
+      infra.base
+      infra.gaming
     ];
 
     base.includes = [

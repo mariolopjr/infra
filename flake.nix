@@ -50,6 +50,23 @@
       };
       url = "github:nix-community/home-manager";
     };
+    hypridle = {
+      inputs = {
+        hyprutils = {
+          follows = "hyprland/hyprutils";
+        };
+        hyprwayland-scanner = {
+          follows = "hyprland/hyprwayland-scanner";
+        };
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+        systems = {
+          follows = "hyprland/systems";
+        };
+      };
+      url = "github:hyprwm/hypridle";
+    };
     hyprland = {
       url = "github:hyprwm/hyprland";
     };
@@ -60,6 +77,23 @@
         };
       };
       url = "github:hyprwm/contrib";
+    };
+    hyprlock = {
+      inputs = {
+        hyprutils = {
+          follows = "hyprland/hyprutils";
+        };
+        hyprwayland-scanner = {
+          follows = "hyprland/hyprwayland-scanner";
+        };
+        nixpkgs = {
+          follows = "hyprland/nixpkgs";
+        };
+        systems = {
+          follows = "hyprland/systems";
+        };
+      };
+      url = "github:hyprwm/hyprlock";
     };
     hyprpicker = {
       inputs = {

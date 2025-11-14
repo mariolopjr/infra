@@ -29,7 +29,7 @@
                 programs = lib.makeBinPath (
                   with pkgs;
                   [
-                    inputs.hyprland.packages.${stdenv.system}.default
+                    inputs.hyprland.packages.${stdenv.hostPlatform.system}.default
                     coreutils
                     power-profiles-daemon
                     systemd
