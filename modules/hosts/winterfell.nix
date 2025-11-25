@@ -1,4 +1,4 @@
-{ infra, inputs, ... }:
+{ infra, ... }:
 let
   # private aspects can be let-bindings
   # more re-usable ones are better defined inside the `infra` namespace.
@@ -19,11 +19,9 @@ let
     };
 in
 {
-  flake-file.inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
-
   # set up hosts with users
   den.hosts.x86_64-linux.winterfell.users.mario = { };
-  den.hosts.x86_64-linux.winterfell-hv.users.mario = { };
+  den.hosts.x86_64-linux.winterfell-kvm.users.mario = { };
   den.hosts.x86_64-linux.winterfell-vm.users.mario = { };
   den.hosts.x86_64-linux.winterfell-iso.users.mario = { };
 
@@ -49,34 +47,23 @@ in
     _.common-user-env = common-user-env;
   };
 
-  den.aspects.winterfell-hv = {
+  den.aspects.winterfell-kvm = {
     includes = [
       infra.winterfell._.base
-      infra.winterfell._.hv
+      infra.winterfell._.kvm
     ];
 
     nixos =
       { pkgs, ... }:
       {
-        imports = [ inputs.vscode-server.nixosModules.default ];
-        boot.initrd.kernelModules = [
-          "hv_vmbus"
-          "hv_storvsc"
-        ];
-        boot.kernelParams = [ "video=hyperv_fb:800x600" ];
-        boot.kernel.sysctl."vm.overcommit_memory" = "1";
         boot.kernelPackages = pkgs.linuxPackages_latest;
-
-        services.vscode-server.enable = true;
-
-        virtualisation.hypervGuest.enable = true;
 
         environment.sessionVariables = {
           WLR_NO_HARDWARE_CURSORS = "1";
         };
 
         disko.devices.disk.main = {
-          device = "/dev/sda";
+          device = "/dev/vda";
           content.partitions.luks.content = {
             content.subvolumes."/swap".swap.swapfile.size = "4G";
           };
@@ -127,7 +114,7 @@ in
       infra.nvidia
     ];
 
-    hv.includes = [
+    kvm.includes = [
       infra.virtual
     ];
 

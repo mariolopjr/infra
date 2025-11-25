@@ -32,6 +32,7 @@ in
           infra.git
           infra.ghostty
           infra.hyprland
+          infra.kde # alternative DE while hyprland config comes together
           infra.nix
           infra.nix-direnv
           infra.neovim
