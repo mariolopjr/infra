@@ -132,6 +132,7 @@ in
     base.includes = [
       infra.base
       infra.limine
+      infra.plymouth
       infra.disko
       infra.gaming
     ];
