@@ -8,6 +8,7 @@
       infra.documentation
       infra.hw-detect
       infra.greetd
+      infra.mutable-users
       infra.substituters
       infra.sudo
       infra.warn-dirty

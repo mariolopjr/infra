@@ -107,6 +107,17 @@ in
           };
 
           keymaps = [
+            (mkKeymap [ "n" "v" ] "<leader>/"
+              # lua
+              ''
+                function() Snacks.picker.grep() end
+              ''
+              {
+                desc = "[/] Grep";
+                lua = true;
+              }
+            )
+
             # git
             (mkKeymap [ "n" "v" ] "<leader>gg"
               # lua

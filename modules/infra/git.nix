@@ -13,39 +13,45 @@ let
   ignore = lib.concatStringsSep "\n" [ ide ];
 in
 {
-  infra.git =
-    { ... }:
-    {
-      homeManager =
-        { pkgs, ... }:
-        {
-          programs.delta = {
-            enable = true;
-            enableGitIntegration = true;
-          };
+  infra.git = _: {
+    homeManager =
+      { pkgs, ... }:
+      {
+        programs.delta = {
+          enable = true;
+          enableGitIntegration = true;
+        };
 
-          programs.git = {
-            enable = true;
-            lfs.enable = true;
+        programs.lazygit = {
+          enable = true;
 
-            ignores = map (v: "${toString v}") (builtins.split "\n" ignore);
-
-            settings = {
-              user.name = "Mario";
-              user.email = "mariolopjr@users.noreply.github.com";
-              # TODO: allow configuring this to 1Password
-              user.signingkey = "~/.ssh/id_ed25519.pub";
-
-              gpg.format = "ssh";
-              gpg.ssh.allowedSignersFile = "${pkgs.writeText "allowed_signers" allowedSigners}";
-              commit.gpgsign = true;
-              tag.gpgsign = true;
-
-              init.defaultBranch = "main";
-              pull.rebase = true;
-              push.autoSetupRemote = true;
-            };
+          settings = {
+            disableStartupPopups = true;
           };
         };
-    };
+
+        programs.git = {
+          enable = true;
+          lfs.enable = true;
+
+          ignores = map (v: "${toString v}") (builtins.split "\n" ignore);
+
+          settings = {
+            user.name = "Mario";
+            user.email = "mariolopjr@users.noreply.github.com";
+            # TODO: allow configuring this to 1Password
+            user.signingkey = "~/.ssh/id_ed25519.pub";
+
+            gpg.format = "ssh";
+            gpg.ssh.allowedSignersFile = "${pkgs.writeText "allowed_signers" allowedSigners}";
+            commit.gpgsign = true;
+            tag.gpgsign = true;
+
+            init.defaultBranch = "main";
+            pull.rebase = true;
+            push.autoSetupRemote = true;
+          };
+        };
+      };
+  };
 }

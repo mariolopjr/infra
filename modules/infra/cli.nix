@@ -12,10 +12,10 @@
           pkgs.fd # find
           pkgs.htop
           pkgs.jq
-          pkgs.lazygit
           pkgs.ripgrep # grep
           pkgs.unzip
           pkgs.zip
+          pkgs.zoxide # z
         ];
       };
   };

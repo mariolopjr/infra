@@ -40,6 +40,7 @@
           users.${user.userName} = {
             # TODO: review application data like devenv, etc. and add here
             directories = [
+              "Code"
               "Downloads"
               "Music"
               "Pictures"
@@ -47,6 +48,7 @@
               "Videos"
 
               # infra repo that manages all nixos/nix/darwin systems
+              # TODO: this should be located in "Code" folder
               "infra"
 
               # {
@@ -64,6 +66,7 @@
               ".local/share/direnv"
               # { directory = ".local/share/keyrings"; mode = "0700"; }
               ".local/share/Steam"
+              ".local/share/nvf"
 
               # ".mozilla/firefox"
             ];
