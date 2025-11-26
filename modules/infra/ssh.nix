@@ -1,10 +1,3 @@
-{ ... }:
-let
-  allowedPubkeys = ''
-    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAipRk9CK71BwC7DtnYAsMX5CsuCbnq03YaOL7ZKX+bn
-    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhF7/5agjGzrAiS7eOH+tY5GhqdLKqbCuvGwkbR0lyr
-  '';
-in
 {
   infra.ssh = _: {
     nixos = {
