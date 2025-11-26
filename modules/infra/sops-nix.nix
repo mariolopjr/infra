@@ -15,12 +15,12 @@ in
     { user, ... }:
     {
       nixos =
-        { config, ... }:
+        { lib, config, ... }:
         {
           imports = [ inputs.sops-nix.nixosModules.sops ];
 
           sops = defaults // {
-            age.keyFile = "/var/lib/sops-nix/keys.txt";
+            age.keyFile = lib.mkDefault "/var/lib/sops-nix/keys.txt";
             secrets."${user.userName}-password".neededForUsers = true;
           };
 

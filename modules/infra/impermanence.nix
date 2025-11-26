@@ -83,6 +83,9 @@
           };
         };
 
+        # ensure sops is configured to load keys from /persist
+        sops.age.keyFile = "/persist/var/lib/sops-nix/keys.txt";
+
         # configure system for persistence and root volume wiping
         fileSystems."/persist".neededForBoot = true;
         virtualisation.fileSystems."/persist".neededForBoot = true;
