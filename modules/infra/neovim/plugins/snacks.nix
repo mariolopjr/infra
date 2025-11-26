@@ -58,6 +58,17 @@ in
                   frecency = true;
                 };
 
+                sources.explorer.win.list.keys = {
+                  # alt+h interferes with pane resizing so remap to alt+.
+                  "<A-.>" = {
+                    "@1" = "toggle_hidden";
+                    mode = [
+                      "n"
+                      "i"
+                    ];
+                  };
+                };
+
                 win.input.keys = {
                   "<Esc>" = {
                     "@1" = "close";
@@ -90,6 +101,14 @@ in
                   };
                   "L" = {
                     "@1" = "preview_scroll_right";
+                    mode = [
+                      "n"
+                      "i"
+                    ];
+                  };
+                  # alt+h interferes with pane resizing so remap to alt+.
+                  "<A-.>" = {
+                    "@1" = "toggle_hidden";
                     mode = [
                       "n"
                       "i"
