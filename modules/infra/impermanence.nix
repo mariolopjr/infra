@@ -47,10 +47,6 @@
               "Documents"
               "Videos"
 
-              # infra repo that manages all nixos/nix/darwin systems
-              # TODO: this should be located in "Code" folder
-              "infra"
-
               # {
               #   directory = ".gnupg";
               #   mode = "0700";
