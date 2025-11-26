@@ -88,7 +88,8 @@ in
         disko.devices.disk.main = {
           device = "/dev/vda";
           imageSize = "40G";
-          # TODO: redo this with a sops-encrypted key
+          # insecure: the password for luks is "secret"
+          # since this is a test VM, security is not important
           preCreateHook = ''
             echo -n 'secret' > /tmp/secret.key
           '';
@@ -132,6 +133,7 @@ in
     base.includes = [
       infra.base
       infra.limine
+      infra.quiet
       infra.plymouth
       infra.disko
       infra.gaming

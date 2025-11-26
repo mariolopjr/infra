@@ -26,6 +26,12 @@ in
             loaded_netrwPlugin = 1;
           };
 
+          theme = {
+            enable = true;
+            name = "catppuccin";
+            style = "macchiato";
+          };
+
           # lang support
           languages = {
             enableTreesitter = true;

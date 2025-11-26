@@ -107,6 +107,18 @@ in
           };
 
           keymaps = [
+            # git
+            (mkKeymap [ "n" "v" ] "<leader>gg"
+              # lua
+              ''
+                function() Snacks.lazygit() end
+              ''
+              {
+                desc = "[G]it Lazy[G]it";
+                lua = true;
+              }
+            )
+
             # file explorer
             (mkKeymap [ "n" "v" ] "<leader>fe"
               # lua

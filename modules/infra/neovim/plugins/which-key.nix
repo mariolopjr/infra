@@ -20,6 +20,7 @@ in
             preset = "helix";
             spec = [
               (wkGroup "<leader>f" "[F]iles")
+              (wkGroup "<leader>g" "[G]it")
               #    {
               #        { "<Tab>", proxy = "<C-w>", group = "windows" },
               #        { "gr", group = "lsp", icon = { icon = "", color = "orange" } },

@@ -1,7 +1,8 @@
 {
   infra.quiet.nixos = {
     boot = {
-      consoleLogLevel = 3;
+      consoleLogLevel = 0;
+      initrd.verbose = false;
       kernelParams = [
         "quiet"
         "systemd.show_status=auto"
