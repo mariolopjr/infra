@@ -39,7 +39,6 @@ in
           settings = {
             user.name = "Mario";
             user.email = "mariolopjr@users.noreply.github.com";
-            # TODO: allow configuring this to 1Password
             user.signingkey = "~/.ssh/id_ed25519.pub";
 
             gpg.format = "ssh";

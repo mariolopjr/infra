@@ -14,14 +14,20 @@ in
   infra.sops-nix =
     { user, ... }:
     {
-      nixos = {
-        imports = [ inputs.sops-nix.nixosModules.sops ];
+      nixos =
+        { config, ... }:
+        {
+          imports = [ inputs.sops-nix.nixosModules.sops ];
 
-        sops = defaults // {
-          age.keyFile = "/var/lib/sops-nix/keys.txt";
-          secrets."${user.userName}-password".neededForUsers = true;
+          sops = defaults // {
+            age.keyFile = "/var/lib/sops-nix/keys.txt";
+            secrets."${user.userName}-password".neededForUsers = true;
+          };
+
+          users.users.${user.userName} = {
+            hashedPasswordFile = config.sops.secrets."${user.userName}-password".path;
+          };
         };
-      };
 
       homeManager = {
         imports = [ inputs.sops-nix.homeManagerModules.sops ];

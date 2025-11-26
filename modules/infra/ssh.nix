@@ -1,3 +1,10 @@
+{ ... }:
+let
+  allowedPubkeys = ''
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAipRk9CK71BwC7DtnYAsMX5CsuCbnq03YaOL7ZKX+bn
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhF7/5agjGzrAiS7eOH+tY5GhqdLKqbCuvGwkbR0lyr
+  '';
+in
 {
   infra.ssh = _: {
     nixos = {
@@ -6,9 +13,8 @@
 
         settings = {
           PermitRootLogin = "no";
-          # TODO: uncomment
-          # PasswordAuthentication = false;
-          # KbdInteractiveAuthentication = false;
+          PasswordAuthentication = false;
+          KbdInteractiveAuthentication = false;
         };
       };
     };
@@ -17,7 +23,7 @@
         enable = true;
         enableDefaultConfig = false;
 
-        # TODO: add servers that have ghostty TERM support
+        # TODO: add servers that have wezterm TERM support
         matchBlocks."*" = {
           forwardAgent = false;
           addKeysToAgent = "yes";

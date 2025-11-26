@@ -8,15 +8,9 @@ let
   # private aspects can be in variables
   # more re-usable ones are better defined inside the `infra` namespace.
   user-contrib-to-host =
-    { user, ... }:
+    { ... }:
     lib.recursiveUpdate {
-      nixos = {
-        users.users.${user.userName} = {
-          # TODO: change this from temp password to one encrypted by sops
-          hashedPassword = "$y$j9T$89xirH4b8LCFTaHBWEoJG.$3MzGxJSgLYKQDP.JUSnZ4oNTLs7vdZyZcdI9f7TQNf3";
-          # hashedPasswordFile = config.sops.secrets."${user.userName}-password".path;
-        };
-      };
+      nixos = { };
       darwin = { };
     } infra.state-version;
 in
