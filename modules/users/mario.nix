@@ -1,5 +1,9 @@
 # An aspect that contributes to any operating system where `mario` is a user.
-{ infra, lib, ... }:
+{
+  infra,
+  lib,
+  ...
+}:
 let
   # private aspects can be in variables
   # more re-usable ones are better defined inside the `infra` namespace.
@@ -10,6 +14,7 @@ let
         users.users.${user.userName} = {
           # TODO: change this from temp password to one encrypted by sops
           hashedPassword = "$y$j9T$89xirH4b8LCFTaHBWEoJG.$3MzGxJSgLYKQDP.JUSnZ4oNTLs7vdZyZcdI9f7TQNf3";
+          # hashedPasswordFile = config.sops.secrets."${user.userName}-password".path;
         };
       };
       darwin = { };
@@ -30,7 +35,6 @@ in
           infra.fish
           infra.fonts
           infra.git
-          infra.ghostty
           infra.hyprland
           infra.kde # alternative DE while hyprland config comes together
           infra.nix

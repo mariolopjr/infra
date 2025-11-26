@@ -35,6 +35,9 @@
                 set fish_cursor_external line # in commands
 
                 set fish_greeting
+
+                set -gx EDITOR nvim
+                set -gx VISUAL nvim
               '';
 
             plugins =
@@ -53,25 +56,6 @@
                 # (fishPlugin pkgs.fishPlugins.puffer-fish)
                 (fishPlugin pkgs.fishPlugins.tide)
               ];
-
-            functions = {
-              "__git.default_branch" = {
-                body =
-                  #fish
-                  ''
-                    command git rev-parse --git-dir &>/dev/null; or return
-                    if set -l default_branch (command git config --get init.defaultBranch)
-                      and command git show-ref -q --verify refs/heads/{$default_branch}
-                      echo $default_branch
-                    else if command git show-ref -q --verify refs/heads/main
-                      echo main
-                    else
-                      echo master
-                    end
-                  '';
-                description = "Use init.defaultBranch if it's set and exists, otherwise use main if it exists. Falls back to master";
-              };
-            };
 
             shellAbbrs = {
               d = "cd ~/dotfiles";

@@ -26,7 +26,7 @@
           files = [
             "/etc/machine-id"
             {
-              file = "/var/lib/sops-nix/key.txt";
+              file = "/var/lib/sops-nix/keys.txt";
               parentDirectory = {
                 mode = "u=rwx,g=,o=";
               };
@@ -76,6 +76,13 @@
               ".bash_history"
               ".local/share/fish/fish_history"
               ".local/share/nix/repl-history"
+
+              {
+                file = ".config/sops/age/keys.txt";
+                parentDirectory = {
+                  mode = "u=rwx,g=,o=";
+                };
+              }
             ];
           };
         };

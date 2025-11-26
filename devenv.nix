@@ -14,6 +14,7 @@
     pkgs.nixd
     pkgs.nh
     pkgs.sops
+    pkgs.ssh-to-age
   ];
 
   # https://devenv.sh/languages/
