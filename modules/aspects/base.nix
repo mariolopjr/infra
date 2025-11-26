@@ -5,7 +5,6 @@
     nixos = { };
     includes = [
       infra.bootable
-      infra.systemd-boot
       infra.documentation
       infra.hw-detect
       infra.greetd
