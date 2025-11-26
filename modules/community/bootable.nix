@@ -1,8 +1,6 @@
 {
   infra.bootable.nixos = {
     boot = {
-      initrd.systemd.enable = true;
-      loader.systemd-boot.enable = true;
       loader.efi.canTouchEfiVariables = true;
 
       initrd.availableKernelModules = [
