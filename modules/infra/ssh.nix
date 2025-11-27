@@ -10,13 +10,15 @@
           KbdInteractiveAuthentication = false;
         };
       };
+
+      programs.ssh.startAgent = true;
     };
     homeManager = {
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
 
-        # TODO: add servers that have wezterm TERM support
+        # TODO: add servers that have wezterm/ghostty TERM support
         matchBlocks."*" = {
           forwardAgent = false;
           addKeysToAgent = "yes";
