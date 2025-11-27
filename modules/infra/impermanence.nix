@@ -64,7 +64,8 @@
               ".local/share/Steam"
               ".local/share/nvf"
 
-              # ".mozilla/firefox"
+              ".mozilla"
+              ".cache/mozilla"
             ];
 
             # TODO: fish history, what about fish autocomplete and plugin data?

@@ -36,6 +36,7 @@ in
           languages = {
             enableTreesitter = true;
             nix.enable = true;
+            rust.enable = true;
           };
           lsp = {
             enable = true;

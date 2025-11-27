@@ -16,8 +16,7 @@
             "$powerMenu" = "${pkgs.writeShellScript "power-menu"
               # bash
               ''
-                # TODO: replace with hyprlock
-                suspend="systemctl suspend && swaylock"
+                suspend="systemctl suspend && hyprlock"
                 logout="hyprctl dispatch exit 0"
                 chosen=$(printf "Log Out\nSuspend\nRestart\nPower Off" | rofi -dmenu -i)
 

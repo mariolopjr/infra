@@ -41,7 +41,6 @@ in
           infra.fonts
           infra.git
           infra.hyprland
-          infra.kde # alternative DE while hyprland config comes together
           infra.lact
           infra.nix
           infra.nix-direnv

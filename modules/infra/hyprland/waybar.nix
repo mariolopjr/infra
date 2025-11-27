@@ -9,7 +9,7 @@
             layer = "top";
             position = "top";
 
-            height = 20;
+            height = 40;
             spacing = 5;
 
             margin-top = 5;
@@ -44,11 +44,11 @@
             # tweak scripts
             "custom/nixos" = {
               format = "";
-              #on-click = "rofi -show drun -disable-history -show-icons";
+              on-click = "rofi -show drun -disable-history -show-icons";
               #on-click-right = "~/.config/custom_scripts/power.sh";
               escape = true;
               tooltip = true;
-              tooltip-format = "btw";
+              tooltip-format = "nixos";
             };
 
             "hyprland/workspaces" = {
@@ -70,20 +70,21 @@
             };
 
             "hyprland/window" = {
-              format = "<span color='#202020' bgcolor='#d3869b' > 󰣆 </span> {class}";
+              format = "{class}";
               separate-outputs = true;
-              icon = false;
+              icon = true;
+              icon-size = "16px";
               tooltip = false;
             };
 
             tray = {
-              icon-size = 16;
-              spacing = 8;
+              icon-size = "16px";
+              spacing = "8px";
             };
 
             "hyprland/submap" = {
               format = " {}";
-              max-length = 50;
+              max-length = "50";
             };
 
             clock = {
@@ -161,7 +162,7 @@
             * {
               padding: 0;
               margin: 0;
-              min-height: 0;
+              min-height: 20px;
               border-radius: 0;
               border: none;
               text-shadow: none;
@@ -176,9 +177,9 @@
             window#waybar {
               color: #ebdbb2;
               background: none;
-              font-family: Monaspace Neon;
+              font-family: Jetbrains Mono;
               font-size: 16px;
-              font-weight: 900;
+              font-weight: 600;
             }
 
             .modules-left,
@@ -205,6 +206,10 @@
               padding: 0 2px;
             }
 
+            #custom-nixos {
+              padding: 0 8px;
+            }
+
             #custom-rofi {
               color: #83a598;
               border: 3px solid #83a598;
@@ -214,14 +219,13 @@
             #workspaces button {
               color: #fff4d2;
               border: 3px solid #fff4d2;
-              margin-right: 5px;
-              min-width: 20px;
-              padding: 0 5;
+              /* margin-right: 5px; */
+              padding: 0 8px;
             }
 
-            #workspaces button:last-child {
+            /* #workspaces button:last-child {
               margin-right: 0;
-            }
+            } */
 
             #workspaces button:hover {
               color: #d3869b;
@@ -241,10 +245,14 @@
               border: 3px solid #ea6962;
             }
 
+            #window {
+              padding: 0 8px;
+            }
+
             #tray {
               background: #222222;
               border: 3px solid #e78a4e;
-              padding: 0 8;
+              padding: 0 8px;
             }
 
             #disk {

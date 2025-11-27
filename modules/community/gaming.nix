@@ -9,6 +9,10 @@
         "vm.max_map_count" = 2147483642;
       };
 
+      environment.sessionVariables = {
+        STEAM_FORCE_DESKTOPUI_SCALING = "2.0";
+      };
+
       programs = {
         gamescope = {
           enable = true;
