@@ -149,6 +149,7 @@ in
       infra.plymouth
       infra.disko
       infra.gaming
+      infra.networkmanager
 
       infra._1password
       infra.obsidian

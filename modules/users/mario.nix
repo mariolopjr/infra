@@ -34,6 +34,7 @@ in
           infra.cli
           infra.command-not-found
           infra.cooler-control
+          infra.firefox
           infra.fish
           infra.fonts
           infra.git
