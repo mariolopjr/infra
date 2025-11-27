@@ -33,11 +33,13 @@ in
           infra.catppuccin
           infra.cli
           infra.command-not-found
+          infra.cooler-control
           infra.fish
           infra.fonts
           infra.git
           infra.hyprland
           infra.kde # alternative DE while hyprland config comes together
+          infra.lact
           infra.nix
           infra.nix-direnv
           infra.neovim

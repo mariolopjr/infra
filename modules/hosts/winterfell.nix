@@ -37,11 +37,24 @@ in
         boot.kernelPackages = pkgs.linuxPackages_latest;
 
         disko.devices.disk.main = {
-          device = "/dev/nvme0n1";
+          device = "/dev/nvme1n1";
           content.partitions.luks.content = {
             content.subvolumes."/swap".swap.swapfile.size = "16G";
           };
         };
+
+        # TODO: enable and test it works
+        # fileSystems."/mnt/games" = {
+        #   device = "/dev/disk/by-label/games";
+        #   fsType = "btrfs";
+        #   options = [
+        #     "x-initrd.mount"
+        #     "compress=zstd"
+        #     "ssd"
+        #     "noatime"
+        #     "discard=async"
+        #   ];
+        # };
       };
 
     _.common-user-env = common-user-env;
