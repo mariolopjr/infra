@@ -37,7 +37,7 @@ in
         boot.kernelPackages = pkgs.linuxPackages_latest;
 
         disko.devices.disk.main = {
-          device = "/dev/nvme1n1";
+          device = "/dev/nvme0n1";
           content.partitions.luks.content = {
             content.subvolumes."/swap".swap.swapfile.size = "16G";
           };
