@@ -140,7 +140,6 @@ in
       infra.iso
       infra.nvidia
       infra.base
-      infra.gaming
     ];
 
     base.includes = [
@@ -150,6 +149,9 @@ in
       infra.plymouth
       infra.disko
       infra.gaming
+
+      infra._1password
+      infra.obsidian
     ];
   };
 }
