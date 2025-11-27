@@ -43,18 +43,17 @@ in
           };
         };
 
-        # TODO: enable and test it works
-        # fileSystems."/mnt/games" = {
-        #   device = "/dev/disk/by-label/games";
-        #   fsType = "btrfs";
-        #   options = [
-        #     "x-initrd.mount"
-        #     "compress=zstd"
-        #     "ssd"
-        #     "noatime"
-        #     "discard=async"
-        #   ];
-        # };
+        fileSystems."/mnt/games" = {
+          device = "/dev/disk/by-label/games";
+          fsType = "btrfs";
+          options = [
+            "x-initrd.mount"
+            "compress=zstd"
+            "ssd"
+            "noatime"
+            "discard=async"
+          ];
+        };
       };
 
     _.common-user-env = common-user-env;

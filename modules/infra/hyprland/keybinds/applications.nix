@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   infra.hyprland = _: {
     homeManager =
@@ -7,7 +8,8 @@
           bindd =
             let
               # terminal = "ghostty +new-window";
-              terminal = "${lib.getExe pkgs.wezterm}";
+              # terminal = "${lib.getExe pkgs.wezterm}";
+              terminal = "${lib.getExe inputs.ghostty.packages.${pkgs.system}.default} +new-window";
               # TODO: add options to user object
               # if meta.programs.terminal == "ghostty"
               # then "ghostty +new-window"

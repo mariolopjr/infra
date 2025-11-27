@@ -65,6 +65,8 @@
               ll = "ls -l";
               lla = "ls -la";
 
+              infra = "cd ~/Code/infra";
+
               mkdev = {
                 setCursor = "%";
                 expansion = "nix flake new --template $NH_FLAKE#%";

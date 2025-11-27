@@ -16,6 +16,7 @@
             config.animation_fps = 144
             config.max_fps = 144
             config.front_end = "WebGpu"
+            config.enable_wayland = true
 
             -- set theme settings
             config.color_scheme = "Catppuccin Macchiato"

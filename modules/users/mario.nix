@@ -48,7 +48,7 @@ in
           infra.neovim
           infra.ssh
           infra.sops-nix
-          infra.wezterm
+          infra.ghostty
 
           infra.impermanence
         ];

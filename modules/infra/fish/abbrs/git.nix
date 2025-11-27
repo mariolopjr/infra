@@ -22,6 +22,7 @@
         };
 
         shellAbbrs = {
+          gg = "lazygit";
           # git abbreviations
           # credit: jhillyerd, https://github.com/jhillyerd/plugin-git
           g = "git";
