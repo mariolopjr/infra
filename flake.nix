@@ -25,6 +25,14 @@
     disko = {
       url = "github:nix-community/disko";
     };
+    firefox-addons = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    };
     flake-aspects = {
       url = "github:vic/flake-aspects";
     };

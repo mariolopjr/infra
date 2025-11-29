@@ -37,6 +37,7 @@ in
             enableTreesitter = true;
             nix.enable = true;
             rust.enable = true;
+            zig.enable = true;
           };
           lsp = {
             enable = true;

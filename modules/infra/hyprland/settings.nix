@@ -138,7 +138,7 @@
         windowrulev2 = [
           # workspaces
           "workspace 1,class:^(firefox)$"
-          "workspace 2,class:^(*.ghostty)$"
+          "workspace 2,class:^(.*ghostty)$"
           "workspace 3,class:^(plexamp)$"
           "workspace 9,class:^(vescord)$"
           "workspace 8,class:^(obsidian)$"

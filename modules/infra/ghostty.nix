@@ -33,6 +33,7 @@
             # ];
 
             # Look and Feel
+            theme = "catppuccin-macchiato";
             bold-is-bright = true;
             adjust-cursor-thickness = 10;
             adjust-underline-position = 3;

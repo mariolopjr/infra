@@ -52,11 +52,12 @@
                 on-resume = "hyprctl dispatch dpms on";
               }
 
+              # suspend seems to be broken
               # suspend - 30 mins
-              {
-                timeout = 1800;
-                on-timeout = "systemctl suspend";
-              }
+              # {
+              #   timeout = 1800;
+              #   on-timeout = "systemctl suspend";
+              # }
             ];
           };
         };
