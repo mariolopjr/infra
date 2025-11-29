@@ -162,7 +162,7 @@
             * {
               padding: 0;
               margin: 0;
-              min-height: 20px;
+              min-height: 24px;
               border-radius: 0;
               border: none;
               text-shadow: none;
@@ -318,7 +318,7 @@
               background: transparent;
               color: @text;
               border: @surface0;
-              padding: 0 10;
+              padding: 0 10px;
             }
           '';
       };

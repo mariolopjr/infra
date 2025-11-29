@@ -21,6 +21,7 @@
               "$mainMod, B, Open browser, exec, firefox"
               "$mainMod, E, Open terminal terminal file manager, exec, uwsm app -- xdg-terminal-exec yazi"
               "$mainMod SHIFT, E, Open file manager, exec, uwsm app -- nautalus"
+              "$mainMod, S, Open Steam, exec, steam"
               # TODO: install calculator
               # ", XF86Calculator, Open calculator, exec, ${runOnce "gnome-calculator"}"
 

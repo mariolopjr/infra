@@ -142,6 +142,7 @@
           "workspace 3,class:^(plexamp)$"
           "workspace 9,class:^(vescord)$"
           "workspace 8,class:^(obsidian)$"
+          "workspace 10,class:^(steam)$,tag:game"
 
           # games
           "tag +game, initialClass:^(steam_app_\d+)|(cyberpunk2077.exe)$, title:negative:|^(?i)(.*(Launcher).*)$"

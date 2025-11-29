@@ -45,16 +45,6 @@ in
           };
           treesitter.enable = true;
 
-          # Editor enhancements (mini.nvim plugins)
-          mini = {
-            comment.enable = true;
-            hipatterns.enable = true;
-            pairs.enable = true;
-            sessions.enable = true;
-            snippets.enable = true;
-            surround.enable = true;
-          };
-
           ui.noice = {
             enable = true;
             setupOpts.presets = {

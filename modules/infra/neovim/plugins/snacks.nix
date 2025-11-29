@@ -18,10 +18,8 @@ in
                 sections = [
                   { section = "header"; }
                   {
-                    icon = " ";
-                    title = "Keymaps";
                     section = "keys";
-                    indent = 2;
+                    gap = 1;
                     padding = 1;
                   }
                   {
@@ -30,6 +28,7 @@ in
                     section = "projects";
                     indent = 2;
                     padding = 1;
+                    pane = 2;
                   }
                   {
                     icon = " ";
@@ -37,6 +36,7 @@ in
                     section = "recent_files";
                     indent = 2;
                     padding = 1;
+                    pane = 2;
                   }
                   # TODO: recreate snacks startup, with using stats and plugins loaded via nvf
                   # { section = "startup"; }
@@ -125,89 +125,177 @@ in
             };
           };
 
-          keymaps = [
-            (mkKeymap [ "n" "v" ] "<leader>/"
-              # lua
-              ''
-                function() Snacks.picker.grep() end
-              ''
-              {
-                desc = "[/] Grep";
-                lua = true;
-              }
-            )
+          keymaps =
+            let
+              getRootDir =
+                #lua
+                ''
+                  --- Get the root directory using LSP or .git
+                  --- @return string root_dir The root directory
+                  local function get_root_dir()
+                    --- @type string|nil
+                    local lsp_root = vim.lsp.buf.list_workspace_folders()[1]
+                    if lsp_root then
+                      return lsp_root
+                    end
 
-            # git
-            (mkKeymap [ "n" "v" ] "<leader>gg"
-              # lua
-              ''
-                function() Snacks.lazygit() end
-              ''
-              {
-                desc = "[G]it Lazy[G]it";
-                lua = true;
-              }
-            )
+                    -- fallback to searching for .git directory
+                    --- @type string|nil
+                    local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+                    if vim.v.shell_error == 0 and git_root and git_root ~= "" then
+                      return git_root
+                    end
 
-            # file explorer
-            (mkKeymap [ "n" "v" ] "<leader>fe"
-              # lua
-              ''
-                function()
-                  local lsp_root = vim.lsp.buf.list_workspace_folders()[1]
-                  Snacks.explorer({ cwd = lsp_root })
-                end
-              ''
-              {
-                desc = "[F]ile [E]xplorer (root dir)";
-                lua = true;
-              }
-            )
-            (mkKeymap [ "n" "v" ] "<leader>e"
-              # lua
-              ''
-                function()
-                  local lsp_root = vim.lsp.buf.list_workspace_folders()[1]
-                  Snacks.explorer({ cwd = lsp_root })
-                end
-              ''
-              {
-                desc = "[E]xplorer (root dir)";
-                lua = true;
-              }
-            )
-            (mkKeymap [ "n" "v" ] "<leader>fE"
-              # lua
-              ''
-                function() Snacks.explorer() end
-              ''
-              {
-                desc = "[F]ile [󰘶E]xplorer (cwd)";
-                lua = true;
-              }
-            )
-            (mkKeymap [ "n" "v" ] "<leader>E"
-              # lua
-              ''
-                function() Snacks.explorer() end
-              ''
-              {
-                desc = "[󰘶E]xplorer (cwd)";
-                lua = true;
-              }
-            )
+                    -- fallback to current working directory
+                    --- @type string
+                    return vim.fn.getcwd()
+                  end
+                '';
+            in
+            [
+              (mkKeymap [ "n" "v" ] "<leader>/"
+                # lua
+                ''
+                  function() Snacks.picker.grep() end
+                ''
+                {
+                  desc = "[/] Grep";
+                  lua = true;
+                }
+              )
 
-            (mkKeymap [ "n" "v" ] "<leader>ff"
-              # lua
-              ''
-                function() Snacks.picker.files() end
-              ''
-              {
-                desc = "[F]ile [F]ind";
-                lua = true;
-              }
-            )
-          ];
+              # git
+              (mkKeymap [ "n" "v" ] "<leader>gg"
+                # lua
+                ''
+                  function() Snacks.lazygit() end
+                ''
+                {
+                  desc = "[G]it Lazy[G]it";
+                  lua = true;
+                }
+              )
+
+              # file explorer
+              (mkKeymap [ "n" "v" ] "<leader>fe"
+                # lua
+                ''
+                  function()
+                    ${getRootDir}
+                    Snacks.explorer({ cwd = get_root_dir() })
+                  end
+                ''
+                {
+                  desc = "[F]ile [E]xplorer (root dir)";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>e"
+                # lua
+                ''
+                  function()
+                    ${getRootDir}
+                    Snacks.explorer({ cwd = get_root_dir() })
+                  end
+                ''
+                {
+                  desc = "[E]xplorer (root dir)";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>fE"
+                # lua
+                ''
+                  function() Snacks.explorer() end
+                ''
+                {
+                  desc = "[F]ile [󰘶E]xplorer (cwd)";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>E"
+                # lua
+                ''
+                  function() Snacks.explorer() end
+                ''
+                {
+                  desc = "[󰘶E]xplorer (cwd)";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>ff"
+                # lua
+                ''
+                  function() Snacks.picker.files() end
+                ''
+                {
+                  desc = "[F]ile [F]ind";
+                  lua = true;
+                }
+              )
+
+              # lsp
+              (mkKeymap [ "n" "v" ] "gd"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_definitions() end
+                ''
+                {
+                  desc = "[G]oto [D]efinitions";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "gr"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_references() end
+                ''
+                {
+                  desc = "[G]oto [R]eferences";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "gI"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_implementations() end
+                ''
+                {
+                  desc = "[G]oto [I]mplementation";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "gy"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_type_definitions() end
+                ''
+                {
+                  desc = "[G]oto T[y]pe Definitions";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>ss"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_symbols() end
+                ''
+                {
+                  desc = "[S]earch [S]ymbols";
+                  lua = true;
+                }
+              )
+              (mkKeymap [ "n" "v" ] "<leader>sS"
+                # lua
+                ''
+                  function() Snacks.picker.lsp_references() end
+                ''
+                {
+                  desc = "[S]earch Reference[S]";
+                  lua = true;
+                }
+              )
+            ];
         };
       };
     };

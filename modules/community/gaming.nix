@@ -77,7 +77,7 @@
           # and stick them here.
           package = pkgs.steam.override {
             extraEnv = {
-              MANGOHUD = true;
+              # MANGOHUD = true;
               SDL_VIDEODRIVER = "x11";
             };
 
@@ -88,7 +88,7 @@
 
             extraPkgs =
               p: with p; [
-                mangohud
+                # mangohud
                 gamemode
               ];
           };
