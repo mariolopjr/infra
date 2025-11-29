@@ -61,11 +61,16 @@
 
               ".local/share/direnv"
               # { directory = ".local/share/keyrings"; mode = "0700"; }
-              ".local/share/Steam"
               ".local/share/nvf"
 
               ".mozilla"
               ".cache/mozilla"
+
+              # games
+              ".steam"
+              ".local/share/Steam"
+              ".factorio"
+              ".config/StardewValley"
             ];
 
             # TODO: fish history, what about fish autocomplete and plugin data?

@@ -4,6 +4,7 @@
     darwin = { };
     nixos = { };
     includes = [
+      infra.audio
       infra.bootable
       infra.documentation
       infra.hw-detect
