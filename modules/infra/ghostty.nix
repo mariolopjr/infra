@@ -14,25 +14,26 @@
 
           settings = {
             # Font
-            font-family = "Monaspace Neon";
-            font-size = 14;
+            font-family = "JetBrainsMono";
+            font-size = 13;
             font-thicken = true;
-            font-feature = [
-              "calt" # variable width / texture healing
-              "ss01" # equals ligatures: ==
-              # "ss02", # less/greater than ligatures: <=
-              "ss03" # arrow ligatures: ->
-              "ss04" # markup ligatures: </
-              "ss05" # F# ligatures: |>
-              "ss06" # repeating character ligatures: ###
-              "ss07" # colon ligatures: ::
-              "ss08" # period ligatures: ..=
-              "ss09" # less/greater than ligatures with other characters: =<<
-              "ss10" # other tag ligatures: #[
-              "liga" # dynamic spacing for repeating char patterns
-            ];
+            # font-feature = [
+            #   "calt" # variable width / texture healing
+            #   "ss01" # equals ligatures: ==
+            #   # "ss02", # less/greater than ligatures: <=
+            #   "ss03" # arrow ligatures: ->
+            #   "ss04" # markup ligatures: </
+            #   "ss05" # F# ligatures: |>
+            #   "ss06" # repeating character ligatures: ###
+            #   "ss07" # colon ligatures: ::
+            #   "ss08" # period ligatures: ..=
+            #   "ss09" # less/greater than ligatures with other characters: =<<
+            #   "ss10" # other tag ligatures: #[
+            #   "liga" # dynamic spacing for repeating char patterns
+            # ];
 
             # Look and Feel
+            theme = "catppuccin-macchiato";
             bold-is-bright = true;
             adjust-cursor-thickness = 10;
             adjust-underline-position = 3;
@@ -69,6 +70,7 @@
 
               # other
               "super+alt+enter=new_split:auto"
+              "super+k=clear_screen"
               "global:ctrl+`=toggle_quick_terminal"
             ];
           };

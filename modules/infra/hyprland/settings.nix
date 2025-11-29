@@ -3,18 +3,16 @@
     homeManager = {
       wayland.windowManager.hyprland.settings = {
         monitor = [
-          ",preferred,auto,auto"
+          ",highres,auto,1.5"
         ];
-
-        # workspace = [
-        #   "1, monitor:eDP-1, default:true"
-        # ];
 
         "$mainMod" = "SUPER";
 
+        "$resetSubmap" = "hyprctl dispatch submap reset";
+
+        # migrate these to systemd
         exec-once = [
-          # finalize startup
-          "uwsm finalize"
+          "waybar &"
           # mute volume on login
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
         ];
@@ -132,6 +130,32 @@
         ecosystem = {
           no_update_news = true;
         };
+
+        xwayland = {
+          force_zero_scaling = true;
+        };
+
+        windowrulev2 = [
+          # workspaces
+          "workspace 1,class:^(firefox)$"
+          "workspace 2,class:^(.*ghostty)$"
+          "workspace 3,class:^(plexamp)$"
+          "workspace 9,class:^(vescord)$"
+          "workspace 8,class:^(obsidian)$"
+          "workspace 10,class:^(steam)$,tag:game"
+
+          # games
+          "tag +game, initialClass:^(steam_app_\d+)|(cyberpunk2077.exe)$, title:negative:|^(?i)(.*(Launcher).*)$"
+          "fullscreen, tag:game"
+          "immediate, tag:game"
+
+          # floats
+          "float,class:^(1Password)$"
+        ];
+
+        # workspace = [
+        #   "1, , default:true"
+        # ];
       };
     };
   };
