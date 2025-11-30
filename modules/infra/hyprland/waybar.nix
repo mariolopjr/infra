@@ -39,6 +39,7 @@
               #"custom/memory"
               "pulseaudio"
               "battery"
+              "idle_inhibitor"
             ];
 
             # tweak scripts
@@ -60,12 +61,14 @@
               format-icons = {
                 "1" = "<span>󰈹</span>";
                 "2" = "<span></span>";
-                "3" = "<span></span>";
+                "3" = "<span>󰚺</span>";
                 "4" = "<span></span>";
                 "5" = "<span></span>";
                 "6" = "<span>󰭛</span>";
                 "7" = "<span>󱓷</span>";
-                "8" = "<span>󰚀</span>";
+                "8" = "<span>󰚸</span>";
+                "9" = "<span>󰚀</span>";
+                "10" = "<span>󰓓</span>";
               };
             };
 
@@ -79,11 +82,11 @@
 
             tray = {
               icon-size = "16px";
-              spacing = "8px";
+              spacing = "24px";
             };
 
             "hyprland/submap" = {
-              format = " {}";
+              format = "  {}";
               max-length = "50";
             };
 
@@ -142,16 +145,25 @@
             };
 
             pulseaudio = {
-              # scroll-step = 1; # %, can be a float
+              scroll-step = 5.0;
               format = "<span color='#202020' bgcolor='#83a598' >  </span> {volume}%";
               format-muted = "<span color='#202020' bgcolor='#ea6962' >  </span> {volume}%";
               format-bluetooth = "<span color='#202020' bgcolor='#83a598' > 󰂰 </span> {volume}%";
               format-bluetooth-muted = "<span color='#202020' bgcolor='#ea6962' > 󰂲 </span> {volume}%";
               format-source = "{volume}% ";
-              on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-              on-click-right = "blueman-manager";
+              on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              # on-click-right = "blueman-manager"; # TODO: add bluetui and
+              # spawn in floating terminal window
               tooltip = false;
-              max-volume = 130;
+              max-volume = 100;
+            };
+
+            idle_inhibitor = {
+              format = "{icon}";
+              format-icons = {
+                activated = "";
+                deactivated = "";
+              };
             };
           };
         };
@@ -165,17 +177,17 @@
               min-height: 24px;
               border-radius: 0;
               border: none;
+              color: @text;
               text-shadow: none;
               transition: none;
               box-shadow: none;
             }
 
             #window {
-              border: 3px solid #d3869b;
+              border: 3px solid @mauve;
             }
 
             window#waybar {
-              color: #ebdbb2;
               background: none;
               font-family: Jetbrains Mono;
               font-size: 16px;
@@ -202,25 +214,30 @@
             #battery.critical,
             #battery.warning,
             #network,
-            #clock {
-              padding: 0 2px;
+            #clock,
+            #idle_inhibitor {
+              padding-right: 6px;
             }
 
             #custom-nixos {
+              color: @blue;
               padding: 0 8px;
             }
 
             #custom-rofi {
-              color: #83a598;
-              border: 3px solid #83a598;
+              color: @subtext1;
+              border: 3px solid @surface0;
               padding: 0 8px;
             }
 
-            #workspaces button {
-              color: #fff4d2;
-              border: 3px solid #fff4d2;
-              /* margin-right: 5px; */
+             #workspaces button {
+              border: 3px solid @green;
+              margin-right: 4px;
               padding: 0 8px;
+            }
+
+             #workspaces button label {
+              color: @green;
             }
 
             /* #workspaces button:last-child {
@@ -228,21 +245,35 @@
             } */
 
             #workspaces button:hover {
-              color: #d3869b;
-              border: 3px solid #d3869b;
+              border: 3px solid @teal;
+            }
+            #workspaces button:hover label {
+              color: @teal;
             }
 
             #workspaces button.visible,
             #workspaces button.visible:hover,
             #workspaces button.active,
             #workspaces button.active:hover {
-              color: #8ec07c;
-              border: 3px solid #8ec07c;
+              border: 3px solid @sky;
+            }
+
+            #workspaces button.visible label,
+            #workspaces button.visible:hover label,
+            #workspaces button.active label,
+            #workspaces button.active:hover label {
+              color: @sky;
+            }
+
+            #workspaces button:hover,
+            #workspaces button.visible:hover,
+            #workspaces button.active:hover {
+              background: @lavendar;
             }
 
             #workspaces button.urgent {
-              color: #ea6962;
-              border: 3px solid #ea6962;
+              color: @red;
+              border: 3px solid @red;
             }
 
             #window {
@@ -250,7 +281,6 @@
             }
 
             #tray {
-              background: #222222;
               border: 3px solid #e78a4e;
               padding: 0 8px;
             }
@@ -313,10 +343,14 @@
               border: 3px solid #d3869b;
             }
 
+            #idle_inhibitor {
+              border: 3px solid #d3869b;
+            }
+
             #mode,
             #submap {
               background: transparent;
-              color: @text;
+              color: @subtext1;
               border: @surface0;
               padding: 0 10px;
             }
