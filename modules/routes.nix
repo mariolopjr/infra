@@ -12,6 +12,10 @@
     url = "github:nix-darwin/nix-darwin/master";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  flake-file.inputs.nur = {
+    url = "github:nix-community/NUR";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   # install profiles as parametric aspects on all hosts/users
   den.default.host._.host.includes = [

@@ -143,6 +143,14 @@
     nixpkgs-lib = {
       follows = "nixpkgs";
     };
+    nur = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/NUR";
+    };
     nvf = {
       url = "github:notashelf/nvf";
     };

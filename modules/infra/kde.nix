@@ -45,12 +45,11 @@
           overrideConfig = true;
 
           workspace = {
-            colorScheme = "CatppuccinMacchiatoSapphire";
+            colorScheme = "BreezeDark";
             cursor = {
-              theme = "catppuccin-macchiato-dark-cursors";
               size = 24;
             };
-            iconTheme = "Papirus-Dark";
+            iconTheme = "Breeze-Dark";
             lookAndFeel = "org.kde.breezedark.desktop";
             # wallpaper = "";
           };
@@ -62,8 +61,7 @@
             {
               name = "Launch Ghostty";
               key = "Meta+Enter";
-              # command = "${terminal}";
-              command = "ghostty +new-window";
+              command = "${terminal}";
             };
 
           kwin = {
@@ -109,6 +107,8 @@
               value = 4;
               immutable = true;
             };
+
+            kspashrc.KSplash.Theme = "org.kde.breeze.desktop";
           };
         };
       };

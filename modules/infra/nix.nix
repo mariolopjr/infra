@@ -6,9 +6,12 @@
     nixos = {
       imports = [
         inputs.determinate.nixosModules.default
+        inputs.nur.modules.nixos.default
       ];
 
+      # TODO: only allow specific packages
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.allowUnfreePredicate = (_: true);
 
       home-manager = {
         useGlobalPkgs = true;
