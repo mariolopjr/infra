@@ -1,7 +1,7 @@
 {
   infra.firefox = _: {
     homeManager =
-      { pkgs, lib, ... }:
+      { pkgs, ... }:
       {
         programs.firefox = {
           enable = true;
