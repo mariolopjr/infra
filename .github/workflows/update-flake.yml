@@ -32,7 +32,7 @@ jobs:
           purge-last-accessed: 0
           purge-primary-key: never
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v27
+        uses: DeterminateSystems/update-flake-lock@v28
         id: update
         with:
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
