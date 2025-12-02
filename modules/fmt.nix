@@ -19,6 +19,7 @@
           shellcheck.enable = true;
           shfmt.enable = true;
           yamlfmt.enable = true;
+          zig.enable = true;
         };
         settings.on-unmatched = "fatal";
         settings.global.excludes = [

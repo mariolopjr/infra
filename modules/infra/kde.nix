@@ -22,6 +22,7 @@
           kdePackages.kcalc
           kdePackages.kcharselect
           kdePackages.kcolorchooser
+          kdePackages.ksshaskpass
           kdePackages.isoimagewriter
           kdePackages.partitionmanager
           wl-clipboard
