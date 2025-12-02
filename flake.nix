@@ -146,6 +146,17 @@
     nvf = {
       url = "github:notashelf/nvf";
     };
+    plasma-manager = {
+      inputs = {
+        home-manager = {
+          follows = "home-manager";
+        };
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/plasma-manager";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
     };

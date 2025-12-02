@@ -135,22 +135,21 @@
           force_zero_scaling = true;
         };
 
-        windowrulev2 = [
+        windowrule = [
           # workspaces
-          "workspace 1,class:^(firefox)$"
-          "workspace 2,class:^(.*ghostty)$"
-          "workspace 3,class:^(plexamp)$"
-          "workspace 9,class:^(vescord)$"
-          "workspace 8,class:^(obsidian)$"
-          "workspace 10,class:^(steam)$,tag:game"
+          "workspace 1, match:class firefox"
+          "workspace 2, match:class ^(.*ghostty)"
+          "workspace 3, match:class plexamp"
+          "workspace 9, match:class vescord"
+          "workspace 8, match:class obsidian"
+          "workspace 10, match:class steam, match:tag game"
 
           # games
-          "tag +game, initialClass:^(steam_app_\d+)|(cyberpunk2077.exe)$, title:negative:|^(?i)(.*(Launcher).*)$"
-          "fullscreen, tag:game"
-          "immediate, tag:game"
+          "match:initial_class ^(steam_app_\d+)|(cyberpunk2077.exe)$ tag +game"
+          "match:tag game fullscreen immediate"
 
           # floats
-          "float,class:^(1Password)$"
+          "match:class 1password float"
         ];
 
         # workspace = [

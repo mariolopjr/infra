@@ -40,7 +40,7 @@ in
           infra.fish
           infra.fonts
           infra.git
-          infra.hyprland
+          infra.kde
           infra.lact
           infra.nix
           infra.nix-direnv

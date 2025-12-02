@@ -40,7 +40,7 @@
             -- auto-load session on startup if it exists
             vim.api.nvim_create_autocmd("VimEnter", {
               callback = function()
-                local session_file = vim.fn.getcwd() .. sessions.config.file
+                local session_file = vim.fn.getcwd() .. "/" .. sessions.config.file
                 if vim.fn.filereadable(session_file) == 1 then
                   sessions.read(sessions.config.file)
                 end

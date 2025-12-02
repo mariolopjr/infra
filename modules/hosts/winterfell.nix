@@ -34,7 +34,7 @@ in
     nixos =
       { pkgs, ... }:
       {
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = pkgs.linuxPackages_zen;
 
         disko.devices.disk.main = {
           device = "/dev/nvme0n1";

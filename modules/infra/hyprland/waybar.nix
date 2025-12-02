@@ -34,9 +34,6 @@
               "cpu"
               "temperature"
               "memory"
-              #"custom/cpu_temp"
-              #"backlight"
-              #"custom/memory"
               "pulseaudio"
               "battery"
               "idle_inhibitor"
@@ -268,7 +265,7 @@
             #workspaces button:hover,
             #workspaces button.visible:hover,
             #workspaces button.active:hover {
-              background: @lavendar;
+              background: @lavender;
             }
 
             #workspaces button.urgent {

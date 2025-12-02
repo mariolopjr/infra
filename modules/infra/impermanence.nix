@@ -71,6 +71,8 @@
               ".local/share/Steam"
               ".factorio"
               ".config/StardewValley"
+              ".local/share/Larian Studios"
+              ".local/state/Larian Studios"
             ];
 
             # TODO: fish history, what about fish autocomplete and plugin data?
