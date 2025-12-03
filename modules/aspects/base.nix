@@ -11,6 +11,7 @@
       infra.mutable-users
       infra.substituters
       infra.sudo
+      infra.timezone
       infra.warn-dirty
     ];
   };

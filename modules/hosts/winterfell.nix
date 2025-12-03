@@ -35,6 +35,9 @@ in
       { pkgs, ... }:
       {
         boot.kernelPackages = pkgs.linuxPackages_zen;
+        services.system76-scheduler = {
+          enable = true;
+        };
 
         disko.devices.disk.main = {
           device = "/dev/nvme0n1";

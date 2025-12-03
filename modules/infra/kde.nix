@@ -50,7 +50,7 @@
             cursor = {
               size = 24;
             };
-            iconTheme = "Breeze-Dark";
+            iconTheme = "breeze-dark";
             lookAndFeel = "org.kde.breezedark.desktop";
             # wallpaper = "";
           };
@@ -68,8 +68,6 @@
           kwin = {
             edgeBarrier = 0;
             cornerBarrier = false;
-
-            scripts.polonium.enable = true;
           };
 
           krunner = {
@@ -109,7 +107,7 @@
               immutable = true;
             };
 
-            kspashrc.KSplash.Theme = "org.kde.breeze.desktop";
+            ksplashrc.KSplash.Theme = "org.kde.breeze.desktop";
           };
         };
       };
