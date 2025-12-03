@@ -45,15 +45,6 @@ in
           };
           treesitter.enable = true;
 
-          ui.noice = {
-            enable = true;
-            setupOpts.presets = {
-              bottom_search = true;
-              command_palette = true;
-              long_message_to_split = true;
-            };
-          };
-
           keymaps = [
             (mkKeymap "n" "<leader>fn" "<cmd>enew<CR>" { desc = "[F]ile [N]ew"; })
             (mkKeymap [ "n" "v" ] "<leader>fs" ":w<CR>" {
