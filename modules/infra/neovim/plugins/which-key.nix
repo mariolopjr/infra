@@ -22,6 +22,8 @@
               spec = [
                 (wkGroup "<leader>f" "[F]iles")
                 (wkGroup "<leader>g" "[G]it")
+                (wkGroup "<leader>l" "[L]SP")
+                (wkGroup "<leader>s" "[S]earch")
                 #    {
                 #        { "<Tab>", proxy = "<C-w>", group = "windows" },
                 #        { "gr", group = "lsp", icon = { icon = "", color = "orange" } },
