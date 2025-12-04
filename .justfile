@@ -65,6 +65,13 @@ iso *args:
 find-non-persisted-files:
     ./scripts/find-non-persisted-files.sh
 
+[group("local")]
+nvf-print-config:
+    nvf-print-config | bat --language=lua
+
+# nix flake update nixpkgs
+# nix flake update
+
 # ---------- machine ---------- #
 [group("machine")]
 [linux]

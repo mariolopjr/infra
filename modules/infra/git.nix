@@ -38,7 +38,7 @@ in
 
           settings = {
             user.name = "Mario";
-            user.email = "mariolopjr@users.noreply.github.com";
+            user.email = "mariolopjr@noreply.codeberg.org";
             user.signingkey = "~/.ssh/id_ed25519.pub";
 
             gpg.format = "ssh";

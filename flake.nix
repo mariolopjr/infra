@@ -23,6 +23,11 @@
       url = "github:vic/den";
     };
     determinate = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     };
     disko = {

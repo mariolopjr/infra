@@ -20,18 +20,10 @@
             setupOpts = {
               preset = "helix";
               spec = [
-                (wkGroup "<leader>f" "[F]iles")
-                (wkGroup "<leader>g" "[G]it")
-                (wkGroup "<leader>l" "[L]SP")
-                (wkGroup "<leader>s" "[S]earch")
-                (wkGroup "<leader><leader>" "[ ] Hop")
-                #    {
-                #        { "<Tab>", proxy = "<C-w>", group = "windows" },
-                #        { "gr", group = "lsp", icon = { icon = "", color = "orange" } },
-                #        { "grf", vim.lsp.buf.format, desc = "vim.lsp.buf.format()" },
-                #        { "grd", vim.lsp.buf.definition, desc = "vim.lsp.buf.definition()" },
-                #        { "grn", vim.lsp.buf.rename, desc = "vim.lsp.buf.rename()" }
-                #    }
+                (wkGroup "<leader>f" "files")
+                (wkGroup "<leader>g" "git")
+                (wkGroup "<leader>l" "lsp")
+                (wkGroup "<leader>s" "search")
               ];
             };
           };

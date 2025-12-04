@@ -3,8 +3,9 @@
     homeManager =
       { pkgs, ... }:
       {
+        programs.bat.enable = true; # cat
+
         home.packages = [
-          pkgs.bat # cat
           pkgs.bottom
           pkgs.curl
           pkgs.devenv

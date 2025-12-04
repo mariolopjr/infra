@@ -67,6 +67,8 @@
 
               infra = "cd ~/Code/infra";
 
+              mf = "microfetch";
+
               mkdev = {
                 setCursor = "%";
                 expansion = "nix flake new --template $NH_FLAKE#%";
