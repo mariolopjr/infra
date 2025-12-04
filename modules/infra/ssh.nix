@@ -18,7 +18,7 @@
         enable = true;
         enableDefaultConfig = false;
 
-        # TODO: add servers that have wezterm/ghostty TERM support
+        # TODO: add servers that have ghostty TERM support
         matchBlocks."*" = {
           forwardAgent = false;
           addKeysToAgent = "yes";
