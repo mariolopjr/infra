@@ -23,7 +23,20 @@
 
           snippets.enable = true;
           statusline.enable = true;
-          surround.enable = true;
+          surround = {
+            enable = true;
+
+            setupOpts = {
+              mappings = {
+                add = "<leader>ta";
+                delete = "<leader>td";
+                find = "<leader>tf";
+                find_left = "<leader>tF";
+                highlight = "<leader>th";
+                replace = "<leader>tr";
+              };
+            };
+          };
         };
 
         luaConfigRC.mini-autocommand =

@@ -52,8 +52,8 @@ in
             # time taken to write to swap in ms when no typing occurs
             updatetime = 500;
 
-            # time for which-key to display
-            timeoutlen = 300;
+            timeoutlen = 400;
+            ttimeoutlen = 10;
 
             # splits
             splitright = true;

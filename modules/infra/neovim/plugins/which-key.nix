@@ -20,10 +20,12 @@
             setupOpts = {
               preset = "helix";
               spec = [
+                (wkGroup "<leader>d" "debug")
                 (wkGroup "<leader>f" "files")
                 (wkGroup "<leader>g" "git")
                 (wkGroup "<leader>l" "lsp")
                 (wkGroup "<leader>s" "search")
+                (wkGroup "<leader>t" "text")
               ];
             };
           };

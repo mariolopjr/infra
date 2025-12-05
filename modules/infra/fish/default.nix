@@ -38,6 +38,8 @@
 
                 set -gx EDITOR nvim
                 set -gx VISUAL nvim
+
+                set fish_escape_delay_ms 10
               '';
 
             plugins =
@@ -64,8 +66,6 @@
               la = "ls -a";
               ll = "ls -l";
               lla = "ls -la";
-
-              infra = "cd ~/Code/infra";
 
               mf = "microfetch";
 

@@ -39,6 +39,7 @@ in
           infra.firefox
           infra.fish
           infra.fonts
+          infra.ghostty
           infra.git
           infra.kde
           infra.lact
@@ -47,7 +48,7 @@ in
           infra.neovim
           infra.ssh
           infra.sops-nix
-          infra.ghostty
+          infra.tmux
 
           infra.impermanence
         ];

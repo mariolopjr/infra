@@ -3,7 +3,7 @@
     homeManager.programs.nvf = {
       settings.vim = {
         utility.smart-splits = {
-          enable = false;
+          enable = true;
         };
       };
     };

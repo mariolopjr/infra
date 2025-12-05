@@ -48,28 +48,14 @@
             quit-after-last-window-closed-delay = "5m";
 
             # Other
+            # TODO: use getExe here
             command = "${pkgs.fish}/bin/fish -l";
             copy-on-select = true;
             auto-update = "off";
 
             # Key bindings
             keybind = [
-              # splits
-              "ctrl+h=goto_split:left"
-              "ctrl+j=goto_split:bottom"
-              "ctrl+k=goto_split:top"
-              "ctrl+l=goto_split:right"
-              "ctrl+shift+h=new_split:left"
-              "ctrl+shift+j=new_split:down"
-              "ctrl+shift+k=new_split:up"
-              "ctrl+shift+l=new_split:right"
-              "ctrl+alt+h=resize_split:left,30"
-              "ctrl+alt+j=resize_split:down,30"
-              "ctrl+alt+k=resize_split:up,30"
-              "ctrl+alt+l=resize_split:right,30"
-
               # other
-              "super+alt+enter=new_split:auto"
               "super+k=clear_screen"
               "global:ctrl+`=toggle_quick_terminal"
             ];
