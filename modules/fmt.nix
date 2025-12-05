@@ -1,6 +1,9 @@
 { inputs, ... }:
 {
-  flake-file.inputs.treefmt-nix.url = "github:numtide/treefmt-nix";
+  flake-file.inputs.treefmt-nix = {
+    url = "github:numtide/treefmt-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   imports = [ inputs.treefmt-nix.flakeModule ];
 
@@ -14,9 +17,18 @@
           deadnix.enable = true;
           nixf-diagnose.enable = true;
 
+          isort.enable = true;
           just.enable = true;
+          mdformat.enable = true;
           prettier.enable = true;
+          python.enable = true;
+          ruff-format = true;
+          rust.enable = true;
+          shellcheck.enable = true;
+          shfmt.enable = true;
+          stylua.enable = true;
           yamlfmt.enable = true;
+          zig.enable = true;
         };
         settings.on-unmatched = "fatal";
         settings.global.excludes = [
