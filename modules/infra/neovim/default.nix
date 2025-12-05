@@ -202,6 +202,33 @@ in
                 lua = true;
               }
             )
+
+            (mkKeymap [ "n" ] "<leader>ll" "<cmd>checkhealth vim.lsp<CR>" {
+              desc = "check lsp health";
+            })
+
+            # tabs
+            (mkKeymap [ "n" ] "<leader><tab><tab>" "<cmd>tabnew<CR>" {
+              desc = "new tab";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>f" "<cmd>tabfirst<CR>" {
+              desc = "first tab";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>l" "<cmd>tablast<CR>" {
+              desc = "last tab";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>o" "<cmd>tabonly<CR>" {
+              desc = "close other tabs";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>d" "<cmd>tabclose<CR>" {
+              desc = "close tab";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>]" "<cmd>tabnext<CR>" {
+              desc = "next tab";
+            })
+            (mkKeymap [ "n" ] "<leader><tab>[" "<cmd>tabprevious<CR>" {
+              desc = "previous tab";
+            })
           ];
         };
       };

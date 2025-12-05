@@ -465,7 +465,7 @@ in
                 function() Snacks.picker.grep_buffers() end
               ''
               {
-                desc = "grep open buffer";
+                desc = "grep search open buffer";
                 lua = true;
               }
             )

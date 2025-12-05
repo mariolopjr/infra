@@ -55,6 +55,8 @@
 
             # Key bindings
             keybind = [
+              "ctrl+equal=unbind"
+              "ctrl+-=unbind"
               # other
               "super+k=clear_screen"
               "global:ctrl+`=toggle_quick_terminal"

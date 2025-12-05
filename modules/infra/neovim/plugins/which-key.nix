@@ -26,6 +26,7 @@
                 (wkGroup "<leader>l" "lsp")
                 (wkGroup "<leader>s" "search")
                 (wkGroup "<leader>t" "text")
+                (wkGroup "<leader><tab>" "tabs")
               ];
             };
           };
