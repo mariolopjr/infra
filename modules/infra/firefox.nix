@@ -49,38 +49,41 @@
               force = true;
 
               settings = {
-                "ublock0@raymondhill.net".settings = {
-                  privateAllowed = true;
+                "ublock0@raymondhill.net" = {
                   settings = {
-                    selectedFilterLists = [
-                      "user-filters"
-                      "ublock-filters"
-                      "ublock-badware"
-                      "ublock-privacy"
-                      "ublock-unbreak"
-                      "ublock-quick-fixes"
-                      "easylist"
-                      "easyprivacy"
-                      "urlhaus-1"
-                      "plowe-0"
+                    force = true;
+                    permissions = [
+                      "alarms"
+                      "dns"
+                      "menus"
+                      "privacy"
+                      "storage"
+                      "tabs"
+                      "unlimitedStorage"
+                      "webNavigation"
+                      "webRequest"
+                      "webRequestBlocking"
+                      "<all_urls>"
+                      "http://*/*"
+                      "https://*/*"
+                      "file://*/*"
                     ];
+                    settings = {
+                      privateAllowed = true;
+                      selectedFilterLists = [
+                        "user-filters"
+                        "ublock-filters"
+                        "ublock-badware"
+                        "ublock-privacy"
+                        "ublock-unbreak"
+                        "ublock-quick-fixes"
+                        "easylist"
+                        "easyprivacy"
+                        "urlhaus-1"
+                        "plowe-0"
+                      ];
+                    };
                   };
-                  permissions = [
-                    "alarms"
-                    "dns"
-                    "menus"
-                    "privacy"
-                    "storage"
-                    "tabs"
-                    "unlimitedStorage"
-                    "webNavigation"
-                    "webRequest"
-                    "webRequestBlocking"
-                    "<all_urls>"
-                    "http://*/*"
-                    "https://*/*"
-                    "file://*/*"
-                  ];
                 };
               };
             };
@@ -92,6 +95,8 @@
               "extensions.update.enabled" = false;
 
               "signon.rememberSignons" = false; # Disable login manager
+
+              "media.ffmpeg.vaapi.enabled" = true;
 
               # Disable address and credit card manager
               "extensions.formautofill.addresses.enabled" = false;
@@ -118,6 +123,20 @@
               "browser.tabs.closeWindowWithLastTab" = false;
 
               "browser.toolbarbuttons.introduced.sidebar-button" = false;
+
+              # disable pocket
+              "extensions.pocket.enabled" = false;
+              "extensions.pocket.api" = "0.0.0.0";
+              "extensions.pocket.loggedOutVariant" = "";
+              "extensions.pocket.oAuthConsumerKey" = "";
+              "extensions.pocket.onSaveRecs" = false;
+              "extensions.pocket.onSaveRecs.locales" = "";
+              "extensions.pocket.showHome" = false;
+              "extensions.pocket.site" = "0.0.0.0";
+              "browser.newtabpage.activity-stream.pocketCta" = "";
+              "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+              "services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket" =
+                false;
             };
 
             search = {

@@ -48,6 +48,11 @@
             setw -g monitor-activity off
             set -g bell-action none
 
+            # clear it all
+            # TODO: figure out how to actually send Super-k to terminal
+            # bind k send-keys -R \; send-keys Super-k \; clear-history
+            bind k send-keys -R \; clear-history \; send-keys Enter
+
             # statusline
             set-option -g status-position top
             set -g status-left '#[fg=#{@thm_crust},bg=#{@thm_teal}] #S '

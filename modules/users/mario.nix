@@ -41,6 +41,7 @@ in
           infra.fonts
           infra.ghostty
           infra.git
+          infra.gui
           infra.kde
           infra.lact
           infra.nix

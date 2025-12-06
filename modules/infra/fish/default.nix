@@ -67,6 +67,8 @@
               ll = "ls -l";
               lla = "ls -la";
 
+              infra = "cd ~/Code/infra";
+
               mf = "microfetch";
 
               mkdev = {

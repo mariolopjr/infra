@@ -63,6 +63,8 @@
               # { directory = ".local/share/keyrings"; mode = "0700"; }
               ".local/share/nvf"
 
+              ".config/1Password"
+
               ".mozilla"
               ".cache/mozilla"
 

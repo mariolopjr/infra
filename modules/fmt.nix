@@ -21,9 +21,8 @@
           just.enable = true;
           mdformat.enable = true;
           prettier.enable = true;
-          python.enable = true;
-          ruff-format = true;
-          rust.enable = true;
+          ruff-format.enable = true;
+          rustfmt.enable = true;
           shellcheck.enable = true;
           shfmt.enable = true;
           stylua.enable = true;
