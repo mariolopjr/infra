@@ -137,6 +137,9 @@
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
     };
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+    };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };

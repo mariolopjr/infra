@@ -45,6 +45,7 @@ in
           infra.kde
           infra.lact
           infra.nix
+          infra.nixcord
           infra.nix-direnv
           infra.neovim
           infra.ssh

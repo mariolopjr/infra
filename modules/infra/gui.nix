@@ -5,6 +5,7 @@
       {
         home.packages = [
           pkgs.gnucash
+          pkgs.plexamp
         ];
       };
   };

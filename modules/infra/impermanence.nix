@@ -57,7 +57,7 @@
               }
               # { directory = ".nixops"; mode = "0700"; }
 
-              # ".config/discord"
+              ".config/vesktop/sessionData"
 
               ".local/share/direnv"
               # { directory = ".local/share/keyrings"; mode = "0700"; }
