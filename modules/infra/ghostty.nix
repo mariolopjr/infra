@@ -1,7 +1,8 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
-    ghostty.url = "github:ghostty-org/ghostty";
+  flake-file.inputs.ghostty = {
+    url = "github:ghostty-org/ghostty";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   infra.ghostty = _: {

@@ -22,15 +22,12 @@
     den = {
       url = "github:vic/den";
     };
-    determinate = {
+    disko = {
       inputs = {
         nixpkgs = {
           follows = "nixpkgs";
         };
       };
-      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    };
-    disko = {
       url = "github:nix-community/disko";
     };
     flake-aspects = {
@@ -48,6 +45,11 @@
       url = "github:hercules-ci/flake-parts";
     };
     ghostty = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "github:ghostty-org/ghostty";
     };
     home-manager = {
@@ -135,6 +137,11 @@
       url = "github:fzakaria/nix-auto-follow";
     };
     nix-index-database = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "github:nix-community/nix-index-database";
     };
     nixcord = {

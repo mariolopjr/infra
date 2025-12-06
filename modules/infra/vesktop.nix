@@ -6,7 +6,7 @@
 
   infra.nixcord = _: {
     homeManager =
-      { pkgs, ... }:
+      { ... }:
       {
         imports = [ inputs.nixcord.homeModules.nixcord ];
 
