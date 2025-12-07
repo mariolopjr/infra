@@ -10,6 +10,12 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.allowUnfreePredicate = (_: true);
 
+      nix.settings.experimental-features = [
+        "flakes"
+        "nix-command"
+        "pipe-operators"
+      ];
+
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
