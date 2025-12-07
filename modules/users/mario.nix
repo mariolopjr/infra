@@ -51,6 +51,7 @@ in
           infra.ssh
           infra.sops-nix
           infra.tmux
+          infra.virtualization
 
           infra.impermanence
         ];

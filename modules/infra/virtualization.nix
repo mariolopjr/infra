@@ -3,7 +3,7 @@
     { user, ... }:
     {
       nixos =
-        { pkgs, lib, ... }:
+        { pkgs, ... }:
         {
           programs.virt-manager.enable = true;
 
@@ -16,7 +16,6 @@
             # Enable TPM emulation (for Windows 11)
             qemu = {
               swtpm.enable = true;
-              ovmf.packages = [ pkgs.OVMFFull.fd ];
             };
           };
           virtualisation.spiceUSBRedirection.enable = true;
@@ -30,8 +29,8 @@
             serviceConfig = {
               Type = "oneshot";
               RemainAfterExit = true;
-              ExecStart = "${lib.getExe pkgs.libvirt} net-start default";
-              ExecStop = "${lib.getExe pkgs.libvirt} net-destroy default";
+              ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
+              ExecStop = "${pkgs.libvirt}/bin/virsh net-destroy default";
               User = "root";
             };
           };
