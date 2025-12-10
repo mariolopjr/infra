@@ -90,6 +90,7 @@ in
             # lang support
             languages = {
               enableTreesitter = true;
+              go.enable = true;
               nix.enable = true;
               rust.enable = true;
               zig.enable = true;

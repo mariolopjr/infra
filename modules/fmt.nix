@@ -17,6 +17,8 @@
           deadnix.enable = true;
           nixf-diagnose.enable = true;
 
+          gofmt.enable = true;
+          golangci-lint.enable = true;
           isort.enable = true;
           just.enable = true;
           mdformat.enable = true;
