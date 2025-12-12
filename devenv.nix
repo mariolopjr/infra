@@ -5,7 +5,6 @@
 {
   packages = [
     pkgs.age
-    pkgs.alejandra
     pkgs.just
     pkgs.nixd
     pkgs.nh

@@ -40,6 +40,7 @@
             unbind %
 
             set-option -g allow-rename off
+            set-option -g set-clipboard external
 
             # disable bell support
             set -g visual-activity off
