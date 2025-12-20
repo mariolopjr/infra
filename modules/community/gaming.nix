@@ -1,7 +1,6 @@
-{ inputs, ... }:
 {
   infra.gaming.nixos =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       boot.kernel.sysctl = {
         # default on some gaming (SteamOS) and desktop (Fedora) distributions
@@ -28,41 +27,41 @@
               renice = 15;
             };
 
-            custom =
-              let
-                programs = lib.makeBinPath (
-                  with pkgs;
-                  [
-                    inputs.hyprland.packages.${stdenv.hostPlatform.system}.default
-                    coreutils
-                    power-profiles-daemon
-                    systemd
-                    libnotify
-                  ]
-                );
-
-                startscript = pkgs.writeShellScript "gamemode-start" ''
-                  export PATH=$PATH:${programs}
-                  export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
-                  hyprctl --batch 'keyword decoration:blur 0 ; keyword animations:enabled 0 ; keyword misc:vfr 0'
-
-                  powerprofilesctl set performance
-                  notify-send -a 'Gamemode' 'Optimizations activated' -u 'low'
-                '';
-
-                endscript = pkgs.writeShellScript "gamemode-end" ''
-                    export PATH=$PATH:${programs}
-                    export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
-                    hyprctl --batch 'keyword decoration:blur 1 ; keyword animations:enabled 1 ; keyword misc:vfr 1'
-
-                  powerprofilesctl set balanced
-                  notify-send -a 'Gamemode' 'Optimizations deactivated' -u 'low'
-                '';
-              in
-              {
-                start = startscript.outPath;
-                end = endscript.outPath;
-              };
+            # custom =
+            #   let
+            #     programs = lib.makeBinPath (
+            #       with pkgs;
+            #       [
+            #         # inputs.hyprland.packages.${stdenv.hostPlatform.system}.default
+            #         coreutils
+            #         power-profiles-daemon
+            #         systemd
+            #         libnotify
+            #       ]
+            #     );
+            #
+            #     startscript = pkgs.writeShellScript "gamemode-start" ''
+            #       export PATH=$PATH:${programs}
+            #       export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
+            #       hyprctl --batch 'keyword decoration:blur 0 ; keyword animations:enabled 0 ; keyword misc:vfr 0'
+            #
+            #       powerprofilesctl set performance
+            #       notify-send -a 'Gamemode' 'Optimizations activated' -u 'low'
+            #     '';
+            #
+            #     endscript = pkgs.writeShellScript "gamemode-end" ''
+            #         export PATH=$PATH:${programs}
+            #         export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
+            #         hyprctl --batch 'keyword decoration:blur 1 ; keyword animations:enabled 1 ; keyword misc:vfr 1'
+            #
+            #       powerprofilesctl set balanced
+            #       notify-send -a 'Gamemode' 'Optimizations deactivated' -u 'low'
+            #     '';
+            #   in
+            #   {
+            #     start = startscript.outPath;
+            #     end = endscript.outPath;
+            #   };
           };
         };
 

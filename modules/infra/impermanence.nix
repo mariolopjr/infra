@@ -66,6 +66,8 @@
               ".local/share/nvf"
 
               ".config/1Password"
+              ".config/obsidian"
+              ".config/Plexamp"
 
               ".mozilla"
               ".cache/mozilla"

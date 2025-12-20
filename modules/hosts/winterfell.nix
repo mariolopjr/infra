@@ -34,7 +34,7 @@ in
     nixos =
       { pkgs, ... }:
       {
-        boot.kernelPackages = pkgs.linuxPackages_zen;
+        boot.kernelPackages = pkgs.linuxPackages_latest;
         services.system76-scheduler = {
           enable = true;
         };

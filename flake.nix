@@ -176,6 +176,11 @@
       url = "github:nix-community/plasma-manager";
     };
     sops-nix = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
       url = "github:Mic92/sops-nix";
     };
     systems = {
