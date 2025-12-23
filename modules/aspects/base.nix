@@ -5,6 +5,7 @@
     nixos = { };
     includes = [
       infra.audio
+      infra.bluetooth
       infra.bootable
       infra.documentation
       infra.hw-detect

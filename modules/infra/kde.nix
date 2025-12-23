@@ -19,6 +19,7 @@
         };
 
         environment.systemPackages = with pkgs; [
+          kdePackages.bluedevil
           kdePackages.kcalc
           kdePackages.kcharselect
           kdePackages.kcolorchooser
