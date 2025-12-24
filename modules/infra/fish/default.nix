@@ -60,14 +60,14 @@
               ];
 
             shellAbbrs = {
-              d = "cd ~/dotfiles";
-
               l = "ls";
               la = "ls -a";
               ll = "ls -l";
               lla = "ls -la";
 
               infra = "cd ~/Code/infra";
+
+              v = "nvim";
 
               mf = "microfetch";
 

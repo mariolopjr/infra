@@ -32,9 +32,19 @@ in
     ];
 
     nixos =
-      { pkgs, ... }:
+      { pkgs, config, ... }:
       {
         boot.kernelPackages = pkgs.linuxPackages_zen;
+        boot.kernelModules = [
+          "asus-ec-sensors"
+          "nct6775"
+        ];
+        boot.extraModulePackages = with config.boot.kernelPackages; [
+          (pkgs.callPackage ../../pkgs/asus-ec-sensors.nix {
+            kernel = kernel;
+          })
+        ];
+
         services.system76-scheduler = {
           enable = true;
         };

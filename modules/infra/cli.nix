@@ -13,6 +13,7 @@
           pkgs.fd # find
           pkgs.htop
           pkgs.jq
+          pkgs.qpdf
           pkgs.ripgrep # grep
           pkgs.unzip
           pkgs.zip

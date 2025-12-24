@@ -4,7 +4,8 @@
       { pkgs, ... }:
       {
         home.packages = [
-          pkgs.gnucash
+          pkgs.calibre
+          pkgs.libreoffice
           pkgs.plexamp
         ];
       };

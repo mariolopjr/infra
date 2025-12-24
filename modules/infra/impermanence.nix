@@ -18,9 +18,12 @@
           directories = [
             "/var/log"
             "/var/lib/bluetooth"
+            "/var/lib/libvirt"
             "/var/lib/nixos"
+            "/var/lib/swtpm-localca"
             "/var/lib/systemd/coredump"
             "/etc/NetworkManager/system-connections"
+            "/etc/coolercontrol"
           ];
 
           files = [
@@ -64,6 +67,8 @@
               ".local/share/nvf"
 
               ".config/1Password"
+              ".config/obsidian"
+              ".config/Plexamp"
 
               ".mozilla"
               ".cache/mozilla"
