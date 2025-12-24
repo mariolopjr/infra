@@ -23,6 +23,7 @@
             "/var/lib/swtpm-localca"
             "/var/lib/systemd/coredump"
             "/etc/NetworkManager/system-connections"
+            "/etc/coolercontrol"
           ];
 
           files = [
