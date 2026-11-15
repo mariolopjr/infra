@@ -1,0 +1,67 @@
+# ghostty +show-config --default --docs
+# ghostty +show-config --default | grep {option-name}
+# ghostty +list-themes
+# ghostty +list-fonts
+# ghostty +list-actions
+
+# Font
+#
+## Font features
+# calt: Contains all ligatures. Substitution for : between digits
+# zero: Changes 0 to slashed variant
+font-family                    = JetBrains Mono
+font-feature                   = calt
+font-feature                   = zero
+font-thicken                   = true
+font-size                      = 16
+
+# Look and Feel
+theme                          = Catppuccin Macchiato
+bold-color                     = bright
+adjust-cursor-thickness        = 10
+adjust-underline-position      = 3
+window-padding-x               = 4
+window-padding-y               = 4,0
+unfocused-split-opacity        = 0.85
+#macos-titlebar-style           = tabs
+mouse-hide-while-typing        = true
+window-save-state              = always
+
+# Other
+copy-on-select                 = true
+auto-update                    = off
+# no ssh features: TERM=xterm-ghostty goes as is (nix hosts have its terminfo), and the
+# remote terminfo install fails over a nushell login
+shell-integration-features     = cursor,no-sudo,title,path
+
+macos-option-as-alt            = left
+
+# Key bindings
+#
+## splits: super+ctrl moves, super+alt resizes; ctrl/alt+hjkl go to nvim
+keybind                        = super+ctrl+h=goto_split:left
+keybind                        = super+ctrl+j=goto_split:down
+keybind                        = super+ctrl+k=goto_split:up
+keybind                        = super+ctrl+l=goto_split:right
+keybind                        = super+alt+h=resize_split:left,30
+keybind                        = super+alt+j=resize_split:down,30
+keybind                        = super+alt+k=resize_split:up,30
+keybind                        = super+alt+l=resize_split:right,30
+keybind                        = ctrl+-=new_split:down
+keybind                        = super+alt+enter=new_split:auto
+
+keybind                        = super+shift+p=toggle_command_palette
+keybind                        = super+n=new_window
+keybind                        = super+shift+]=goto_window:next
+keybind                        = super+shift+[=goto_window:previous
+keybind                        = super+shift+t=prompt_surface_title
+keybind                        = global:ctrl+`=toggle_quick_terminal
+
+## scrollback and config
+# Clears the screen and scrollback
+keybind                        = super+l=clear_screen
+keybind                        = super+r=reload_config
+keybind                        = super+i=inspector:toggle
+
+# Per-OS settings
+config-file                    = ?macos

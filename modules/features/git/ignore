@@ -1,0 +1,5 @@
+.DS_Store
+.session.nvim
+.claude/settings.local.json
+.claude/worktrees/
+Icon[]

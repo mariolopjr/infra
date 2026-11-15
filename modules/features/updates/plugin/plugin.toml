@@ -1,0 +1,9 @@
+id         = "mario/updates"
+name       = "Updates"
+version    = "1.0.0"
+plugin_api = 3
+author     = "mario"
+
+[[widget]]
+id    = "updates"
+entry = "widget.luau"
