@@ -1,0 +1,3 @@
+# macOS: nushell from home-manager
+command                        = /etc/profiles/per-user/mario/bin/nu -l
+env                            = SHELL=/etc/profiles/per-user/mario/bin/nu

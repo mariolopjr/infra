@@ -1,0 +1,68 @@
+# Weekly flake.lock PR. Building winterfell before and after is the test; the nvd diff of the
+# two closures (packages, kernel) goes into the PR body.
+name: update flake.lock
+on:
+  schedule:
+    - cron: "0 10 * * 0" # Sunday 5am EST (6am EDT); cron is UTC only
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  SYSTEM: .#nixosConfigurations.winterfell.config.system.build.toplevel
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      # Two desktop closures don't fit in the runner's default free space.
+      - uses: jlumbroso/free-disk-space@v1.3.1
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/determinate-nix-action@v3
+        with:
+          # Same caches as modules/_caches.nix, or noctalia and umbriel build from source.
+          extra-conf: |
+            extra-substituters = https://noctalia.cachix.org https://umbriel.cachix.org https://nix-community.cachix.org
+            extra-trusted-public-keys = noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4= umbriel.cachix.org-1:JfNq/2yg2S6D6z4Z2dVSZrZlDPQTKtexB6GAVLD98nw= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+
+      - run: nix build -L --out-link old "$SYSTEM"
+
+      - id: update
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          commit-msg: "chore(flake): update flake.lock"
+          pr-title: "chore(flake): update flake.lock"
+          pr-labels: dependencies
+
+      - if: steps.update.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.update.outputs.pull-request-number }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git fetch origin update_flake_lock_action
+          git checkout FETCH_HEAD
+          kernel() { basename "$(dirname "$(readlink -f "$1/kernel")")" | cut -d- -f2-; }
+          {
+            gh pr view "$PR" --json body -q .body
+            echo
+            if nix build -L --out-link new "$SYSTEM"; then
+              echo "## winterfell"
+              echo
+              echo "Kernel: \`$(kernel old)\` -> \`$(kernel new)\`"
+              echo
+              echo '```'
+              nix shell nixpkgs#nvd -c nvd diff old new | head -c 55000
+              echo '```'
+            else
+              echo "## winterfell failed to build"
+              echo
+              echo "$RUN"
+              touch failed
+            fi
+          } > body.md
+          gh pr edit "$PR" --body-file body.md
+          test ! -e failed

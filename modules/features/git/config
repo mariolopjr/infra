@@ -1,0 +1,25 @@
+[core]
+pager = delta
+untrackedCache = true
+fsmonitor = true
+[user]
+signingkey = ~/.ssh/id_ed25519.pub
+email = mariolopjr@users.noreply.github.com
+name = Mario
+[gpg]
+format = ssh
+[gpg "ssh"]
+allowedSignersFile = ~/.ssh/allowed_signers
+[commit]
+gpgsign = true
+[pull]
+rebase = true
+[tag]
+gpgsign = true
+[init]
+defaultBranch = main
+[push]
+autoSetupRemote = true
+[diff "hex"]
+textconv = hexdump -v -C
+binary = true

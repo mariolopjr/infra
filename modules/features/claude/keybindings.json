@@ -1,0 +1,12 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
+  "bindings": [
+    {
+      "context": "Chat",
+      "bindings": {
+        "ctrl+x b": "command:beans",
+        "ctrl+x r": "command:beans-refresh"
+      }
+    }
+  ]
+}
