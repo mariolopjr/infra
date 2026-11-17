@@ -4,6 +4,10 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAipRk9CK71BwC7DtnYAsMX5CsuCbnq03YaOL7ZKX+bn dragonstone"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaGF5WxANyrUZqR65w31DvRzK6n9IaGCjpIT3kxozaV winterfell"
   ];
+  # login only
+  phoneKeys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBImMg0zbBLjw6D9UBA7LHvtPX8PqJs3tYaMkWreh+vLgQlJS5f3Mwaw43nRxJ17TV/yRs+MgdN9qknmRrkgevr0= rex@iPhone"
+  ];
 in
 {
   den.aspects.mario = {
@@ -82,7 +86,7 @@ in
       {
         # Password is set by the installer (passwd via nixos-enter).
         users.users.mario.shell = pkgs.nushell;
-        users.users.mario.openssh.authorizedKeys.keys = sshKeys;
       };
+    provides.to-hosts.os.users.users.mario.openssh.authorizedKeys.keys = sshKeys ++ phoneKeys;
   };
 }
