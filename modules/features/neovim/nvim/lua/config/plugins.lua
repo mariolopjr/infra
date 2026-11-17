@@ -4,6 +4,7 @@ vim.pack.add({
   "https://github.com/folke/snacks.nvim",
   "https://github.com/stevearc/conform.nvim",
   "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/folke/lazydev.nvim",
   "https://github.com/folke/which-key.nvim",
   {
     src = "https://github.com/smart-splits-nvim/smart-splits.nvim",
@@ -237,6 +238,14 @@ vim.api.nvim_create_autocmd("LspProgress", {
       end,
     })
   end,
+})
+
+-- lua_ls gets the nvim runtime and these plugins' types
+require("lazydev").setup({
+  library = {
+    { path = "snacks.nvim", words = { "Snacks" } },
+    { path = "mini.nvim", words = { "Mini%w+" } },
+  },
 })
 
 require("conform").setup({
