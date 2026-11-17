@@ -25,7 +25,8 @@ in
         programs.fzf.enable = true;
         programs.bottom.enable = true;
         programs.carapace.enable = true;
-        services.ssh-agent.enable = true;
+        # only need ssh-agent on macOS
+        services.ssh-agent.enable = pkgs.stdenv.hostPlatform.isDarwin;
         programs.ssh = {
           enable = true;
           settings."*".AddKeysToAgent = "yes";

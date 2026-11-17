@@ -31,6 +31,35 @@
           settings.session.default = "umbriel";
         };
 
+        # Login starts an ssh-agent and unlocks ~/.ssh/id_* with the login password.
+        # start-umbriel imports the PAM SSH_AUTH_SOCK into the systemd user environment.
+        security.pam.services.greetd.rules =
+          let
+            # build pam_ssh_add without installing cockpit
+            pam_ssh_add = pkgs.stdenv.mkDerivation {
+              pname = "pam_ssh_add";
+              inherit (pkgs.cockpit) version src;
+              buildInputs = [ pkgs.pam ];
+              dontConfigure = true;
+              buildPhase = ''
+                printf '#define _GNU_SOURCE\n#define PATH_SSH_ADD "%s"\n#define PATH_SSH_AGENT "%s"\n' \
+                  ${pkgs.openssh}/bin/ssh-add ${pkgs.openssh}/bin/ssh-agent > config.h
+                $CC -shared -fPIC -O2 -I. src/pam-ssh-add/pam-ssh-add.c -o pam_ssh_add.so -lpam
+              '';
+              installPhase = "install -Dm555 pam_ssh_add.so $out/lib/security/pam_ssh_add.so";
+            };
+            # After greetd's `login` substack (10100): pam_unix has set PAM_AUTHTOK, pam_systemd XDG_RUNTIME_DIR.
+            rule = {
+              order = 10200;
+              control = "optional";
+              modulePath = "${pam_ssh_add}/lib/security/pam_ssh_add.so";
+            };
+          in
+          {
+            auth.ssh_add = rule;
+            session.ssh_add = rule;
+          };
+
         hardware.graphics.enable = true;
         security.rtkit.enable = true;
         services.pipewire = {
