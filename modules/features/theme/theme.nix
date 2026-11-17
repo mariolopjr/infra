@@ -136,7 +136,11 @@ in
         # The bar clock ignores shell.time_format and defaults to {:%H:%M}.
         [widget.clock]
         format = "%-I:%M %p"
-        font_scale = 1.15
+
+        # scale sizes every widget (glyphs and text); thickness is raw px, so it grows with it.
+        [bar.main]
+        scale = 1.15
+        thickness = 40
       '';
       xdg.configFile."noctalia/theme.toml".source = (pkgs.formats.toml { }).generate "theme.toml" {
         theme = {
