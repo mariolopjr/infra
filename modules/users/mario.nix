@@ -1,4 +1,10 @@
 { den, ... }:
+let
+  sshKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAipRk9CK71BwC7DtnYAsMX5CsuCbnq03YaOL7ZKX+bn dragonstone"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaGF5WxANyrUZqR65w31DvRzK6n9IaGCjpIT3kxozaV winterfell"
+  ];
+in
 {
   den.aspects.mario = {
     includes = [
@@ -7,7 +13,7 @@
     ];
 
     homeManager =
-      { pkgs, ... }:
+      { pkgs, lib, ... }:
       {
         programs.zoxide.enable = true;
         programs.starship.enable = true;
@@ -16,6 +22,8 @@
           enable = true;
           settings."*".AddKeysToAgent = "yes";
         };
+        # git gpg.ssh.allowedSignersFile
+        home.file.".ssh/allowed_signers".text = lib.concatMapStrings (k: "* ${k}\n") sshKeys;
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
@@ -69,9 +77,7 @@
       {
         # Password is set by the installer (passwd via nixos-enter).
         users.users.mario.shell = pkgs.nushell;
-        users.users.mario.openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAipRk9CK71BwC7DtnYAsMX5CsuCbnq03YaOL7ZKX+bn dragonstone"
-        ];
+        users.users.mario.openssh.authorizedKeys.keys = sshKeys;
       };
   };
 }
