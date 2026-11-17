@@ -19,7 +19,10 @@
         };
         # Keep Noctalia's state (setup marker, launcher usage, catalogs) but drop its GUI
         # overrides each boot
-        preservation.preserveAt."/persist".users.mario.directories = [ ".local/state/noctalia" ];
+        preservation.preserveAt."/persist".users.mario.directories = [
+          ".local/state/noctalia"
+          ".local/state/umbriel"
+        ];
         systemd.tmpfiles.settings.noctalia."/persist/home/mario/.local/state/noctalia/settings.toml".r =
           { };
 
