@@ -74,6 +74,16 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd("BufEnter", {
+  desc = "Autocomplete only in file buffers",
+  group = group("autocomplete-scope"),
+  callback = function(ev)
+    if vim.bo[ev.buf].buftype ~= "" then
+      vim.bo[ev.buf].autocomplete = false
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("VimResized", {
   desc = "Equalize splits when the terminal is resized",
   group = group("resize-splits"),
