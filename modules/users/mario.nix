@@ -38,7 +38,6 @@ in
           pkgs.devenv
           pkgs.f3
           pkgs.just
-          pkgs.lazygit
         ];
         programs.nushell.shellAliases = {
           c = "claude";
