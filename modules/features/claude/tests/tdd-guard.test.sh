@@ -111,10 +111,22 @@ RS
 plain="$repo/crate/src/plain.rs"
 printf 'pub fn x() {}\n' >"$plain"
 region() { bash "$(dirname "$hook")/test-region" "$@"; }
-[ "$(region "$board" | head -n 2 | tail -n 1)" = "mod tests {" ] || { echo "FAIL test-region start"; fail=1; }
-[ "$(region "$board" | tail -n 1)" = "}" ] || { echo "FAIL test-region end"; fail=1; }
-[ -z "$(region "$plain")" ] || { echo "FAIL test-region on a file without tests"; fail=1; }
-[ "$(region - <"$board")" = "$(region "$board")" ] || { echo "FAIL test-region stdin"; fail=1; }
+[ "$(region "$board" | head -n 2 | tail -n 1)" = "mod tests {" ] || {
+	echo "FAIL test-region start"
+	fail=1
+}
+[ "$(region "$board" | tail -n 1)" = "}" ] || {
+	echo "FAIL test-region end"
+	fail=1
+}
+[ -z "$(region "$plain")" ] || {
+	echo "FAIL test-region on a file without tests"
+	fail=1
+}
+[ "$(region - <"$board")" = "$(region "$board")" ] || {
+	echo "FAIL test-region stdin"
+	fail=1
+}
 attrs="$repo/crate/src/attrs.rs"
 cat >"$attrs" <<'RS'
 pub fn x() {}
@@ -129,8 +141,14 @@ mod tests {
     fn t() {}
 }
 RS
-[ "$(region "$attrs" | head -n 1)" = "#[cfg(test)]" ] || { echo "FAIL test-region attributes: start"; fail=1; }
-[ "$(region "$attrs" | grep -c .)" = 9 ] || { echo "FAIL test-region attributes: whole module"; fail=1; }
+[ "$(region "$attrs" | head -n 1)" = "#[cfg(test)]" ] || {
+	echo "FAIL test-region attributes: start"
+	fail=1
+}
+[ "$(region "$attrs" | grep -c .)" = 9 ] || {
+	echo "FAIL test-region attributes: whole module"
+	fail=1
+}
 
 printf 'green\ncrate/src/board.rs\n' >"$mark"
 expect_json allow "$(edit "$board" "    3

@@ -20,6 +20,7 @@
           pkgs.nixd
           pkgs.nixfmt
           pkgs.shellcheck
+          pkgs.shfmt
           pkgs.stylua
         ];
       };

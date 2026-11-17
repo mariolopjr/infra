@@ -82,7 +82,10 @@ is_frozen() {
 # slurp <jq filter>: a string field verbatim, trailing newlines kept
 slurp() {
 	local v
-	v=$(jq -j "$1" <<<"$input"; printf x)
+	v=$(
+		jq -j "$1" <<<"$input"
+		printf x
+	)
 	printf '%s' "${v%x}"
 }
 
@@ -93,7 +96,10 @@ after_edit() {
 		slurp '.tool_input.content // ""'
 		return
 	fi
-	text=$(cat "$real"; printf x)
+	text=$(
+		cat "$real"
+		printf x
+	)
 	text=${text%x}
 	if [ "$tool" = Edit ]; then
 		n=1
