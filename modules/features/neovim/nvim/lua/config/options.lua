@@ -31,6 +31,6 @@ vim.o.foldtext = "" -- first line of a fold keeps its highlighting
 vim.o.foldlevel = 99
 
 vim.o.autocomplete = true
-vim.o.complete = "o,.,w,b"
+vim.o.complete = "o" -- LSP only autocomplete
 vim.o.completeopt = "menuone,noselect,popup,fuzzy"
 vim.o.pumborder = "rounded"
