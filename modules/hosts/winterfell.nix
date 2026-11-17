@@ -34,6 +34,14 @@
           "nct6775" # NCT6799D: 4 fan headers, 4 PWM
           "asus_ec_sensors" # VRM, chipset, water temps
         ];
+        # PPD's state file is on the tmpfs root so set it as `performance` manually
+        systemd.services.ppd-performance = {
+          wantedBy = [ "multi-user.target" ];
+          after = [ "power-profiles-daemon.service" ];
+          requires = [ "power-profiles-daemon.service" ];
+          serviceConfig.Type = "oneshot";
+          script = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance";
+        };
         environment.systemPackages = [ pkgs.wakeonlan ];
         services.smartd.enable = true;
         hardware.enableRedistributableFirmware = true;

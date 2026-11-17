@@ -25,35 +25,35 @@ base=${file_path##*/}
 matched=()
 
 for root in "$HOME/.claude/rules" "${CLAUDE_PROJECT_DIR:-}/.claude/rules"; do
-	[ -n "$root" ] && [ -d "$root" ] || continue
-	while IFS= read -r rule; do
-		globs=$(awk '
-			NR == 1 && $0 != "---" { exit }
-			NR > 1 && $0 == "---" { exit }
-			/^paths:[[:space:]]*$/ { p = 1; next }
-			p && /^[[:space:]]*-[[:space:]]/ {
-				v = $0
-				sub(/^[[:space:]]*-[[:space:]]*/, "", v)
-				print v
-				next
-			}
-			p && /^[^[:space:]]/ { p = 0 }
-		' "$rule" 2>/dev/null)
-		[ -n "$globs" ] || continue
+  [ -n "$root" ] && [ -d "$root" ] || continue
+  while IFS= read -r rule; do
+    globs=$(awk '
+      NR == 1 && $0 != "---" { exit }
+      NR > 1 && $0 == "---" { exit }
+      /^paths:[[:space:]]*$/ { p = 1; next }
+      p && /^[[:space:]]*-[[:space:]]/ {
+        v = $0
+        sub(/^[[:space:]]*-[[:space:]]*/, "", v)
+        print v
+        next
+      }
+      p && /^[^[:space:]]/ { p = 0 }
+    ' "$rule" 2>/dev/null)
+    [ -n "$globs" ] || continue
 
-		while IFS= read -r g; do
-			g=${g%"${g##*[![:space:]]}"}
-			g=${g%\"} g=${g#\"}
-			g=${g%\'} g=${g#\'}
-			[ -n "$g" ] || continue
-			# Unquoted on purpose: $g is the glob, and [[ ]] lets * cross '/'.
-			# shellcheck disable=SC2053
-			if [[ $file_path == $g || $base == $g ]]; then
-				matched+=("$rule")
-				break
-			fi
-		done <<<"$globs"
-	done < <(find -L "$root" -type f -name '*.md' 2>/dev/null)
+    while IFS= read -r g; do
+      g=${g%"${g##*[![:space:]]}"}
+      g=${g%\"} g=${g#\"}
+      g=${g%\'} g=${g#\'}
+      [ -n "$g" ] || continue
+      # Unquoted on purpose: $g is the glob, and [[ ]] lets * cross '/'.
+      # shellcheck disable=SC2053
+      if [[ $file_path == $g || $base == $g ]]; then
+        matched+=("$rule")
+        break
+      fi
+    done <<<"$globs"
+  done < <(find -L "$root" -type f -name '*.md' 2>/dev/null)
 done
 
 [ ${#matched[@]} -gt 0 ] || exit 0
@@ -62,35 +62,35 @@ mkdir -p "$state_dir" 2>/dev/null || exit 0
 payload=""
 names=""
 for rule in "${matched[@]}"; do
-	key=$(printf '%s' "$rule" | shasum 2>/dev/null | cut -d' ' -f1)
-	[ -n "$key" ] || continue
-	[ -e "$state_dir/$key" ] && continue
-	: >"$state_dir/$key"
+  key=$(printf '%s' "$rule" | shasum 2>/dev/null | cut -d' ' -f1)
+  [ -n "$key" ] || continue
+  [ -e "$state_dir/$key" ] && continue
+  : >"$state_dir/$key"
 
-	body=$(awk '
-		NR == 1 && $0 == "---" { f = 1; next }
-		f && $0 == "---" { f = 0; next }
-		!f
-	' "$rule" 2>/dev/null)
-	[ -n "$body" ] || continue
+  body=$(awk '
+    NR == 1 && $0 == "---" { f = 1; next }
+    f && $0 == "---" { f = 0; next }
+    !f
+  ' "$rule" 2>/dev/null)
+  [ -n "$body" ] || continue
 
-	payload="${payload}<project-rule source=\"${rule}\">
+  payload="${payload}<project-rule source=\"${rule}\">
 ${body}
 </project-rule>
 "
-	names="${names}${names:+, }${rule##*/}"
+  names="${names}${names:+, }${rule##*/}"
 done
 
 [ -n "$payload" ] || exit 0
 
 jq -nc \
-	--arg ctx "$payload" \
-	--arg reason "Rule not yet in context for a file you are creating: ${names}. It has now been loaded. Re-issue the write applying it." \
-	'{
-		hookSpecificOutput: {
-			hookEventName: "PreToolUse",
-			permissionDecision: "deny",
-			permissionDecisionReason: $reason,
-			additionalContext: $ctx
-		}
-	}'
+  --arg ctx "$payload" \
+  --arg reason "Rule not yet in context for a file you are creating: ${names}. It has now been loaded. Re-issue the write applying it." \
+  '{
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      permissionDecisionReason: $reason,
+      additionalContext: $ctx
+    }
+  }'

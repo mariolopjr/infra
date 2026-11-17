@@ -18,13 +18,6 @@ fmt:
 lint:
     git ls-files -co --exclude-standard '*.sh' modules/features/claude/hooks/test-region | xargs shellcheck
 
-claude := "modules/features/claude"
-
-# Run the Claude Code hook and status line tests
-test-claude:
-    python3 {{ claude }}/tests/test_statusline.py
-    bash {{ claude }}/tests/tdd-guard.test.sh
-
 # Run the infra-install host choice test
 test-install:
     bash modules/infra-install.test.sh
