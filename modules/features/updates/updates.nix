@@ -1,6 +1,6 @@
 # Pending-update indicator: a user timer builds main's system for this host in the background
 # and counts package changes against the running one. A noctalia bar widget shows the count.
-# Click: pull + switch in a terminal. Right click: check now.
+# Click: full package list in a terminal, then optional pull + switch. Right click: check now.
 {
   den.aspects.mario.homeManager =
     { lib, pkgs, ... }:
