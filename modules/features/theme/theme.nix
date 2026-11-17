@@ -132,6 +132,11 @@ in
 
         [calendar]
         event_time_format = "%-I:%M %p"
+
+        # The bar clock ignores shell.time_format and defaults to {:%H:%M}.
+        [widget.clock]
+        format = "%-I:%M %p"
+        font_scale = 1.15
       '';
       xdg.configFile."noctalia/theme.toml".source = (pkgs.formats.toml { }).generate "theme.toml" {
         theme = {
