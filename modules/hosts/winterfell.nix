@@ -36,9 +36,10 @@
         ];
         # PPD's state file is on the tmpfs root so set it as `performance` manually
         systemd.services.ppd-performance = {
-          wantedBy = [ "multi-user.target" ];
+          # PPD orders itself after multi-user.target
+          wantedBy = [ "power-profiles-daemon.service" ];
           after = [ "power-profiles-daemon.service" ];
-          requires = [ "power-profiles-daemon.service" ];
+          bindsTo = [ "power-profiles-daemon.service" ];
           serviceConfig.Type = "oneshot";
           script = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance";
         };
