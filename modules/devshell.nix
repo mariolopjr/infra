@@ -14,6 +14,7 @@
           lib.mkIf (root != "") root;
         containers = lib.mkForce { }; # devenv's container outputs need nix2container; unused here
         packages = [
+          pkgs.cspell
           pkgs.just
           pkgs.lua-language-server
           pkgs.nil

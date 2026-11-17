@@ -17,6 +17,10 @@ in
       {
         programs.zoxide.enable = true;
         programs.starship.enable = true;
+        programs.bat.enable = true;
+        programs.fzf.enable = true;
+        programs.bottom.enable = true;
+        programs.carapace.enable = true;
         services.ssh-agent.enable = true;
         programs.ssh = {
           enable = true;
@@ -29,8 +33,10 @@ in
           nix-direnv.enable = true;
         };
         home.packages = [
+          pkgs.age
           pkgs.claude-code
           pkgs.devenv
+          pkgs.f3
           pkgs.just
           pkgs.lazygit
         ];

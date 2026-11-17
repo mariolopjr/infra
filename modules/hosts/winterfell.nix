@@ -34,6 +34,8 @@
           "nct6775" # NCT6799D: 4 fan headers, 4 PWM
           "asus_ec_sensors" # VRM, chipset, water temps
         ];
+        environment.systemPackages = [ pkgs.wakeonlan ];
+        services.smartd.enable = true;
         hardware.enableRedistributableFirmware = true;
         hardware.cpu.amd.updateMicrocode = true;
 

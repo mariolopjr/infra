@@ -20,6 +20,19 @@ gpgsign = true
 defaultBranch = main
 [push]
 autoSetupRemote = true
+[diff]
+tool = difftastic
+[difftool]
+prompt = false
+[difftool "difftastic"]
+cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+difftool = true
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
 [diff "hex"]
 textconv = hexdump -v -C
 binary = true

@@ -4,8 +4,14 @@
   den.aspects.peripherals.nixos =
     { lib, pkgs, ... }:
     {
-      environment.systemPackages = [ pkgs.asdbctl ];
+      environment.systemPackages = [
+        pkgs.asdbctl # monitor brightness control
+      ];
       services.udev.packages = [ pkgs.asdbctl ]; # hidraw access for the logged-in user
+      # STM32 ROM DFU bootloader
+      services.udev.extraRules = ''
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", TAG+="uaccess"
+      '';
 
       # Brightness % = SLOPE * log10(lux), checked every 5s; written only on a STEP-point change,
       # so a manual `asdbctl up/down` holds until the room light moves.
