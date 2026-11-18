@@ -24,7 +24,8 @@ end
 
 function onClick()
   noctalia.runInTerminal(
-    "cd ~/.config/infra && git pull --ff-only && sudo nixos-rebuild switch --flake . "
+    "less -F " .. dir .. "diff; printf 'Update now? [y/N] '; read a; [ \"$a\" = y ] && "
+      .. "cd ~/.config/infra && git pull --ff-only && sudo nixos-rebuild switch --flake . "
       .. "&& systemctl --user start infra-update; echo; echo 'Enter to close'; read _"
   )
 end
