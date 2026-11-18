@@ -4,11 +4,14 @@ let
   luks = name: content: {
     type = "luks";
     inherit name content;
-    passwordFile = "/tmp/luks.key";
-    settings.allowDiscards = true;
+    passwordFile = "/tmp/luks.key"; # only used during install
+    settings = {
+      allowDiscards = true;
+      bypassWorkqueues = true; # dm-crypt workqueues only add latency on NVMe
+    };
   };
   btrfsOpts = [
-    "compress=zstd"
+    "compress=zstd:1"
     "noatime"
   ];
 in
@@ -92,6 +95,10 @@ in
             };
           };
           services.btrfs.autoScrub.enable = true;
+          boot.kernelParams = [
+            "zswap.enabled=1"
+            "zswap.shrinker_enabled=1"
+          ];
         };
       }
     )

@@ -6,11 +6,16 @@ mkdir -p "$state"
 rev=$(git ls-remote https://github.com/mariolopjr/infra refs/heads/main | cut -f1)
 [[ -n $rev ]]
 if [[ $rev != "$(cat "$state/rev" 2>/dev/null)" || ! -e $state/system ]]; then
-	nix build --out-link "$state/system" \
-		"github:mariolopjr/infra/$rev#nixosConfigurations.$(</proc/sys/kernel/hostname).config.system.build.toplevel"
-	echo "$rev" >"$state/rev"
+  nix build --out-link "$state/system" \
+    "github:mariolopjr/infra/$rev#nixosConfigurations.$(</proc/sys/kernel/hostname).config.system.build.toplevel"
+  echo "$rev" >"$state/rev"
 fi
+
+# Same running and built systems as the last diff: the count still holds.
+pair="$(readlink /run/current-system) $(readlink "$state/system")"
+[[ $pair == "$(cat "$state/diffed" 2>/dev/null)" && -e $state/count ]] && exit 0
 
 nvd diff /run/current-system "$state/system" >"$state/diff"
 grep -c '^\[' "$state/diff" >"$state/count.tmp" || true
 mv "$state/count.tmp" "$state/count"
+echo "$pair" >"$state/diffed"

@@ -89,6 +89,15 @@
         };
         preserveAt."/cache".users.mario.directories = cached;
       };
+      # e2e VM disks: unsnapshotted and nodatacow so qcow2 rewrites don't fragment
+      systemd.tmpfiles.settings.e2e."/cache/e2e" = {
+        d = {
+          user = "mario";
+          group = "users";
+          mode = "0755";
+        };
+        h.argument = "+C";
+      };
 
       services.snapper.configs.persist = {
         SUBVOLUME = "/persist";

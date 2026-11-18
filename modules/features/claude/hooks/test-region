@@ -5,10 +5,10 @@
 # Attributes between the two, single- or multi-line, belong to the region.
 # Usage: test-region <file|->. Prints nothing for a file without inline tests.
 exec awk '
-	on { print; next }
-	/^#\[cfg\(test\)\][[:space:]]*$/ { held = $0; open = 0; next }
-	held != "" && open { held = held "\n" $0; if ($0 ~ /\][[:space:]]*$/) open = 0; next }
-	held != "" && /^#\[/ { held = held "\n" $0; open = $0 !~ /\][[:space:]]*$/; next }
-	held != "" && /^(pub(\([a-z]+\))? )?mod tests \{/ { on = 1; print held; print; next }
-	{ held = "" }
+  on { print; next }
+  /^#\[cfg\(test\)\][[:space:]]*$/ { held = $0; open = 0; next }
+  held != "" && open { held = held "\n" $0; if ($0 ~ /\][[:space:]]*$/) open = 0; next }
+  held != "" && /^#\[/ { held = held "\n" $0; open = $0 !~ /\][[:space:]]*$/; next }
+  held != "" && /^(pub(\([a-z]+\))? )?mod tests \{/ { on = 1; print held; print; next }
+  { held = "" }
 ' "${1:--}"

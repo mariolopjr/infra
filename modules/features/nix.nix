@@ -12,8 +12,17 @@ in
     nix.settings = caches // {
       trusted-users = [ "@wheel" ];
       eval-cores = 0;
+      download-buffer-size = 256 * 1024 * 1024; # 256 MiB
     };
     nixpkgs.config.allowUnfree = true;
+    programs.nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        extraArgs = "--keep 20 --keep-since 14d"; # 20 matches limine's maxGenerations
+      };
+    };
+    documentation.nixos.enable = false; # skips rebuilding the options manual on module changes
   };
 
   den.default.darwin = {

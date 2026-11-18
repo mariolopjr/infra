@@ -3,7 +3,7 @@
 #   nix run .#e2e          boot installer ISO
 #   nix run .#e2e -- boot  boot installed disks
 #   nix run .#e2e -- reset delete disks and EFI vars
-# State lives in $E2E_DIR (default ./.e2e).
+# State lives in $E2E_DIR (default /cache/e2e if it exists, else ./.e2e).
 { inputs, lib, ... }:
 {
   perSystem =

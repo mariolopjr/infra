@@ -4,7 +4,7 @@ set -euo pipefail
 
 # shellcheck disable=SC2016 # $in is nushell's
 {
-	printf 'modified\tsize\tpath\n'
-	sudo find / -xdev -type f -not -path '/tmp/*' -not -path '/etc/static/*' -printf '%TY-%Tm-%Td %TH:%TM\t%s\t%p\n' |
-		grep -vP '\t/etc/(passwd|group|shadow|subuid|subgid|sudoers|resolv.conf|\.clean|NIXOS)$'
+  printf 'modified\tsize\tpath\n'
+  sudo find / -xdev -type f -not -path '/tmp/*' -not -path '/etc/static/*' -printf '%TY-%Tm-%Td %TH:%TM\t%s\t%p\n' |
+    grep -vP '\t/etc/(passwd|group|shadow|subuid|subgid|sudoers|resolv.conf|\.clean|NIXOS)$'
 } | nu --stdin -c '$in | from tsv | into int size | into filesize size | into datetime modified | sort-by modified'
