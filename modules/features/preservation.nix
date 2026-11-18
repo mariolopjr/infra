@@ -22,6 +22,9 @@
           ".local/state/wireplumber" # volumes, default devices
           ".local/state/rex" # host-id, server snapshots
           ".steam" # registry.vdf (settings), steam.token
+          ".local/share/Paradox Interactive" # game saves, Paradox launcher login (launcher-v2/chromium-data)
+          ".local/share/Games By Malcs" # Melvor Idle 2 saves
+          ".config/unity3d" # Caves of Qud saves and settings
           "code"
           "Documents"
           "Downloads"
@@ -45,6 +48,7 @@
         ".cache"
         ".cargo"
         "go"
+        ".paradoxlauncher" # launcher binaries, the bootstrapper redownloads them
       ];
     in
     {
