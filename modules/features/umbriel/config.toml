@@ -199,7 +199,7 @@ numlock_toggle = true
 
 # Applications and session
 "Mod+Return" = { action = "spawn ghostty", repeat = false }
-"Mod" = "spawn noctalia msg panel-toggle launcher"
+"Mod+Space" = { action = "spawn noctalia msg panel-toggle launcher", repeat = false }
 "Mod+Q" = { action = "window-close", repeat = false }
 "Mod+Slash" = { action = "cheatsheet-toggle", repeat = false }
 "Mod+Escape" = "session-quit"
@@ -285,9 +285,9 @@ numlock_toggle = true
 "Mod+Shift+9" = "window-move-to-workspace 9"
 
 # Scratchpad
-"Mod+Shift+Space" = { action = "window-move-to-scratchpad", repeat = false }
-"Mod+Space" = "scratchpad-toggle"
-"Mod+Ctrl+Space" = { action = "window-restore-from-scratchpad", repeat = false }
+"Mod+Shift+Grave" = { action = "window-move-to-scratchpad", repeat = false }
+"Mod+Grave" = "scratchpad-toggle"
+"Mod+Alt+Grave" = { action = "window-restore-from-scratchpad", repeat = false }
 "Mod+Tab" = "scratchpad-focus-next"
 
 # ==============================================================================
