@@ -68,6 +68,14 @@ in
           "gcs!" = "git commit -S --amend";
         };
         programs.nushell.enable = true;
+        # sshd sessions and rex panes (rex.service starts before login): reuse the agent
+        # pam_ssh_add started at the desktop login
+        programs.nushell.extraEnv = ''
+          if ($env.SSH_AUTH_SOCK? == null) {
+            let sock = (systemctl --user show-environment | lines | parse "{k}={v}" | where k == SSH_AUTH_SOCK | get v.0?)
+            if $sock != null { $env.SSH_AUTH_SOCK = $sock }
+          }
+        '';
         # nix-index ships command-not-found hooks for bash/zsh/fish only; same lookup for nushell.
         programs.nushell.extraConfig = ''
           use ${pkgs.nu_scripts}/share/nu_scripts/aliases/git/git-aliases.nu *
