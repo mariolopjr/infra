@@ -4,6 +4,21 @@ vim.o.mouse = "a"
 vim.o.showmode = false -- mini.statusline shows it
 vim.o.cursorline = true
 
+-- over SSH or in a rex pane: copy via OSC 52, paste from the unnamed register
+-- (rex panes have no WAYLAND_DISPLAY/SSH_TTY; rex relays OSC 52 to its client.
+-- OSC 52 paste would hit the terminal's clipboard-read prompt on every `p`)
+if vim.env.SSH_TTY or vim.env.REX_BLOCK then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  local function paste()
+    return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+  end
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = paste, ["*"] = paste },
+  }
+end
+
 -- defer clipboard sync
 vim.schedule(function()
   vim.o.clipboard = "unnamedplus"

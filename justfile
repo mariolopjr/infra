@@ -53,4 +53,6 @@ test-nvim:
     set -euo pipefail
     cfg=$(mktemp -d); trap 'rm -rf "$cfg"' EXIT
     ln -s "$PWD/modules/features/neovim/nvim" "$cfg/nvim"
-    XDG_CONFIG_HOME=$cfg nvim --headless -u "$cfg/nvim/init.lua" -l modules/features/neovim/tests/config_test.lua
+    for env in SSH_TTY=/dev/pts/0 REX_BLOCK=1; do
+        env -u SSH_TTY -u REX_BLOCK "$env" XDG_CONFIG_HOME=$cfg nvim --headless -u "$cfg/nvim/init.lua" -l modules/features/neovim/tests/config_test.lua
+    done
