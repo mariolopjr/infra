@@ -132,6 +132,13 @@ in
 
         [calendar]
         event_time_format = "%-I:%M %p"
+
+        [widget.clock]
+        format = "%-I:%M %p"
+
+        [bar.main]
+        scale = 1.15
+        thickness = 40
       '';
       xdg.configFile."noctalia/theme.toml".source = (pkgs.formats.toml { }).generate "theme.toml" {
         theme = {
