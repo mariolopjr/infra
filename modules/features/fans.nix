@@ -14,19 +14,33 @@
       caseProfile = "3ee09b8f-3140-4d08-a034-e222f6d92632";
     in
     {
-      # LACT factory defaults. Per-GPU settings (power cap, clocks, fan curve) key on the
-      # exact PCI id from `lact cli list-gpus`.
-      services.lact = {
-        enable = true;
-        settings = {
-          version = 7;
-          daemon = {
-            log_level = "info";
-            admin_group = "wheel";
-            disable_clocks_cleanup = false;
-          };
-          apply_settings_timer = 5;
-        };
+      # LACT: RTX 5080 overclock/power only, CoolerControl owns the fans. GPUs key on the PCI id
+      # from `lact cli list-gpus`. Hand-written, not services.lact.settings: pkgs.formats.yaml quotes
+      # the offset keys ('0': 500) and lactd rejects quoted ints. Writable copy replaced on every
+      # activation, lactd reloads it on change. Port UI tweaks from
+      # `diff -u /etc/static/lact/config.yaml /etc/lact/config.yaml`.
+      services.lact.enable = true;
+      environment.etc."lact/config.yaml" = {
+        mode = "0644";
+        text = ''
+          version: 7
+          daemon:
+            log_level: info
+            admin_group: wheel
+            disable_clocks_cleanup: false
+          apply_settings_timer: 5
+          gpus:
+            10DE:2C02-10DE:2095-0000:01:00.0:
+              fan_control_enabled: false
+              power_mizer_mode: Adaptive
+              power_cap: 380.0
+              min_core_clock: 180
+              max_core_clock: 3150
+              gpu_clock_offsets:
+                0: 250
+              mem_clock_offsets:
+                0: 2000
+        '';
       };
 
       # CoolerControl. config.toml and overrides.toml are writable copies, replaced on every
