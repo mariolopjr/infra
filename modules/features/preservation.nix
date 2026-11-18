@@ -84,6 +84,12 @@
             "/var/lib/NetworkManager"
             "/var/lib/bluetooth"
             "/var/lib/fwupd"
+            # coolercontrold's UI password, tokens, TLS cert. In initrd so activation's copy of the
+            # Nix-managed config.toml/overrides.toml (fans.nix) lands on top of it, not under it.
+            {
+              directory = "/etc/coolercontrol";
+              inInitrd = true;
+            }
           ];
           users.mario = mario;
         };
