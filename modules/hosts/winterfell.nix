@@ -12,7 +12,12 @@
     ];
 
     nixos =
-      { config, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         boot.initrd.availableKernelModules = [
           "nvme"
@@ -42,6 +47,14 @@
           bindsTo = [ "power-profiles-daemon.service" ];
           serviceConfig.Type = "oneshot";
           script = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance";
+        };
+        # FE logo LED via NVIDIA's driver API, not i2c. Match by name: as root OpenRGB also finds
+        # the board's Aura controller, so index 0 is not stable
+        systemd.services.gpu-rgb-off = {
+          wantedBy = [ "multi-user.target" ];
+          after = [ "systemd-modules-load.service" ];
+          serviceConfig.Type = "oneshot";
+          script = ''${lib.getExe pkgs.openrgb} --noautoconnect -d "RTX 5080" -m off'';
         };
         environment.systemPackages = [ pkgs.wakeonlan ];
         services.smartd.enable = true;
