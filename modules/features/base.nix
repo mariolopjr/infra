@@ -7,6 +7,12 @@
         efiSupport = true;
         maxGenerations = 20;
         efiInstallAsRemovable = true;
+        # Keys are made on the first install with none in /var/lib/sbctl; they only enroll if the
+        # firmware is in Setup Mode then, else `sbctl enroll-keys -m -f`. -m: GPU option ROMs need Microsoft's CA.
+        secureBoot = {
+          enable = true;
+          autoEnrollKeys.enable = true;
+        };
       };
       boot.loader.efi.canTouchEfiVariables = false;
 

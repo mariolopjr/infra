@@ -27,6 +27,13 @@
               msg = "steam (client and default library) needs @games at ~/.local/share/Steam, not on /persist";
             }
             {
+              # Root is tmpfs: without /persist, sbctl's keys vanish and the next rebuild signs with new ones.
+              ok =
+                cfg.boot.loader.limine.secureBoot.enable
+                && lib.any (d: d.directory == "/var/lib/sbctl") cfg.preservation.preserveAt."/persist".directories;
+              msg = "limine secure boot needs its sbctl keys on /persist";
+            }
+            {
               # /home is tmpfs too
               ok = !(cfg.fileSystems ? "/home");
               msg = "/home is a disk mount, not part of the tmpfs root";

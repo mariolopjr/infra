@@ -147,6 +147,10 @@ else
   )
 fi
 
+# Root is tmpfs: the secure boot keys the bootloader install creates must land on /persist.
+install -d -m 700 /mnt/persist/var/lib/sbctl /mnt/var/lib/sbctl
+mount --bind /mnt/persist/var/lib/sbctl /mnt/var/lib/sbctl
+
 nixos-install --flake "$flake#$host" --no-root-passwd --no-channel-copy
 
 # Public infra repo

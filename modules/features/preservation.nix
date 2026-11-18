@@ -84,6 +84,10 @@
             "/var/lib/NetworkManager"
             "/var/lib/bluetooth"
             "/var/lib/fwupd"
+            {
+              directory = "/var/lib/sbctl"; # secure boot signing keys
+              mode = "0700";
+            }
             # coolercontrold's UI password, tokens, TLS cert. In initrd so activation's copy of the
             # Nix-managed config.toml/overrides.toml (fans.nix) lands on top of it, not under it.
             {
