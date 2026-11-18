@@ -1,6 +1,11 @@
 {
   den.aspects.mario.homeManager =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       languages = [
         "bash"
@@ -31,7 +36,8 @@
         pkgs.git
         pkgs.ripgrep # snacks picker
         pkgs.fd
-      ];
+      ]
+      ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.wl-clipboard; # clipboard provider for unnamedplus
       home.sessionVariables.EDITOR = "nvim";
 
       xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
