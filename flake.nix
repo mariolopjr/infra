@@ -30,6 +30,10 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     rex.url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"; # no stable channel yet
     rex.inputs.nixpkgs.follows = "nixpkgs";
+    # Unofficial Linux rex client
+    rex-attach.url = "github:nivox/rex-attach/013610aab7ab1108ee5c26d6ea486e45ce881019";
+    rex-attach.inputs.nixpkgs.follows = "nixpkgs";
+    rex-attach.inputs.rust-overlay.follows = "";
 
     # Peter Lowe's ad/tracker hosts list for OpenSnitch
     pgl-blocklist = {

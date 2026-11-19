@@ -1,5 +1,5 @@
 # Rex (Superlogical)
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
   den.aspects.mario.homeManager = {
     imports = [ inputs.rex.homeManagerModules.default ];
@@ -14,8 +14,9 @@
       { host, ... }:
       if host.class == "nixos" then
         {
-          homeManager = {
+          homeManager = { pkgs, ... }: {
             services.rex.enable = true;
+            home.packages = [ inputs.rex-attach.packages.${pkgs.stdenv.hostPlatform.system}.rex-attach ];
             programs.ssh = {
               enable = true; # rex adds its SSH fallback to ~/.ssh/config
               enableDefaultConfig = false;
