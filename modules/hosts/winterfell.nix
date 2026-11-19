@@ -12,7 +12,12 @@
     ];
 
     nixos =
-      { config, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         boot.initrd.availableKernelModules = [
           "nvme"
@@ -43,6 +48,28 @@
           serviceConfig.Type = "oneshot";
           script = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance";
         };
+        # Disable 5080 FE RGB
+        systemd.services.gpu-rgb-off =
+          let
+            sleep = [
+              "suspend.target"
+              "hibernate.target"
+              "hybrid-sleep.target"
+              "suspend-then-hibernate.target"
+            ];
+          in
+          {
+            wantedBy = [ "multi-user.target" ] ++ sleep;
+            after = [ "systemd-modules-load.service" ] ++ sleep;
+            # No HID/USB/i2c access
+            serviceConfig = {
+              Type = "oneshot";
+              DynamicUser = true;
+              RuntimeDirectory = "gpu-rgb-off";
+            };
+            environment.HOME = "/run/gpu-rgb-off"; # OpenRGB writes its config here
+            script = ''${lib.getExe pkgs.openrgb} --noautoconnect -d "RTX 5080" -m off'';
+          };
         environment.systemPackages = [ pkgs.wakeonlan ];
         services.smartd.enable = true;
         hardware.enableRedistributableFirmware = true;
