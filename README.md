@@ -10,6 +10,16 @@ Nix flake for all my systems, built with [flake-parts](https://github.com/hercul
 | `winterfell-vm` | e2e test VM | NixOS |
 | `dragonstone` | MacBook Pro M1 Pro | nix-darwin |
 
+### winterfell gaming
+
+For some games, the game renders on the iGPU. To fix that, use the following Steam launch options to force the game to render on the RTX 5080 through PRIME offload. Steam launch options:
+
+```
+nvidia-offload mangohud %command%
+```
+
+MangoHud opens on the full preset and shows only the 5080. `Shift_R+F12` toggles the HUD, `Shift_R+F10` cycles presets.
+
 ## Layout
 
 - `modules/hosts/`: one file per machine

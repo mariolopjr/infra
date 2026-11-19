@@ -16,6 +16,9 @@
         capSysNice = true;
       };
 
+      # launch option: mangohud %command%
+      environment.systemPackages = [ pkgs.mangohud ];
+
       disko.devices.disk.main.content.partitions.root.content.content.subvolumes."@games" = {
         mountpoint = "/home/mario/.local/share/Steam";
         # Same compress level as the other subvolumes (it is filesystem-wide). The
@@ -54,5 +57,12 @@
               mode = "0755";
             };
           });
+
+      # Ensure only the RTX 5080 displays
+      home-manager.users.mario.xdg.configFile."MangoHud/MangoHud.conf".text = ''
+        preset=4,-1,0,1,2,3
+        pci_dev=0000:01:00.0
+        gpu_text=RTX 5080
+      '';
     };
 }
