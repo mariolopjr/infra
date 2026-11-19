@@ -1,0 +1,81 @@
+# coolercontrold config, deployed by fans.nix. The daemon requires inline tables for
+# device-settings channels, temp_source and channel_settings entries.
+# Device hashes: 00a4da18... nct6799, 034c2fb1... rtx5080, 3145e1a4... cpu
+# Profile uids: f7db5d77... GPU, 10e5bad1... CPU, 3ee09b8f... Case
+# speed_profile points are [temp °C (float), duty %]
+
+[devices]
+
+[legacy690]
+
+[device-settings.00a4da18625f56275c89e2fcd25a83c08c5ad3326452fa7e252fcc8a89c92493]
+fan1 = { profile_uid = "3ee09b8f-3140-4d08-a034-e222f6d92632" } # top fans: Case
+fan2 = { profile_uid = "10e5bad1-bd74-47e4-8795-b50a0e86d573" } # cpu/rear fans: CPU
+
+[device-settings.034c2fb184a101865710c8258650caaaeade161075207cedb2f14e4168d8e6d2]
+fan1 = { profile_uid = "f7db5d77-811d-42d1-8fe1-7dba8b2415bb" } # GPU
+fan2 = { profile_uid = "f7db5d77-811d-42d1-8fe1-7dba8b2415bb" } # GPU
+
+[[profiles]]
+uid = "0"
+name = "Unmanaged"
+p_type = "Default"
+function = "0"
+
+[[profiles]]
+uid = "f7db5d77-811d-42d1-8fe1-7dba8b2415bb"
+name = "GPU"
+p_type = "Graph"
+function_uid = "0"
+speed_profile = [[0.0, 10], [55.0, 10], [65.0, 40], [75.0, 80], [85.0, 90], [100.0, 100]]
+temp_source = { temp_name = "GPU Temp", device_uid = "034c2fb184a101865710c8258650caaaeade161075207cedb2f14e4168d8e6d2" }
+temp_min = 0.0
+temp_max = 100.0
+
+[[profiles]]
+uid = "10e5bad1-bd74-47e4-8795-b50a0e86d573"
+name = "CPU"
+p_type = "Graph"
+function_uid = "0"
+speed_profile = [[0.0, 30], [55.0, 30], [75.0, 80], [90.0, 90], [100.0, 100]]
+temp_source = { temp_name = "temp3", device_uid = "3145e1a42801faf9cf948df8c705afb4859f084c10a7e7c5e4efecb1e0167127" }
+temp_min = 0.0
+temp_max = 100.0
+
+[[profiles]]
+uid = "3ee09b8f-3140-4d08-a034-e222f6d92632"
+name = "Case"
+p_type = "Mix"
+function_uid = "0"
+member_profile_uids = ["f7db5d77-811d-42d1-8fe1-7dba8b2415bb", "10e5bad1-bd74-47e4-8795-b50a0e86d573"]
+mix_function_type = "Max"
+
+[[functions]]
+uid = "0"
+name = "Default Function"
+f_type = "Identity"
+
+[settings]
+apply_on_boot = true
+liquidctl_integration = true
+hide_duplicate_devices = true
+no_init = false
+startup_delay = 2
+thinkpad_full_speed = false
+compress_payload = true
+drivetemp_suspend = false
+
+[settings.00a4da18625f56275c89e2fcd25a83c08c5ad3326452fa7e252fcc8a89c92493]
+name = "nct6799"
+disable = false
+
+[settings.00a4da18625f56275c89e2fcd25a83c08c5ad3326452fa7e252fcc8a89c92493.channel_settings]
+fan6 = { disabled = true }
+fan7 = { disabled = true }
+temp3 = { label = "Auxtin0", disabled = true }
+temp4 = { label = "Auxtin1", disabled = true }
+temp5 = { label = "Auxtin2", disabled = true }
+temp7 = { label = "Auxtin4", disabled = true }
+temp10 = { label = "Auxtin5", disabled = true }
+temp11 = { label = "Pch Chip Cpu Max Temp", disabled = true }
+temp12 = { label = "Pch Chip Temp", disabled = true }
