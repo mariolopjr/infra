@@ -28,6 +28,10 @@ One line. Add a body only when the change is not self-evident, and keep it to a 
 
 When the repo uses beans, end with a `Refs: <bean-id>` footer for each bean the commit works on.
 
+## Shell
+
+My shell is nushell. Commands I run myself (handoffs, `! <cmd>` suggestions, setup steps) are written in native nushell syntax. Wrap in `bash -c "..."` only when nushell has no reasonable equivalent
+
 ## Communication
 
 - Say `I don't know` when evidence missing. Mark what could not be confirmed and where you looked
