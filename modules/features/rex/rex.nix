@@ -27,7 +27,28 @@
         }
       else
         {
-          homeManager.programs.rex.package = null;
+          # Rex.app bundles the client, the server helper and its rex CLI.
+          homeManager = { pkgs, ... }: {
+            programs.rex.package = null;
+            home.packages = [
+              (pkgs.stdenvNoCC.mkDerivation (
+                let
+                  app = builtins.fromJSON (builtins.readFile ./app.json); # bumped by scripts/update-rex-app.sh
+                in
+                {
+                  pname = "rex-app";
+                  inherit (app) version;
+                  src = pkgs.fetchurl { inherit (app) url hash; };
+                  nativeBuildInputs = [ pkgs.undmg ];
+                  sourceRoot = "Rex.app";
+                  dontFixup = true; # any byte change breaks the code signature
+                  installPhase = "mkdir -p $out/Applications/Rex.app && cp -R . $out/Applications/Rex.app";
+                }
+              ))
+            ];
+            # Nix controls when to update.
+            targets.darwin.defaults."com.superlogical.rex".SUEnableAutomaticChecks = false;
+          };
         }
     )
   ];

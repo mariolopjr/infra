@@ -30,6 +30,9 @@ jobs:
 
       - run: nix build -L --out-link old "$SYSTEM"
 
+      # Rex.app has no flake input
+      - run: scripts/update-rex-app.sh
+
       - id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:

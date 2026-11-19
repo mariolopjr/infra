@@ -25,6 +25,7 @@ test-install:
 # Update all inputs or only the named ones
 update *inputs:
     nix flake update {{ inputs }}
+    {{ if inputs == "" { "scripts/update-rex-app.sh" } else { "" } }}
 
 # Build the installer ISO (aarch64 or x86_64)
 iso arch="x86_64":
