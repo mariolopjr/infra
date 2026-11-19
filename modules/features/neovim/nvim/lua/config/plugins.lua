@@ -6,6 +6,7 @@ vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/folke/lazydev.nvim",
   "https://github.com/folke/which-key.nvim",
+  "https://github.com/folke/flash.nvim",
   {
     src = "https://github.com/smart-splits-nvim/smart-splits.nvim",
     version = vim.version.range("3"),
@@ -274,5 +275,8 @@ require("which-key").setup({
     { "<leader>t", group = "[T]abs" },
   },
 })
+
+-- char mode also labels f/F/t/T targets
+require("flash").setup({ modes = { char = { jump_labels = true } } })
 
 require("smart-splits").setup({ move = { at_edge = "stop" } })

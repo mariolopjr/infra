@@ -14,6 +14,14 @@ map("n", "<A-j>", splits.resize_down)
 map("n", "<A-k>", splits.resize_up)
 map("n", "<A-l>", splits.resize_right)
 
+-- flash jumps
+local flash = require("flash")
+map({ "n", "x", "o" }, "s", flash.jump, { desc = "Flash" })
+map({ "n", "x", "o" }, "S", flash.treesitter, { desc = "Flash Treesitter" })
+map("o", "r", flash.remote, { desc = "Remote Flash" })
+map({ "o", "x" }, "R", flash.treesitter_search, { desc = "Treesitter Search" })
+map("c", "<c-s>", flash.toggle, { desc = "Toggle Flash Search" })
+
 -- buffers, files, tabs
 map("n", "<leader>bd", "<cmd>bd<CR>", { desc = "[B]uffer [D]elete" })
 map("n", "<leader>fs", "<cmd>w<CR>", { desc = "[F]ile [S]ave" })
