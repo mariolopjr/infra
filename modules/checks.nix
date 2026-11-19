@@ -39,7 +39,9 @@
           throw "${name}: ${lib.concatMapStringsSep ", " (x: x.msg) failed}";
 
       # Every ~/.claude command in the managed Claude settings is a file home-manager links.
-      claudeHosts = ofSystem (inputs.self.nixosConfigurations // inputs.self.darwinConfigurations);
+      claudeHosts = lib.filterAttrs (_: c: c.config.home-manager.users ? mario) (
+        ofSystem (inputs.self.nixosConfigurations // inputs.self.darwinConfigurations)
+      );
       claudeCheck =
         name: c:
         let

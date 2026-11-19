@@ -32,6 +32,17 @@ iso arch="x86_64":
     nix build .#packages.{{ arch }}-linux.iso
     ls result/iso
 
+# Build highgarden's SD image and write it to a whole-disk device, eg /dev/disk/by-id/usb-...-0:1
+pi-flash device:
+    nix build .#nixosConfigurations.highgarden.config.system.build.sdImage
+    lsblk -o NAME,SIZE,RM,MODEL,LABEL {{ device }}
+    @read -rp "Erase {{ device }}? [y/N] " ok && [ "$ok" = y ]
+    zstdcat result/sd-image/*.img.zst | sudo dd of={{ device }} bs=4M conv=fsync status=progress
+
+# Build highgarden here and switch it over SSH (the Pi has no internet)
+pi-deploy host="highgarden":
+    nixos-rebuild switch --flake .#highgarden --target-host mario@{{ host }} --sudo
+
 # List files on the tmpfs root that may need an entry in preservation.nix
 ephemeral:
     scripts/ephemeral.sh

@@ -71,6 +71,7 @@
             script = ''${lib.getExe pkgs.openrgb} --noautoconnect -d "RTX 5080" -m off'';
           };
         environment.systemPackages = [ pkgs.wakeonlan ];
+        boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # builds highgarden (Pi 5)
         services.smartd.enable = true;
         hardware.enableRedistributableFirmware = true;
         hardware.cpu.amd.updateMicrocode = true;

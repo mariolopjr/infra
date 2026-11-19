@@ -28,6 +28,11 @@ in
 
   den.hosts.aarch64-darwin.dragonstone.users.mario = { };
 
+  den.hosts.aarch64-linux.highgarden = {
+    instantiate = inputs.nixos-raspberrypi.lib.nixosSystem; # Pi kernel overlays, on its own nixpkgs
+    users.mario.classes = [ ]; # login and SSH keys only: no home-manager on a LAN appliance
+  };
+
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
   den.schema.host.includes = [
     den.batteries.hostname
