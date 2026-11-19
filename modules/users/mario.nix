@@ -29,6 +29,7 @@ in
         services.ssh-agent.enable = pkgs.stdenv.hostPlatform.isDarwin;
         programs.ssh = {
           enable = true;
+          enableDefaultConfig = false;
           settings."*".AddKeysToAgent = "yes";
         };
         # git gpg.ssh.allowedSignersFile

@@ -17,10 +17,7 @@
           homeManager = { pkgs, ... }: {
             services.rex.enable = true;
             home.packages = [ inputs.rex-attach.packages.${pkgs.stdenv.hostPlatform.system}.rex-attach ];
-            programs.ssh = {
-              enable = true; # rex adds its SSH fallback to ~/.ssh/config
-              enableDefaultConfig = false;
-            };
+            programs.ssh.enable = true; # rex adds its SSH fallback to ~/.ssh/config
           };
           # Keep the user service (and its sessions) running while logged out.
           provides.to-hosts.nixos.users.users.mario.linger = true;
