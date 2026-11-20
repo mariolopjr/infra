@@ -702,28 +702,6 @@
         "url": "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"
       }
     },
-    "rex-attach": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": []
-      },
-      "locked": {
-        "lastModified": 1794349826,
-        "narHash": "sha256-ng0jW4ivjL8Og/6QMZW8BQfx+8U+na6ZDJZ4rKwv59g=",
-        "owner": "nivox",
-        "repo": "rex-attach",
-        "rev": "013610aab7ab1108ee5c26d6ea486e45ce881019",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nivox",
-        "repo": "rex-attach",
-        "rev": "013610aab7ab1108ee5c26d6ea486e45ce881019",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -740,8 +718,7 @@
         "nixpkgs": "nixpkgs_4",
         "pgl-blocklist": "pgl-blocklist",
         "preservation": "preservation",
-        "rex": "rex",
-        "rex-attach": "rex-attach"
+        "rex": "rex"
       }
     },
     "rust-overlay": {

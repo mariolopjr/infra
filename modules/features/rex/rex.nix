@@ -14,9 +14,8 @@
       { host, ... }:
       if host.class == "nixos" then
         {
-          homeManager = { pkgs, ... }: {
+          homeManager = {
             services.rex.enable = true;
-            home.packages = [ inputs.rex-attach.packages.${pkgs.stdenv.hostPlatform.system}.rex-attach ];
             programs.ssh.enable = true; # rex adds its SSH fallback to ~/.ssh/config
           };
           # Keep the user service (and its sessions) running while logged out.
