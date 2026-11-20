@@ -1,4 +1,4 @@
-# Firefox with configured policies: no telemetry, studies or Pocket, HTTPS-only, uBlock Origin.
+# Firefox with configured settings
 {
   den.aspects.desktop.nixos = {
     programs.firefox = {
@@ -9,6 +9,7 @@
         DisablePocket = true;
         DontCheckDefaultBrowser = true;
         HttpsOnlyMode = "enabled";
+        SearchEngines.Default = "DuckDuckGo";
         FirefoxHome = {
           SponsoredTopSites = false;
           SponsoredPocket = false;
