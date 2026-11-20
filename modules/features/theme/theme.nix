@@ -156,5 +156,23 @@ in
         size = 32;
         gtk.enable = true;
       };
+      # GTK apps: Catppuccin Macchiato Mauve
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Catppuccin-GTK-Macchiato-Mauve-Dark";
+          package = pkgs.magnetic-catppuccin-gtk.override {
+            accent = [ "mauve" ];
+            tweaks = [ "macchiato" ];
+          };
+        };
+        iconTheme = {
+          name = "Papirus-Dark";
+          package = pkgs.catppuccin-papirus-folders.override {
+            flavor = "macchiato";
+            accent = "mauve";
+          };
+        };
+      };
     };
 }

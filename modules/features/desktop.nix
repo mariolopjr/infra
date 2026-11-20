@@ -79,6 +79,8 @@
           enable = true;
           settings.default = [ "com.mitchellh.ghostty.desktop" ];
         };
+        programs.thunar.enable = true;
+        xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
         environment.systemPackages = with pkgs; [
           btrfs-assistant # GUI for the /persist snapper snapshots
         ];
