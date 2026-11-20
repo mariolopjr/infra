@@ -80,6 +80,8 @@
           settings.default = [ "com.mitchellh.ghostty.desktop" ];
         };
         programs.thunar.enable = true;
+        programs.thunar.plugins = [ pkgs.thunar-volman ];
+        services.gvfs.enable = true;
         xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
         environment.systemPackages = with pkgs; [
           btrfs-assistant # GUI for the /persist snapper snapshots
