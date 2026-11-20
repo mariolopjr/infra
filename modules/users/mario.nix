@@ -25,12 +25,26 @@ in
         programs.fzf.enable = true;
         programs.bottom.enable = true;
         programs.carapace.enable = true;
-        # only need ssh-agent on macOS
-        services.ssh-agent.enable = pkgs.stdenv.hostPlatform.isDarwin;
+        # macOS: Apple's launchd ssh-agent and /usr/bin/ssh are able to UseKeychain.
+        # Linux: pam_ssh_add, see desktop.nix.
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-          settings."*".AddKeysToAgent = "yes";
+          settings."*" = {
+            AddKeysToAgent = "yes";
+          }
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin { UseKeychain = "yes"; };
+        };
+        # preload keychain-stored keys
+        launchd.agents.ssh-add-keychain = {
+          enable = true;
+          config = {
+            ProgramArguments = [
+              "/usr/bin/ssh-add"
+              "--apple-load-keychain"
+            ];
+            RunAtLoad = true;
+          };
         };
         # git gpg.ssh.allowedSignersFile
         home.file.".ssh/allowed_signers".text = lib.concatMapStrings (k: "* ${k}\n") sshKeys;
