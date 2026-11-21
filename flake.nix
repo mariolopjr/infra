@@ -32,6 +32,8 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     rex.url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"; # no stable channel yet
     rex.inputs.nixpkgs.follows = "nixpkgs";
+    luciole.url = "github:noctalia-dev/luciole"; # no releases yet
+    luciole.inputs.nixpkgs.follows = "nixpkgs";
 
     # Peter Lowe's ad/tracker hosts list for OpenSnitch
     pgl-blocklist = {

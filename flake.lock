@@ -412,6 +412,26 @@
         "type": "github"
       }
     },
+    "luciole": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795199690,
+        "narHash": "sha256-i7m8OE+0WowSQDGEkHTbuqrdlJizQh2TKvhTO/gnFdc=",
+        "owner": "noctalia-dev",
+        "repo": "luciole",
+        "rev": "b92ac0456751c8047a0501b3b7d3b44fc9f3a227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "luciole",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "bdwgc": "bdwgc",
@@ -713,6 +733,7 @@
         "flake-parts": "flake-parts_3",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "luciole": "luciole",
         "nix-index-database": "nix-index-database",
         "nixos-raspberrypi": "nixos-raspberrypi",
         "nixpkgs": "nixpkgs_4",

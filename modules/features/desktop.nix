@@ -1,9 +1,11 @@
 # Wayland desktop: noctalia shell on umbriel using noctalia-greeter.
+{ inputs, ... }:
 {
   den.aspects.desktop = {
     nixos =
       { pkgs, ... }:
       {
+        imports = [ inputs.luciole.nixosModules.default ];
         boot.consoleLogLevel = 3;
         boot.kernelParams = [
           "quiet"
@@ -79,10 +81,9 @@
           enable = true;
           settings.default = [ "com.mitchellh.ghostty.desktop" ];
         };
-        programs.thunar.enable = true;
-        programs.thunar.plugins = [ pkgs.thunar-volman ];
-        services.gvfs.enable = true;
-        xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
+        programs.luciole.enable = true;
+        services.gvfs.enable = true; # trash, drives, sftp/smb; luciole's module leaves it off
+        xdg.mime.defaultApplications."inode/directory" = "dev.noctalia.luciole.desktop";
         environment.systemPackages = with pkgs; [
           btrfs-assistant # GUI for the /persist snapper snapshots
         ];
