@@ -36,6 +36,9 @@
         pkgs.git
         pkgs.ripgrep # snacks picker
         pkgs.fd
+        pkgs.nil
+        pkgs.nixd
+        pkgs.nixfmt
       ]
       ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.wl-clipboard; # clipboard provider for unnamedplus
       home.sessionVariables.EDITOR = "nvim";

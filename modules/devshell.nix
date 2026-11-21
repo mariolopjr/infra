@@ -17,9 +17,6 @@
           pkgs.cspell
           pkgs.just
           pkgs.lua-language-server
-          pkgs.nil
-          pkgs.nixd
-          pkgs.nixfmt
           pkgs.shellcheck
           pkgs.shfmt
           pkgs.stylua

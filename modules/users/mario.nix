@@ -102,6 +102,16 @@ in
             let list = ($pkgs | each {|p| $"  nixpkgs#($p)" } | str join "\n")
             $"($cmd) is provided by:\n($list)\nRun it once with: , ($cmd)"
           }
+
+          # small reminder when a typed command matches an alias expansion
+          $env.config.hooks.pre_execution = ($env.config.hooks.pre_execution? | default [] | append {||
+            let cmd = (commandline | str trim)
+            let hits = (scope aliases | where {|a| $cmd == $a.expansion or ($cmd | str starts-with $"($a.expansion) ")})
+            if ($hits | is-not-empty) {
+              let a = ($hits | sort-by {|h| $h.expansion | str length} --reverse | first)
+              print $"(ansi yellow)alias tip:(ansi reset) ($a.name) = ($a.expansion)"
+            }
+          })
         '';
       };
 
