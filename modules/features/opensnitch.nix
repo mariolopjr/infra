@@ -1,7 +1,6 @@
 # OpenSnitch: per-process application firewall (eBPF + nftables).
 # Rules in services.opensnitch.rules are symlinked into /var/lib/opensnitch/rules each start.
-{ inputs, ... }:
-{
+_: {
   den.aspects.desktop.nixos =
     { lib, pkgs, ... }:
     {
@@ -9,6 +8,7 @@
         enable = true;
         settings.DefaultAction = "allow";
         # The lists loader only globs `<dir>/*.*`, so the file needs an extension.
+        # Vendored and not a flake input
         rules.pgl-blocklist = {
           name = "pgl-blocklist";
           enabled = true;
@@ -18,7 +18,7 @@
           operator = {
             type = "lists";
             operand = "lists.domains";
-            data = "${pkgs.linkFarm "opensnitch-blocklists" { "pgl.txt" = inputs.pgl-blocklist; }}";
+            data = "${pkgs.linkFarm "opensnitch-blocklists" { "pgl.txt" = ./opensnitch-pgl.txt; }}";
           };
         };
       };

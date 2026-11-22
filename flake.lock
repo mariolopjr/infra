@@ -678,18 +678,6 @@
         "url": "https://flakehub.com/f/NixOS/nixpkgs/0.1"
       }
     },
-    "pgl-blocklist": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-X2b+Vb9MQZApfzEU/oPQolG/RJgjLX1N6Z2toiGt47A=",
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&showintro=0"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&showintro=0"
-      }
-    },
     "preservation": {
       "locked": {
         "lastModified": 1792953443,
@@ -737,7 +725,6 @@
         "nix-index-database": "nix-index-database",
         "nixos-raspberrypi": "nixos-raspberrypi",
         "nixpkgs": "nixpkgs_4",
-        "pgl-blocklist": "pgl-blocklist",
         "preservation": "preservation",
         "rex": "rex"
       }

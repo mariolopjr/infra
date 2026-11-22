@@ -3,7 +3,7 @@
 name: update flake.lock
 on:
   schedule:
-    - cron: "0 10 * * 0" # Sunday 5am EST (6am EDT); cron is UTC only
+    - cron: "17 10 * * 0" # Sunday ~5am EST (6am EDT)
   workflow_dispatch:
 
 permissions:
@@ -32,6 +32,9 @@ jobs:
 
       # Rex.app has no flake input
       - run: scripts/update-rex-app.sh
+
+      # Live list and not a flake input (see modules/features/opensnitch.nix)
+      - run: curl -fsSL 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext' -o modules/features/opensnitch-pgl.txt
 
       - id: update
         uses: DeterminateSystems/update-flake-lock@main

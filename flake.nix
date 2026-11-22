@@ -34,11 +34,5 @@
     rex.inputs.nixpkgs.follows = "nixpkgs";
     luciole.url = "github:noctalia-dev/luciole"; # no releases yet
     luciole.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Peter Lowe's ad/tracker hosts list for OpenSnitch
-    pgl-blocklist = {
-      url = "file+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext";
-      flake = false;
-    };
   };
 }
