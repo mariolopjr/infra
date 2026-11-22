@@ -10,6 +10,7 @@ name = Mario
 format = ssh
 [gpg "ssh"]
 allowedSignersFile = ~/.ssh/allowed_signers
+program = git-ssh-sign
 [commit]
 gpgsign = true
 [pull]
