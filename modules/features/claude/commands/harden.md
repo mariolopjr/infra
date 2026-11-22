@@ -110,7 +110,7 @@ runner: run it once on one file before calling it present.
 | `lint` gate | `cargo fmt --check` and `cargo clippy --workspace --all-targets -- -D warnings`, lints set in `[workspace.lints]`: `clippy::pedantic` warn; `unwrap_used`, `expect_used`, `indexing_slicing`, `cast_possible_truncation` deny in logic crates |
 | `cover` gate | `cargo llvm-cov nextest --fail-under-lines <today's number, rounded down>`; ratchets up, never down |
 | `vuln` gate | `cargo deny check` (advisories, licenses, bans, sources), with a `deny.toml` |
-| test layout | unit tests inline at the end of the file they test (`#[cfg(test)] mod tests { }`; clippy's `items_after_test_module` under `-D warnings` keeps nothing after it), integration tests in `tests/`. `tdd-guard` and the gauntlet freeze the inline module by region (`~/.claude/hooks/test-region`) |
+| test layout | unit tests inline at the end of the file they test (`#[cfg(test)] mod tests { }`; clippy's `items_after_test_module` under `-D warnings` keeps nothing after it), integration tests in `tests/`. `/implement` and the gauntlet diff the inline module by region (`~/.claude/hooks/test-region`) |
 | property tests | proptest. Every rule, parser and invariant the docs state gets a `proptest!`; a slow obvious version in reach means a differential property |
 | `fuzz` recipe | `cargo +nightly fuzz run {{target}} -- -max_total_time={{secs}}`, targets in `fuzz/`; `bolero` instead when fuzz targets should also run as plain tests on stable |
 | `mutate` recipe | cargo-mutants on the diff from a base ref, through nextest, scoped with `--package` to logic crates (below) |
@@ -215,8 +215,7 @@ not part of the file.
 
 ## 5. Hooks
 
-`tdd-guard` is global and only acts in a worktree `/implement` marked, so
-there is nothing to enable per repo. Propose a project hook in
+Propose a project hook in
 `.claude/settings.json` only for a failure this repo has actually shown, in
 its history, step 1's gate output, or an open `prevention` bean (`beans
 list --tag prevention`; `/land` files those from gauntlet runs). Candidates:

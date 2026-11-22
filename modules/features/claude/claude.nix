@@ -152,16 +152,6 @@
                   }
                 ];
               }
-              {
-                matcher = "Edit|Write|MultiEdit|NotebookEdit|Bash";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "~/.claude/hooks/tdd-guard.sh";
-                    timeout = 5;
-                  }
-                ];
-              }
             ];
           };
           statusLine = {

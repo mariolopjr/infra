@@ -143,14 +143,16 @@ Every round prompt opens with this block, filled in:
 > changes means no commit. A fix that adds or changes behavior lands with a
 > test that fails without it; run it against the unfixed code first.
 >
-> New tests go in the file's existing `#[cfg(test)] mod tests`, appended;
-> the freeze allows adding tests there. Never a second test module in a
-> file. Changing, moving or deleting an existing test is a human gate,
-> stop and report it, unless the repo's rules (CLAUDE.md, AGENTS.md) allow
-> editing existing tests and the freeze below does not cover the file: then
-> make it and name the test in the commit message.
-> Test files listed in the repo's `tdd-phase` freeze are frozen: a finding's
-> new test goes in a new or non-frozen test file, never a frozen one.
+> New tests go in the file's existing `#[cfg(test)] mod tests`, appended.
+> Never a second test module in a file. An existing test changes only
+> under `/implement`'s Test changes rules, never to make a fix pass: its
+> own `test(<scope>): <what changed>` commit with the reason in the body,
+> and a row in your reply (test, file, what changed, reason). Good reasons:
+> it contradicts a Definition-of-done box or bean rule, asserts internals
+> the `Interface:` does not expose, is nondeterministic, pins a value only
+> the implementation produces, or follows a rename or re-sign. Loosening an
+> assertion or dropping a case names the box that still covers it. No good
+> reason: stop and report it as a human gate.
 >
 > The first lines of your reply are the output of
 > `git diff --name-only <RANGE>`, before anything else.
@@ -159,9 +161,10 @@ The coordinator compares that echoed list to `<FILES>`. Mismatch VOIDS the
 whole round for that branch: re-run it. A clean result from a wrong-scope
 agent is worthless, not reassuring.
 
-After each round commits, on a `behavior` bean: `git -C <WT> diff <RED>
-task/<id> -- <FROZEN>` (§8) must be empty. Not empty is an integrity failure:
-list it under Needs you.
+After each round commits, append the round's test-change rows to the
+bean's `## Test changes`, then run §8's test-change check on the new
+commits. An untabled change or a bad reason: back to that round's agent
+once, then an integrity failure listed under Needs you.
 
 ## 4. Rounds
 
@@ -381,8 +384,8 @@ Then set `<BASE_TIP>` to the new base tip before restacking that branch's own
 children. Per-branch `--onto`, not `rebase --update-refs`: every branch in the
 stack is checked out in a worktree. A conflict: `git rebase --abort`, list the
 branch under Needs you, and skip its children's verify. `<RED>` keeps
-pointing at the pre-rebase red commit; the integrity diff below compares file
-contents, so it still holds.
+pointing at the pre-rebase red commit; the test-change diff below compares
+file contents, so it still holds.
 
 Then, per branch, the coordinator itself:
 
@@ -393,21 +396,22 @@ Then, per branch, the coordinator itself:
    Any other `.rs` file counts by its inline test module only: compare
    `git show <rev>:<file> | ~/.claude/hooks/test-region -` across revs, never
    the whole file, since the code above the module is meant to change.
-   - `behavior`: `<FROZEN>` = test files in `git diff --name-only <RED>^
-     <RED>`, the red commit alone, whatever its base. `git -C <WT> diff <RED> task/<id> -- <FROZEN>` must be empty
-     for whole test files and the test region unchanged for inline Rust files,
-     and those tests must fail on `<RED>` and pass on `task/<id>`.
-   - other kinds: `git -C <WT> diff --name-only <RANGE>` lists no test file
-     and no changed `.rs` file's test region differs across `<RANGE>`,
-     and the suite passes on `<BASE>` and on `task/<id>`.
+   - every kind: each removed or changed test line between `<RED>`
+     (other kinds: `<BASE_TIP>`) and `task/<id>` belongs to a row in the
+     bean's `## Test changes`, and the row gives a reason from
+     `/implement`'s Test changes list. Lines that only add tests need no
+     row. The suite passes on `task/<id>`.
+   - `behavior`: the red tests no row changed fail on `<RED>`.
+   - other kinds: the suite passes on `<BASE>`.
    - other kinds whose range changes test files because the bean moves the
      test runner or framework: a port, not a P0, when every test name on
      `<BASE>` still exists on `task/<id>` and the suite passes on both. List
      it under Needs you as a `decision` with any test name that did not
      survive, and continue to §9.
 
-   A failure here is a P0 the fix agents may not resolve by editing tests:
-   the spec's tests were weakened. List it under Needs you.
+   An untabled change or a bad reason is a P0 the fix agents may not
+   resolve by editing tests: the spec changed silently. List it under
+   Needs you.
 
 ## 9. Human-eyes pass
 
@@ -451,7 +455,8 @@ only produce duplicates. After the §3 block (minus the commit line):
 >
 > - `decision` — a defensible approach chosen over another defensible one, a
 >   spec gap filled without asking, a deviation from the bean, a `ponytail:`
->   corner cut, or a reviewer finding a round declined. **Name the rejected
+>   corner cut, a reviewer finding a round declined, or a row of the bean's
+>   `## Test changes` (one flag each, with its reason). **Name the rejected
 >   alternative.** Without it there is no decision to rule on.
 > - `impact` — saves, credentials, money, destructive operations, migrations,
 >   anything with a rollback story. Flagged because being wrong is expensive.
@@ -558,7 +563,7 @@ After the last report is written, ping the user once (`PushNotification`).
 ```
 | bean | base | sha | simplify | ponytail | code-review | cold | round 5 | mutation | integrity | gates | eyes |
 |------|------|-----|----------|----------|-------------|------|---------|----------|-----------|-------|------|
-| <id> | main | <short> | 3 applied | 2 applied, 1 declined | 1 applied | 1 P0, 2 P1 fixed | rule 1: clean | 18/21 | frozen ok | test 142/142, lint ok | 2 decision, 1 taste, 1 prevent |
+| <id> | main | <short> | 3 applied | 2 applied, 1 declined | 1 applied | 1 P0, 2 P1 fixed | rule 1: clean | 18/21 | 2 test changes tabled | test 142/142, lint ok | 2 decision, 1 taste, 1 prevent |
 
 Ready to land (try it, then `/land <id> [rulings]`):
 - <id>: <worktree path>, report in bean

@@ -27,7 +27,7 @@ Raw arguments: `$ARGUMENTS`
   `--ready` never returns a bean whose blocker is still open.
 - `<BASE>` = `task/<base-id>` with `--on`, else `main`.
 
-## 2. Worktree and phase marker
+## 2. Worktree
 
 ```bash
 git worktree add .claude/worktrees/<id> -b task/<id> <BASE>
@@ -35,26 +35,35 @@ git config branch.task/<id>.stackParent task/<base-id>   # --on only; /review-ga
 beans update <id> -s in-progress
 ```
 
-Record, all absolute: `<WT>` = `<repo>/.claude/worktrees/<id>`, `<GITDIR>` =
-`git -C <WT> rev-parse --absolute-git-dir`, `<MARK>` = `<GITDIR>/tdd-phase`.
+Record, absolute: `<WT>` = `<repo>/.claude/worktrees/<id>`.
 
-`<MARK>` drives the `tdd-guard` hook, which denies Edit and Write on test
-files the phase freezes, and Bash that removes, moves, edits in place or
-redirects onto one. Line 1 is the phase; for `green` the remaining lines
-are the frozen repo-relative paths:
+A Rust source file with inline tests counts as a test file by its test
+module only: the `#[cfg(test)] mod tests { }` region
+`~/.claude/hooks/test-region <file>` prints, which clippy's
+`items_after_test_module` keeps at the end of the file. Below, "test file"
+includes such a file, and comparing it means comparing `test-region`
+output, not the file.
 
-- `green`: only the listed files are frozen.
-- `frozen`: every test file is frozen.
-- no file: nothing is frozen.
+## Test changes
 
-A Rust source file with inline tests freezes only its test module: the
-`#[cfg(test)] mod tests { }` region `~/.claude/hooks/test-region <file>`
-prints, which clippy's `items_after_test_module` keeps at the end of the
-file. The code above it stays editable. Below, "test file" includes such a
-file, and comparing it means comparing `test-region` output, not the file.
+Tests are the spec, but a spec can be wrong. After red, an existing test
+(red's own or older) may change only with a stated reason, never to make
+code pass. Good reasons, each naming the box, rule or member involved:
 
-Subtler Bash edits still pass the hook; `/review-gauntlet` §8 checks the
-same thing by diff and fails the branch on it.
+- it contradicts a Definition-of-done box or a bean rule
+- it asserts internals the `Interface:` does not expose
+- it is nondeterministic (time, order, randomness)
+- `regen`: a pin whose value only the implementation produces
+- it adapts a call site to a signature the bean renames or re-signs
+
+Not reasons: the code is easier another way, the assertion is hard to meet.
+A change that loosens an assertion or drops a case names the box that still
+covers it. Each change goes in its own `test(<scope>): <what changed>`
+commit, before the code that relies on it, with the reason in the body, and
+in the agent's reply as a row: test, file, what changed, reason. The
+coordinator appends every row, red's and later ones, to the bean under
+`## Test changes`, which `/review-gauntlet` raises as `decision` flags and
+`/land` carries into the commit.
 
 Before any test, install every toolchain the repo's lockfiles declare, in
 `<WT>`: e.g. `mise install && uv sync && bun install --frozen-lockfile`. A
@@ -71,9 +80,7 @@ agent prompt opens with:
 > main checkout or another worktree. Do not spawn `fork` subagents. Commit
 > with a Conventional Commits subject; never amend or rebase. Never run
 > `beans` or edit `.beans/`: the worktree's copy is stale, the coordinator
-> owns beans. A file with a frozen test module is edited with Edit or Write
-> only; the hook denies any Bash edit to it (sed, heredoc, redirect), even
-> above the module.
+> owns beans.
 
 The coordinator runs every `beans` call in `<repo>`, never in `<WT>`.
 
@@ -102,7 +109,6 @@ not the plan or other beans:
 > Rust: unit tests go in the one `#[cfg(test)] mod tests { }` at the end of
 > the file they test: add to it when it exists, create it when it does not,
 > never a second test module in the file. Integration tests go in `tests/`.
-> Only the test module is frozen, so stubs above it stay editable.
 >
 > Existing tests the bean forces to change are changed here, in the red
 > commit, never later. Find them: run the suite against your stubs, grep
@@ -140,8 +146,7 @@ The coordinator then checks, itself:
 
 1. The build and the repo's static gates pass on the red commit: Go `go vet
    ./...`; Python `ruff check` and the type checker; TS `tsc --noEmit` and the
-   linter. A test that fails to compile proves nothing, and a type error in a
-   frozen test can only be fixed by rewriting the red commit.
+   linter. A test that fails to compile proves nothing.
 2. Every new test fails on an assertion, not a setup error, and not a stub
    panic unless the agent named that stub as having no do-nothing value. A
    panic proves the stub ran, not that the assertions can fail. A new test
@@ -158,46 +163,41 @@ The coordinator then checks, itself:
    bean and ask, never routed around by a re-run.
 
 Any check fails: one fresh red re-run with the failure named, then stop the
-bean and report. On pass:
+bean and report. On pass, append the agent's table to the bean under
+`## Test changes`, and:
 
 ```bash
 git -C <WT> update-ref refs/tdd/<id> HEAD
-{ echo green; git -C <WT> diff --name-only <BASE> HEAD | <test-file filter> | grep -vxFf <REGEN>; } > <MARK>
 ```
 
-`<REGEN>` = `<GITDIR>/tdd-regen`, the repo-relative files of the `regen`
-rows, one per line, empty when none. They stay editable for green; §6
-checks their diff.
-
-The filter keeps test files and every changed `.rs` file for which
-`~/.claude/hooks/test-region <WT>/<file>` prints a region.
+`<SPEC>` = the test files the red commits changed, `git -C <WT> diff
+--name-only <BASE> refs/tdd/<id>` filtered to test files and every `.rs`
+file for which `test-region` prints a region.
 
 ## 4. `behavior`: green
 
 One fresh agent, never the red one, `opus` at the bean's effort:
 
-> Make the frozen tests pass: `<FROZEN>`. In a Rust file only its
-> `#[cfg(test)] mod tests` is frozen; the code above it is yours, edited
-> with Edit or Write, not Bash. You cannot edit frozen tests, and a hook
-> will deny it. A frozen test you believe is wrong: stop and report it with
-> the box it contradicts; do not work around it. Regenerate the `regen` pins
-> in `<REGEN>` from the implementation and touch nothing else in those files.
-> Any other change to an existing test is a human gate, stop and report it,
-> unless the repo's rules (CLAUDE.md, AGENTS.md) allow editing existing tests
-> and the marker does not freeze the file: then make it and name the test in
-> the commit message.
-> Replace every stub. You
-> may add tests for branches the boxes do not cover: appended to the file's
-> existing `mod tests` (the freeze allows additions there), never a second
-> test module in a Rust file. Each test you add was never seen red: break the
-> code it pins (a named mutation), watch it fail, restore the code, and name
-> the test, its mutation and why the red phase missed it in your reply, not the
-> commit body; the coordinator writes them to the bean.
+> Make the red tests pass: `<SPEC>`. Replace every stub. Regenerate the
+> `regen` pins from the implementation. A test you believe is wrong: change
+> it only under the Test changes rules below, in its own commit, and table
+> it. A change you cannot give a good reason for is a human gate: stop and
+> report it with the box it contradicts.
+>
+> <the Test changes section, verbatim>
+>
+> You may add tests for branches the boxes do not cover: appended to the
+> file's existing `mod tests`, never a second test module in a Rust file.
+> Each test you add was never seen red: break the code it pins (a named
+> mutation), watch it fail, restore the code, and name the test, its
+> mutation and why the red phase missed it in your reply, not the commit
+> body; the coordinator writes them to the bean.
 >
 > `Fuzz: yes`: add a `Fuzz*` target for the named input with seed corpus
 > entries in a new test file, and run it for 30s. `Fuzz: no`: none.
 >
 > Run every gate and report the numbers. Commit as `feat|fix(<scope>): ...`.
+> Reply with the test-change table, or `no test changes`.
 
 ## 5. Other kinds: `refactor`, `perf`, `chore`
 
@@ -205,18 +205,17 @@ No red phase. Before the agent starts, the coordinator runs the suite on
 `<BASE>` in `<WT>` and records the result; a red suite on `<BASE>`: stop and
 say so.
 
-A bean that removes or re-signs tested code (a deletion, a rename, a moved
-type) first gets one fresh agent for a test-change commit: the §3 rules for
-`adapted`, `deleted` and `regen` rows, no `changed` rows (a refactor keeps
-behavior), stubs for new signatures so it builds, and the same table. The
-coordinator runs §3 check 5 on it, `git -C <WT> update-ref refs/tdd/<id>
-HEAD`, writes `<REGEN>`, then writes `green` with every test file except
-`<REGEN>` to `<MARK>`. Otherwise `echo frozen > <MARK>`. Then one fresh
-agent:
+Then one fresh agent:
 
-> Implement the bean. Test files and inline Rust test modules are frozen:
-> the existing suite is the spec,
-> and it must pass unchanged. `perf`: run `Done when`'s benchmark before your
+> Implement the bean. The existing suite is the spec and must pass. A
+> refactor keeps behavior, so a test changes only to follow a rename,
+> removal or re-sign the bean makes, or for a reason under the Test changes
+> rules below; each in its own commit and tabled. Reply with the table, or
+> `no test changes`.
+>
+> <the Test changes section, verbatim>
+>
+> `perf`: run `Done when`'s benchmark before your
 > first change and after your last, and report both.
 >
 > A bean that adds a rule or convention (a doc line, lint, rule file): before
@@ -229,15 +228,13 @@ agent:
 Per bean, the coordinator itself:
 
 1. Re-runs every gate. Never reuse an agent's numbers.
-2. `behavior`: `git -C <WT> diff refs/tdd/<id> HEAD -- <FROZEN>` is empty
-   for whole test files; for each inline Rust file,
-   `git -C <WT> show refs/tdd/<id>:<file> | test-region -` equals
-   `test-region <WT>/<file>`. The frozen tests pass. Others:
-   `git -C <WT> diff --name-only <BASE> HEAD` lists no test file outside the
-   test-change commit, and every changed `.rs` file's test region is the same
-   at `refs/tdd/<id>` (or `<BASE>` when there was none) and `HEAD`. Each
-   `<REGEN>` file's diff since `refs/tdd/<id>` touches only its pinned value
-   lines.
+2. Test changes: every removed or changed line in a test file (for `.rs`,
+   its `test-region` output) between `refs/tdd/<id>` (other kinds: `<BASE>`)
+   and `HEAD` belongs to a row in the agent's table, and each row gives a
+   reason from the Test changes list. Untabled change or a bad reason: back
+   to the agent once, then stop the bean and list it under Needs you. Append
+   the rows to the bean under `## Test changes`. `behavior`: the `<SPEC>`
+   tests pass.
 3. `behavior`: every test added after the red commit is named in the green
    agent's reply, with its mutation; append them to the bean. One that is not:
    back to the green agent once.
@@ -252,18 +249,15 @@ Per bean, the coordinator itself:
 The bean stays `in-progress`. Only `/land` sets `completed`, after the
 user's rulings and any `Gate: human`.
 
-Leave `<MARK>` in place; it keeps the review rounds off the frozen tests and
-goes when the worktree does.
-
 ```
-| bean | kind | red | test changes | green | gates | mutation | frozen |
+| bean | kind | red | test changes | green | gates | mutation | spec |
 |------|------|-----|--------------|-------|-------|----------|--------|
-| <id> | behavior | 6 tests, 6 failing | 2 changed, 5 adapted, 3 deleted, 1 regen | 6/6 pass, 2 added | test 142/142, lint ok | 40/42, 2 equivalent | unchanged |
+| <id> | behavior | 6 tests, 6 failing | red: 2 changed, 5 adapted, 1 regen; green: 1 changed | 6/6 pass, 2 added | test 142/142, lint ok | 40/42, 2 equivalent | 1 change tabled |
 
 Next: /review-gauntlet <ids that passed>
 
 Needs you:
-- <id>: <frozen test disputed, test that could not fail, red suite on base>
+- <id>: <test change without a good reason, test that could not fail, red suite on base>
 ```
 
 The test-change table goes to `/review-gauntlet` as an item for human eyes,
