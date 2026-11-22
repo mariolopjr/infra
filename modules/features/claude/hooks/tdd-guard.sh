@@ -6,7 +6,7 @@
 #   frozen  every test file is frozen (refactor, perf, chore)
 # No marker, no repo: allow.
 #
-# A Rust source file (not under tests/, not tests.rs) freezes only its inline test region
+# A Rust source file, or a tests/*.rs file holding a #[cfg(test)] mod tests, freezes only its inline test region
 # (see test-region): Edit, MultiEdit and Write are applied to the current text and denied
 # only when that region changes. Bash that mutates such a file is denied whole.
 #
@@ -96,7 +96,8 @@ is_test() {
 
 # is_inline <repo-relative path>: Rust source whose tests, if any, live inline
 is_inline() {
-  case $1 in *.rs) ! is_test "$1" ;; *) return 1 ;; esac
+  # A tests/*.rs file with a `mod tests` holds harness code above it: inline too
+  case $1 in *.rs) ! is_test "$1" || [ -n "$(region "$top/$1")" ] ;; *) return 1 ;; esac
 }
 
 # is_frozen <repo-relative path>
