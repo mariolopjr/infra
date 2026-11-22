@@ -9,6 +9,7 @@
       den.aspects.gaming
       den.aspects.fans
       den.aspects.peripherals
+      den.aspects.workstation
     ];
 
     nixos =

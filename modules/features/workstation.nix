@@ -1,0 +1,19 @@
+# Packages for non-server, non-handheld systems
+{
+  den.aspects.workstation = {
+    os =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = with pkgs; [
+          discord
+          ncdu
+        ];
+        fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
+      };
+    darwin =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = [ pkgs.rsync ]; # NixOS ships it by default
+      };
+  };
+}
