@@ -24,10 +24,10 @@
       else
         {
           # Rex.app bundles the client, the server helper and its rex CLI.
-          homeManager = { pkgs, ... }: {
-            programs.rex.package = null;
-            home.packages = [
-              (pkgs.stdenvNoCC.mkDerivation (
+          homeManager =
+            { pkgs, ... }:
+            let
+              rexApp = pkgs.stdenvNoCC.mkDerivation (
                 let
                   app = builtins.fromJSON (builtins.readFile ./app.json); # bumped by scripts/update-rex-app.sh
                 in
@@ -40,11 +40,17 @@
                   dontFixup = true; # any byte change breaks the code signature
                   installPhase = "mkdir -p $out/Applications/Rex.app && cp -R . $out/Applications/Rex.app";
                 }
-              ))
-            ];
-            # Nix controls when to update.
-            targets.darwin.defaults."com.superlogical.rex".SUEnableAutomaticChecks = false;
-          };
+              );
+            in
+            {
+              programs.rex.package = null;
+              home.packages = [ rexApp ];
+              # Rex iOS looks for the CLI on the non-interactive SSH PATH or here.
+              home.file.".local/bin/rex".source =
+                "${rexApp}/Applications/Rex.app/Contents/Helpers/Rex Server.rex/Contents/MacOS/rex";
+              # Nix controls when to update.
+              targets.darwin.defaults."com.superlogical.rex".SUEnableAutomaticChecks = false;
+            };
         }
     )
   ];
