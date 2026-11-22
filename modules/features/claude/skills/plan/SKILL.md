@@ -45,7 +45,9 @@ Decisions: <spec gaps resolved here; omit when none>
 ```
 
 `Done when` is the finish line: a command or test with its expected
-result, never "works" or "looks right".
+result, never "works" or "looks right". It runs on the tree as the task
+leaves it; when it needs code that does not exist yet (an empty crate, a
+caller a later task adds), name the fixture the task builds to run it.
 
 `Tests` decides how `/implement` runs the task. `behavior` is any change
 a user or caller could observe, bug fixes included: tests are written

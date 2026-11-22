@@ -136,6 +136,10 @@ not the plan or other beans:
 > its shared test-name prefix (`tests/test_no_*`), not only its own file, so a
 > later test that must name the token does not trip it.
 >
+> An error-path helper (`expect_err`, `parse_err`) panics when the call
+> returns Ok. Never turn the Ok value into text and assert a needle on it:
+> the needle can match the Ok value's own debug output.
+>
 > Commit as `test(<scope>): <behavior>`. Reply with each box and the test
 > names that cover it, then each body rule outside the boxes and its test,
 > and quote one failing assertion message per test. Then a table of every

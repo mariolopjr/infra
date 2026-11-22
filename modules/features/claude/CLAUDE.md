@@ -1,6 +1,7 @@
 # Claude Code
 
 - Run the smallest relevant validation after a change
+- Capture a check's exit code before truncating its output: `cmd > log; echo exit=$?`, then `tail log`. A pipe into `tail` reports tail's status
 - Skip unrequested docs, changelog, formatting passes
 - Step needs no input from me: keep going, status notes ride in the same message as the next action. Stop and ask only for a decision that is mine or a destructive action
 - Multi-step work: keep the task list in beans, or a file when the repo has none, and update it as you go. It survives summarization
