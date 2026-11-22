@@ -1,5 +1,4 @@
-# Weekly flake.lock PR. Building winterfell before and after is the test; the nvd diff of the
-# two closures (packages, kernel) goes into the PR body.
+# Weekly flake.lock PR
 name: update flake.lock
 on:
   schedule:
@@ -12,13 +11,17 @@ permissions:
 
 env:
   SYSTEM: .#nixosConfigurations.winterfell.config.system.build.toplevel
+  CONFIG: .#nixosConfigurations.winterfell.config
+  # Installed packages only: a .drv closure diff lists every source and patch in nixpkgs
+  PACKAGES: >-
+    c: map (p: p.name) (c.environment.systemPackages ++ c.home-manager.users.mario.home.packages ++ [ c.boot.kernelPackages.kernel ])
 
 jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
-      # Two desktop closures don't fit in the runner's default free space.
+      # Room for the desktop closure
       - uses: jlumbroso/free-disk-space@v1.3.1
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/determinate-nix-action@v3
@@ -28,7 +31,7 @@ jobs:
             extra-substituters = https://noctalia.cachix.org https://umbriel.cachix.org https://nix-community.cachix.org
             extra-trusted-public-keys = noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4= umbriel.cachix.org-1:JfNq/2yg2S6D6z4Z2dVSZrZlDPQTKtexB6GAVLD98nw= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
-      - run: nix build -L --out-link old "$SYSTEM"
+      - run: nix eval --json "$CONFIG" --apply "$PACKAGES" | jq -r '.[]' | sort -u > /tmp/old.txt
 
       # Rex.app has no flake input
       - run: scripts/update-rex-app.sh
@@ -51,17 +54,15 @@ jobs:
         run: |
           git fetch origin update_flake_lock_action
           git checkout FETCH_HEAD
-          kernel() { basename "$(dirname "$(readlink -f "$1/kernel")")" | cut -d- -f2-; }
           {
             gh pr view "$PR" --json body -q .body
             echo
             if nix build -L --out-link new "$SYSTEM"; then
               echo "## winterfell"
               echo
-              echo "Kernel: \`$(kernel old)\` -> \`$(kernel new)\`"
-              echo
-              echo '```'
-              nix shell nixpkgs#nvd -c nvd diff old new | head -c 55000
+              nix eval --json "$CONFIG" --apply "$PACKAGES" | jq -r '.[]' | sort -u > /tmp/new.txt
+              echo '```diff'
+              diff --old-line-format='- %L' --new-line-format='+ %L' --unchanged-line-format='' /tmp/old.txt /tmp/new.txt | head -c 55000 || true
               echo '```'
             else
               echo "## winterfell failed to build"
