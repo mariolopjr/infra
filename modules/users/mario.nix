@@ -48,6 +48,11 @@ in
         };
         # git gpg.ssh.allowedSignersFile
         home.file.".ssh/allowed_signers".text = lib.concatMapStrings (k: "* ${k}\n") sshKeys;
+        # Intermediate build artifacts per workspace under ~/.cargo
+        home.file.".cargo/config.toml".text = ''
+          [build]
+          build-dir = "{cargo-cache-home}/build/{workspace-path-hash}"
+        '';
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
