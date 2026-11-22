@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  statuses: write # GITHUB_TOKEN-made PRs trigger no workflows, so the result is posted as a commit status
 
 env:
   SYSTEM: .#nixosConfigurations.winterfell.config.system.build.toplevel
@@ -54,10 +55,16 @@ jobs:
         run: |
           git fetch origin update_flake_lock_action
           git checkout FETCH_HEAD
+          status() {
+            gh api "repos/$GITHUB_REPOSITORY/statuses/$(git rev-parse HEAD)" -f context="flake check + winterfell build" \
+              -f state="$1" -f description="$2" -f target_url="$RUN" > /dev/null
+          }
+          status pending "running"
           {
             gh pr view "$PR" --json body -q .body
             echo
-            if nix build -L --out-link new "$SYSTEM"; then
+            # --impure: devenv shells need the working directory. Evaluates every host, builds x86_64-linux checks.
+            if nix flake check -L --all-systems --impure && nix build -L --out-link new "$SYSTEM"; then
               echo "## winterfell"
               echo
               nix eval --json "$CONFIG" --apply "$PACKAGES" | jq -r '.[]' | sort -u > /tmp/new.txt
@@ -65,11 +72,12 @@ jobs:
               diff --old-line-format='- %L' --new-line-format='+ %L' --unchanged-line-format='' /tmp/old.txt /tmp/new.txt | head -c 55000 || true
               echo '```'
             else
-              echo "## winterfell failed to build"
+              echo "## flake check or winterfell build failed"
               echo
               echo "$RUN"
               touch failed
             fi
           } > body.md
           gh pr edit "$PR" --body-file body.md
-          test ! -e failed
+          if [ -e failed ]; then status failure "failed"; exit 1; fi
+          status success "passed"
