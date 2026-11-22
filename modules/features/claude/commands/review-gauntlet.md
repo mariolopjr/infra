@@ -152,7 +152,10 @@ Every round prompt opens with this block, filled in:
 > the `Interface:` does not expose, is nondeterministic, pins a value only
 > the implementation produces, or follows a rename or re-sign. Loosening an
 > assertion or dropping a case names the box that still covers it. No good
-> reason: stop and report it as a human gate.
+> reason: stop and report it as a human gate. Existing means every test and
+> test helper on `<BASE>` plus the red commit's: <red tests and helpers
+> by name; none for other kinds>. Deduping, folding or inlining one into another test, a helper or the
+> implementation is not a reason; list it as declined.
 >
 > The first lines of your reply are the output of
 > `git diff --name-only <RANGE>`, before anything else.

@@ -48,6 +48,10 @@ Decisions: <spec gaps resolved here; omit when none>
 result, never "works" or "looks right". It runs on the tree as the task
 leaves it; when it needs code that does not exist yet (an empty crate, a
 caller a later task adds), name the fixture the task builds to run it.
+A prevention task's `Done when` replays the incident's own code shape,
+pointing at the original lines; a minimal made-up case only adds to it. A
+rename or removal sweep greps case-insensitively and for the concept's
+prose words, not only the literal name.
 
 `Tests` decides how `/implement` runs the task. `behavior` is any change
 a user or caller could observe, bug fixes included: tests are written
