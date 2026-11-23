@@ -1,6 +1,11 @@
 # Rex (Superlogical)
 { inputs, ... }:
 {
+  flake-file.inputs.rex = {
+    url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"; # no stable channel yet
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   den.aspects.mario.homeManager = {
     imports = [ inputs.rex.homeManagerModules.default ];
     programs.rex = {

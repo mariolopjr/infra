@@ -18,6 +18,9 @@ let
   };
 in
 {
+  # Pi 5 kernel, firmware, bootloader and SD image
+  flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+
   den.aspects.highgarden = {
     includes = [
       den.aspects.preservation

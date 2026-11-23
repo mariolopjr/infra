@@ -3,6 +3,15 @@
 { inputs, ... }:
 {
   imports = [ inputs.devenv.flakeModule ];
+  flake-file.inputs = {
+    devenv.url = "github:cachix/devenv";
+    devenv.inputs.nixpkgs.follows = "nixpkgs";
+    # .envrc overrides this with a file holding the repo path; devenv needs its root.
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
+  };
   perSystem =
     { lib, pkgs, ... }:
     {

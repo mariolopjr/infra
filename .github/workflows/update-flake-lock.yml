@@ -55,6 +55,13 @@ jobs:
         run: |
           git fetch origin update_flake_lock_action
           git checkout FETCH_HEAD
+          # A nixpkgs (nixfmt) or flake-file bump can change the generated flake.nix
+          nix run .#write-flake
+          if ! git diff --quiet flake.nix; then
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "chore(flake): regenerate flake.nix" flake.nix
+            git push origin HEAD:update_flake_lock_action
+          fi
           status() {
             gh api "repos/$GITHUB_REPOSITORY/statuses/$(git rev-parse HEAD)" -f context="flake check + winterfell build" \
               -f state="$1" -f description="$2" -f target_url="$RUN" > /dev/null

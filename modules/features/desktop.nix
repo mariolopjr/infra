@@ -1,6 +1,11 @@
 # Wayland desktop: noctalia shell on umbriel using noctalia-greeter.
 { inputs, ... }:
 {
+  flake-file.inputs.luciole = {
+    url = "github:noctalia-dev/luciole"; # no releases yet
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   den.aspects.desktop = {
     nixos =
       { pkgs, ... }:

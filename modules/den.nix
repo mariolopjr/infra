@@ -17,6 +17,14 @@ in
 {
   imports = [ inputs.den.flakeModule ];
 
+  flake-file.inputs = {
+    den.url = "github:denful/den/latest";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.url = "github:nix-darwin/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   den.hosts.x86_64-linux.winterfell = {
     disks.main = "/dev/disk/by-id/nvme-WD_BLACK_SN850X_2000GB_22302C801545";
     disks.data = "/dev/disk/by-id/nvme-WD_BLACK_SN770_2TB_244647801062";

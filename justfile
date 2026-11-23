@@ -4,10 +4,12 @@ default:
 
 # Apply the config to this machine
 rebuild:
+    nix run .#write-flake
     {{ if os() == "macos" { "sudo -H darwin-rebuild switch --flake ." } else { "sudo nixos-rebuild switch --flake ." } }}
 
-# Evaluate every host, ISO and package for all systems
+# Check flake.nix matches the modules' flake-file inputs, then evaluate every host, ISO and package for all systems
 check:
+    nix build --no-link ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem).check-flake-file"
     @mkdir -p .devenv && printf %s "$PWD" > .devenv/root
     nix flake check --no-build --all-systems --override-input devenv-root "file+file://$PWD/.devenv/root"
 
@@ -24,6 +26,7 @@ test-install:
 
 # Update all inputs or only the named ones
 update *inputs:
+    nix run .#write-flake
     nix flake update {{ inputs }}
     {{ if inputs == "" { "scripts/update-rex-app.sh" } else { "" } }}
 

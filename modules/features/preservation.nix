@@ -3,6 +3,8 @@
 # adds winterfell's tmpfs /home state and /cache (not snapshotted).
 { inputs, den, ... }:
 {
+  flake-file.inputs.preservation.url = "github:nix-community/preservation";
+
   den.aspects.preservation.nixos =
     { config, lib, ... }:
     {

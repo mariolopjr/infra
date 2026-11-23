@@ -7,6 +7,9 @@ let
   };
 in
 {
+  # no follows: keeps FlakeHub cache hits
+  flake-file.inputs.determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+
   den.default.nixos = {
     imports = [ inputs.determinate.nixosModules.default ];
     nix.settings = caches // {
