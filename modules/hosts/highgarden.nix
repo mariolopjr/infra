@@ -28,7 +28,7 @@ in
       { lib, pkgs, ... }:
       {
         imports = with inputs.nixos-raspberrypi.nixosModules; [
-          inputs.home-manager.nixosModules.home-manager # no users; den.default sets its options
+          inputs.home-manager.nixosModules.home-manager
           raspberry-pi-5.base
           sd-image
         ];
@@ -97,6 +97,10 @@ in
             user = "mario";
             group = "users";
           }
+        ];
+        preservation.preserveAt."/persist".users.mario.directories = [
+          ".local/state/rex" # host-id, server snapshots
+          ".local/state/nvim" # undo, shada
         ];
 
         services.navidrome = {

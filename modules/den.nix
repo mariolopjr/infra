@@ -30,7 +30,7 @@ in
 
   den.hosts.aarch64-linux.highgarden = {
     instantiate = inputs.nixos-raspberrypi.lib.nixosSystem; # Pi kernel overlays, on its own nixpkgs
-    users.mario.classes = [ ]; # login and SSH keys only: no home-manager on a LAN appliance
+    users.mario = { }; # slim home: no den.aspects.dev
   };
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];

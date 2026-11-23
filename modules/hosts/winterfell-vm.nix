@@ -6,6 +6,7 @@
     includes = [
       den.aspects.disks
       den.aspects.desktop
+      den.aspects.dev
     ];
     nixos =
       { modulesPath, ... }:

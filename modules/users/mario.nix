@@ -22,7 +22,11 @@ in
         programs.zoxide.enable = true;
         programs.starship.enable = true;
         programs.bat.enable = true;
-        programs.fzf.enable = true;
+        programs.fzf = {
+          enable = true;
+          # highgarden's own nixpkgs can lag behind the version the nushell integration needs
+          enableNushellIntegration = lib.versionAtLeast pkgs.fzf.version "0.73.0";
+        };
         programs.bottom.enable = true;
         programs.carapace.enable = true;
         # macOS: Apple's launchd ssh-agent and /usr/bin/ssh are able to UseKeychain.
@@ -53,17 +57,6 @@ in
           [build]
           build-dir = "{cargo-cache-home}/build/{workspace-path-hash}"
         '';
-        programs.direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-        };
-        home.packages = [
-          pkgs.age
-          pkgs.claude-code
-          pkgs.devenv
-          pkgs.f3
-          pkgs.just
-        ];
         programs.nushell.shellAliases = {
           c = "claude";
           gg = "lazygit";

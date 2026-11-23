@@ -1,5 +1,5 @@
 {
-  den.aspects.mario.homeManager =
+  den.aspects.dev.provides.to-users.homeManager =
     { lib, pkgs, ... }:
     let
       darwin = pkgs.stdenv.hostPlatform.isDarwin;

@@ -1,5 +1,5 @@
 {
-  den.aspects.mario.homeManager =
+  den.aspects.desktop.provides.to-users.homeManager =
     { lib, pkgs, ... }:
     {
       xdg.configFile."umbriel/config.toml" = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {

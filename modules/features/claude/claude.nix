@@ -1,7 +1,7 @@
 # Claude Code user config (moved from chezmoi). ~/.claude itself stays mutable: Claude writes
 # projects/, plugins/ and settings.json there, so only individual files are linked.
 {
-  den.aspects.mario.homeManager =
+  den.aspects.dev.provides.to-users.homeManager =
     {
       config,
       lib,

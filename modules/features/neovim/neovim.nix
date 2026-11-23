@@ -1,11 +1,7 @@
 {
+  # Every host: the editor, shared settings and the nixpkgs plugins (no network needed).
   den.aspects.mario.homeManager =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
+    { pkgs, ... }:
     let
       languages = [
         "bash"
@@ -36,19 +32,29 @@
         pkgs.git
         pkgs.ripgrep # snacks picker
         pkgs.fd
+      ];
+      home.sessionVariables.EDITOR = "nvim";
+
+      xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
+      xdg.configFile."nvim/lua/config".source = ./nvim/lua/config;
+      xdg.configFile."nvim/lua/util".source = ./nvim/lua/util;
+
+      xdg.dataFile."nvim/site/pack/nix-shared/start".source = (import ./_plugins.nix pkgs).shared;
+      xdg.dataFile."nvim/site/parser".source = "${treesitter}/parser";
+      xdg.dataFile."nvim/site/queries".source = "${treesitter}/queries";
+    };
+
+  # IDE layer: formatters, language servers and the plugins for them.
+  den.aspects.dev.provides.to-users.homeManager =
+    { lib, pkgs, ... }:
+    {
+      home.packages = [
         pkgs.nil
         pkgs.nixd
         pkgs.nixfmt
       ]
       ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.wl-clipboard; # clipboard provider for unnamedplus
-      home.sessionVariables.EDITOR = "nvim";
-
-      xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
-      xdg.configFile."nvim/lua".source = ./nvim/lua;
-      xdg.configFile."nvim/nvim-pack-lock.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/infra/modules/features/neovim/nvim/nvim-pack-lock.json";
-
-      xdg.dataFile."nvim/site/parser".source = "${treesitter}/parser";
-      xdg.dataFile."nvim/site/queries".source = "${treesitter}/queries";
+      xdg.configFile."nvim/lua/ide".source = ./nvim/lua/ide;
+      xdg.dataFile."nvim/site/pack/nix-ide/start".source = (import ./_plugins.nix pkgs).ide;
     };
 }

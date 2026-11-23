@@ -2,7 +2,7 @@
 # and counts package changes against the running one. A noctalia bar widget shows the count.
 # Click: full package list in a terminal, then optional pull + switch. Right click: check now.
 {
-  den.aspects.mario.homeManager =
+  den.aspects.desktop.provides.to-users.homeManager =
     { lib, pkgs, ... }:
     let
       check = pkgs.writeShellApplication {

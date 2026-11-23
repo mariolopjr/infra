@@ -57,9 +57,6 @@ map(
   vim.lsp.buf.code_action,
   { desc = "[C]ode [A]ction" }
 )
-map("n", "<leader>cf", function()
-  require("conform").format({ async = true, lsp_format = "fallback" })
-end, { desc = "[C]ode [F]ormat" })
 map("n", "<leader>ch", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "[C]ode Toggle Inlay [H]ints" })

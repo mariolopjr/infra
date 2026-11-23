@@ -1,6 +1,6 @@
 # Terminal file manager
 {
-  den.aspects.mario.homeManager =
+  den.aspects.dev.provides.to-users.homeManager =
     { lib, ... }:
     let
       c = (import ./theme/_palette.nix).dark;

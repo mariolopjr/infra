@@ -71,7 +71,7 @@
             }
             ".config/gh"
             ".claude"
-            ".local/share/nvim" # vim.pack plugins
+            ".local/share/nvim" # snacks scratch buffers
             ".local/state/nvim" # undo, shada
             ".local/share/zoxide"
             ".local/share/direnv" # allow list

@@ -39,7 +39,7 @@
           throw "${name}: ${lib.concatMapStringsSep ", " (x: x.msg) failed}";
 
       # Every ~/.claude command in the managed Claude settings is a file home-manager links.
-      claudeHosts = lib.filterAttrs (_: c: c.config.home-manager.users ? mario) (
+      claudeHosts = lib.filterAttrs (_: c: (c.config.home-manager.users.mario or { }) ? claude) (
         ofSystem (inputs.self.nixosConfigurations // inputs.self.darwinConfigurations)
       );
       claudeCheck =
@@ -71,41 +71,58 @@
           pkgs.emptyFile
         else
           throw "${name}: claude settings reference unlinked ~/${lib.concatStringsSep ", ~/" missing}";
+
+      nvimCheck =
+        name: packs: dirs:
+        let
+          nvim = ./features/neovim/nvim;
+          plugins = import ./features/neovim/_plugins.nix pkgs;
+        in
+        pkgs.runCommand "neovim-${name}-check" { nativeBuildInputs = [ pkgs.neovim-unwrapped ]; } ''
+          export HOME=$TMPDIR XDG_CONFIG_HOME=$TMPDIR/config XDG_DATA_HOME=$TMPDIR/data
+          export XDG_STATE_HOME=$TMPDIR/state XDG_CACHE_HOME=$TMPDIR/cache
+          mkdir -p $XDG_CONFIG_HOME/nvim/lua $XDG_DATA_HOME/nvim/site/pack
+          ln -s ${nvim}/init.lua $XDG_CONFIG_HOME/nvim/init.lua
+          for d in config util ${toString dirs}; do ln -s ${nvim}/lua/$d $XDG_CONFIG_HOME/nvim/lua/$d; done
+          ${lib.concatMapStrings (p: ''
+            mkdir -p $XDG_DATA_HOME/nvim/site/pack/nix-${p}
+            ln -s ${plugins.${p}} $XDG_DATA_HOME/nvim/site/pack/nix-${p}/start
+          '') packs}
+          nvim --headless -u $XDG_CONFIG_HOME/nvim/init.lua -l ${./features/neovim/tests/${name}_test.lua}
+          touch $out
+        '';
     in
     {
       checks =
         lib.mapAttrs' (n: c: lib.nameValuePair "host-${n}" (check n c)) hosts
         // lib.mapAttrs' (n: c: lib.nameValuePair "claude-${n}" (claudeCheck n c)) claudeHosts
         // {
-          # check if vim.pack.add sources and lockfile list the same packages
-          neovim =
+          # Appliances get the slim home: rex and the shared nvim, none of the dev aspect.
+          appliance =
             let
-              nvim = ./features/neovim/nvim;
-              srcs =
-                f:
-                map lib.head (
-                  lib.filter lib.isList (
-                    builtins.split "\"(https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)\"" (builtins.readFile f)
-                  )
-                );
-              added = lib.unique (
-                lib.concatMap srcs (lib.filter (lib.hasSuffix ".lua") (lib.filesystem.listFilesRecursive nvim))
-              );
-              lock = nvim + "/nvim-pack-lock.json";
-              locked = lib.optionals (builtins.pathExists lock) (
-                lib.mapAttrsToList (_: p: p.src) (builtins.fromJSON (builtins.readFile lock)).plugins
-              );
-              failed = lib.filter (x: !x.ok) [
-                {
-                  ok = added != [ ] && lib.sort lib.lessThan added == lib.sort lib.lessThan locked;
-                  msg = "vim.pack.add sources and nvim-pack-lock.json differ";
-                }
-              ];
+              hm = inputs.self.nixosConfigurations.highgarden.config.home-manager.users.mario or null;
             in
-            if failed == [ ] then
+            if
+              hm != null
+              && hm.services.rex.enable
+              && hm.xdg.dataFile ? "nvim/site/pack/nix-shared/start"
+              && !(hm.xdg.configFile ? "nvim/lua/ide")
+              && !(hm ? claude)
+            then
               pkgs.emptyFile
             else
-              throw "neovim: ${lib.concatMapStringsSep "; " (x: x.msg) failed}";
+              throw "highgarden: mario's home should have rex and the shared nvim, without the dev aspect";
+
+          # The shared nvim config starts offline with only the shared nixpkgs plugins, and
+          # the IDE layer on top with its own.
+          neovim-shared = nvimCheck "shared" [ "shared" ] [ ];
+          neovim-ide =
+            nvimCheck "ide"
+              [
+                "shared"
+                "ide"
+              ]
+              [ "ide" ];
         };
     };
 }

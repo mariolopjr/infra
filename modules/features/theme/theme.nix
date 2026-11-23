@@ -118,7 +118,7 @@ in
 
   # Noctalia reads every *.toml in ~/.config/noctalia; GUI changes go to
   # ~/.local/state/noctalia/settings.toml and win over these.
-  den.aspects.mario.homeManager =
+  den.aspects.desktop.provides.to-users.homeManager =
     { lib, pkgs, ... }:
     lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       xdg.configFile."noctalia/palettes/${palette.name}.json".text = builtins.toJSON {

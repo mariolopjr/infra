@@ -1,6 +1,8 @@
 # Packages for non-server, non-handheld systems
+{ den, ... }:
 {
   den.aspects.workstation = {
+    includes = [ den.aspects.dev ];
     os =
       { pkgs, ... }:
       {

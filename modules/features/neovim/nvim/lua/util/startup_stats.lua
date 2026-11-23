@@ -1,4 +1,4 @@
--- Dashboard footer like lazy.nvim's: plugin counts from vim.pack and startup time.
+-- Dashboard footer like lazy.nvim's: plugin count and startup time.
 local ffi = require("ffi")
 ffi.cdef([[
   typedef struct { long tv_sec; long tv_nsec; } timespec_t;
@@ -13,18 +13,14 @@ local function startup_ms()
 end
 
 return function()
-  local plugins = vim.pack.get()
-  local loaded = #vim.tbl_filter(function(p)
-    return p.active
-  end, plugins)
+  -- every plugin is a start package from nix, so all of them are loaded
+  local plugins = #vim.api.nvim_get_runtime_file("pack/*/start/*", true)
   return {
     align = "center",
     text = {
       { "⚡ Neovim loaded ", hl = "footer" },
-      { ("%d/%d"):format(loaded, #plugins), hl = "special" },
-      { " plugins (", hl = "footer" },
-      { tostring(#plugins - loaded), hl = "special" },
-      { " lazy) in ", hl = "footer" },
+      { tostring(plugins), hl = "special" },
+      { " plugins in ", hl = "footer" },
       { ("%.2fms"):format(startup_ms()), hl = "special" },
     },
   }
