@@ -2,6 +2,12 @@
 # The display uses the iGPU and the 5080 renders games through PRIME offload.
 { den, ... }:
 {
+  den.hosts.x86_64-linux.winterfell = {
+    disks.main = "/dev/disk/by-id/nvme-WD_BLACK_SN850X_2000GB_22302C801545";
+    disks.data = "/dev/disk/by-id/nvme-WD_BLACK_SN770_2TB_244647801062";
+    users.mario = { };
+  };
+
   den.aspects.winterfell = {
     includes = [
       den.aspects.disks
@@ -10,6 +16,8 @@
       den.aspects.fans
       den.aspects.peripherals
       den.aspects.workstation
+      den.aspects.mario-keys
+      den.aspects.rex
     ];
 
     nixos =
@@ -71,7 +79,10 @@
             environment.HOME = "/run/gpu-rgb-off"; # OpenRGB writes its config here
             script = ''${lib.getExe pkgs.openrgb} --noautoconnect -d "RTX 5080" -m off'';
           };
-        environment.systemPackages = [ pkgs.wakeonlan ];
+        environment.systemPackages = [
+          pkgs.discord
+          pkgs.wakeonlan
+        ];
         boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # builds highgarden (Pi 5)
         services.smartd.enable = true;
         hardware.enableRedistributableFirmware = true;

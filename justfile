@@ -20,10 +20,6 @@ fmt:
 lint:
     git ls-files -co --exclude-standard '*.sh' modules/features/claude/hooks/test-region | xargs shellcheck
 
-# Run the infra-install host choice test
-test-install:
-    bash modules/infra-install.test.sh
-
 # Update all inputs or only the named ones
 update *inputs:
     nix run .#write-flake

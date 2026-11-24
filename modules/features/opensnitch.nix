@@ -4,6 +4,14 @@ _: {
   den.aspects.desktop.nixos =
     { lib, pkgs, ... }:
     {
+      imports = [
+        (import ./_with-preservation.nix {
+          preservation.preserveAt."/persist" = {
+            directories = [ "/var/lib/opensnitch" ];
+            users.mario.directories = [ ".config/opensnitch" ];
+          };
+        })
+      ];
       services.opensnitch = {
         enable = true;
         settings.DefaultAction = "allow";
@@ -31,11 +39,6 @@ _: {
           Restart = "on-failure";
           ExecStart = "${lib.getExe' pkgs.opensnitch-ui "opensnitch-ui"} --background";
         };
-      };
-
-      preservation.preserveAt."/persist" = {
-        directories = [ "/var/lib/opensnitch" ];
-        users.mario.directories = [ ".config/opensnitch" ];
       };
     };
 }

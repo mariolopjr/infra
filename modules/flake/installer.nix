@@ -5,7 +5,7 @@
 { inputs, lib, ... }:
 let
   # Binary caches for the closure; the custom ISO sets them in nix.conf, the script via NIX_CONFIG.
-  shared = import ./_caches.nix;
+  shared = import ../_caches.nix;
   caches = {
     substituters = shared.substituters ++ [
       "https://install.determinate.systems" # prebuilt Determinate Nix

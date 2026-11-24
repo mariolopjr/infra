@@ -52,7 +52,7 @@ done
 if ((missing)); then
   echo "Available disks:" >&2
   find /dev/disk/by-id -mindepth 1 -maxdepth 1 ! -name '*-part*' -printf '  %p -> %l\n' | sort >&2
-  echo "Set den.hosts.*.$host.disks in modules/den.nix, then retry (INFRA_FLAKE=<checkout>)." >&2
+  echo "Set den.hosts.*.$host.disks in its modules/hosts/ file, then retry (INFRA_FLAKE=<checkout>)." >&2
   exit 1
 fi
 

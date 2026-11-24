@@ -10,7 +10,19 @@
     nixos =
       { pkgs, ... }:
       {
-        imports = [ inputs.luciole.nixosModules.default ];
+        imports = [
+          inputs.luciole.nixosModules.default
+          # Keep Noctalia's state (setup marker, launcher usage, catalogs) but drop its GUI
+          # overrides each boot
+          (import ./_with-preservation.nix {
+            preservation.preserveAt."/persist".users.mario.directories = [
+              ".local/state/noctalia"
+              ".local/state/umbriel"
+            ];
+            systemd.tmpfiles.settings.noctalia."/persist/home/mario/.local/state/noctalia/settings.toml".r =
+              { };
+          })
+        ];
         boot.consoleLogLevel = 3;
         boot.kernelParams = [
           "quiet"
@@ -24,15 +36,6 @@
           systemd.enable = true;
           recommendedServices.enable = true;
         };
-        # Keep Noctalia's state (setup marker, launcher usage, catalogs) but drop its GUI
-        # overrides each boot
-        preservation.preserveAt."/persist".users.mario.directories = [
-          ".local/state/noctalia"
-          ".local/state/umbriel"
-        ];
-        systemd.tmpfiles.settings.noctalia."/persist/home/mario/.local/state/noctalia/settings.toml".r =
-          { };
-
         services.displayManager.noctalia-greeter = {
           enable = true;
           settings.session.default = "umbriel";

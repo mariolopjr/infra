@@ -2,7 +2,7 @@ let
   c = (import ./theme/_palette.nix).dark;
 in
 {
-  den.aspects.mario.homeManager.programs.lazygit = {
+  den.aspects.lazygit.homeManager.programs.lazygit = {
     enable = true;
     settings = {
       gui = {

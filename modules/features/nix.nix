@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 let
   shared = import ../_caches.nix;
   caches = {
@@ -35,16 +35,8 @@ in
       enable = true;
       customSettings = caches // {
         trusted-users = [ "@admin" ];
-        eval-cores = 0;
-        use-case-hack = false; # store is case-sensitive APFS (installer's --extra-conf)
-      };
-      nixosVmBasedLinuxBuilder = {
-        enable = true;
-        config.virtualisation = {
-          cores = 6;
-          darwin-builder.memorySize = 12 * 1024;
-          darwin-builder.diskSize = 100 * 1024;
-        };
+        eval-cores = lib.mkDefault 0;
+        use-case-hack = lib.mkDefault false; # store is case-sensitive APFS (installer's --extra-conf)
       };
     };
   };

@@ -1,5 +1,5 @@
-# Binary caches for noctalia, umbriel, nix-community and Raspberry Pi kernel builds. Used by nix.nix (hosts) and
-# installer.nix (ISOs and infra-install).
+# Binary caches for noctalia, umbriel, nix-community and Raspberry Pi kernel builds. Used by features/nix.nix (hosts) and
+# flake/installer.nix (ISOs and infra-install).
 {
   substituters = [
     "https://noctalia.cachix.org"

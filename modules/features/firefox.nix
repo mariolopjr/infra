@@ -21,14 +21,18 @@ in
 {
   den.aspects.workstation = {
     nixos = {
+      imports = [
+        (import ./_with-preservation.nix {
+          preservation.preserveAt."/persist".users.mario.directories = [
+            ".config/mozilla"
+            ".mozilla"
+          ];
+        })
+      ];
       programs.firefox = {
         enable = true;
         inherit policies;
       };
-      preservation.preserveAt."/persist".users.mario.directories = [
-        ".config/mozilla"
-        ".mozilla"
-      ];
     };
     darwin =
       { pkgs, ... }:

@@ -21,11 +21,38 @@ in
   # Pi 5 kernel, firmware, bootloader and SD image
   flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
 
+  den.hosts.aarch64-linux.highgarden = {
+    instantiate = inputs.nixos-raspberrypi.lib.nixosSystem; # Pi kernel overlays, on its own nixpkgs
+    users.mario = { }; # slim home: no den.aspects.dev
+  };
+
+  # Appliances get the slim home: rex and the shared nvim, none of the dev aspect.
+  perSystem =
+    { pkgs, ... }:
+    {
+      checks.appliance =
+        let
+          hm = inputs.self.nixosConfigurations.highgarden.config.home-manager.users.mario or null;
+        in
+        if
+          hm != null
+          && hm.services.rex.enable
+          && hm.xdg.dataFile ? "nvim/site/pack/nix-shared/start"
+          && !(hm.xdg.configFile ? "nvim/lua/ide")
+          && !(hm ? claude)
+        then
+          pkgs.emptyFile
+        else
+          throw "highgarden: mario's home should have rex and the shared nvim, without the dev aspect";
+    };
+
   den.aspects.highgarden = {
     includes = [
       den.aspects.preservation
       den.aspects.egress
       den.aspects.homebridge
+      den.aspects.mario-keys
+      den.aspects.rex
     ];
     nixos =
       { lib, pkgs, ... }:

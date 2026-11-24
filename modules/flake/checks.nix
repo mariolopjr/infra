@@ -75,8 +75,8 @@
       nvimCheck =
         name: packs: dirs:
         let
-          nvim = ./features/neovim/nvim;
-          plugins = import ./features/neovim/_plugins.nix pkgs;
+          nvim = ../features/neovim/nvim;
+          plugins = import ../features/neovim/_plugins.nix pkgs;
         in
         pkgs.runCommand "neovim-${name}-check" { nativeBuildInputs = [ pkgs.neovim-unwrapped ]; } ''
           export HOME=$TMPDIR XDG_CONFIG_HOME=$TMPDIR/config XDG_DATA_HOME=$TMPDIR/data
@@ -88,7 +88,7 @@
             mkdir -p $XDG_DATA_HOME/nvim/site/pack/nix-${p}
             ln -s ${plugins.${p}} $XDG_DATA_HOME/nvim/site/pack/nix-${p}/start
           '') packs}
-          nvim --headless -u $XDG_CONFIG_HOME/nvim/init.lua -l ${./features/neovim/tests/${name}_test.lua}
+          nvim --headless -u $XDG_CONFIG_HOME/nvim/init.lua -l ${../features/neovim/tests/${name}_test.lua}
           touch $out
         '';
     in
@@ -97,22 +97,6 @@
         lib.mapAttrs' (n: c: lib.nameValuePair "host-${n}" (check n c)) hosts
         // lib.mapAttrs' (n: c: lib.nameValuePair "claude-${n}" (claudeCheck n c)) claudeHosts
         // {
-          # Appliances get the slim home: rex and the shared nvim, none of the dev aspect.
-          appliance =
-            let
-              hm = inputs.self.nixosConfigurations.highgarden.config.home-manager.users.mario or null;
-            in
-            if
-              hm != null
-              && hm.services.rex.enable
-              && hm.xdg.dataFile ? "nvim/site/pack/nix-shared/start"
-              && !(hm.xdg.configFile ? "nvim/lua/ide")
-              && !(hm ? claude)
-            then
-              pkgs.emptyFile
-            else
-              throw "highgarden: mario's home should have rex and the shared nvim, without the dev aspect";
-
           # The shared nvim config starts offline with only the shared nixpkgs plugins, and
           # the IDE layer on top with its own.
           neovim-shared = nvimCheck "shared" [ "shared" ] [ ];

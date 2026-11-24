@@ -1,6 +1,6 @@
 {
-  # Every host: the editor, shared settings and the nixpkgs plugins (no network needed).
-  den.aspects.mario.homeManager =
+  # The editor, shared settings and the nixpkgs plugins (no network needed).
+  den.aspects.neovim.homeManager =
     { pkgs, ... }:
     let
       languages = [
@@ -44,8 +44,8 @@
       xdg.dataFile."nvim/site/queries".source = "${treesitter}/queries";
     };
 
-  # IDE layer: formatters, language servers and the plugins for them.
-  den.aspects.dev.provides.to-users.homeManager =
+  # IDE layer on top of neovim: formatters, language servers and the plugins for them.
+  den.aspects.neovim-ide.homeManager =
     { lib, pkgs, ... }:
     {
       home.packages = [

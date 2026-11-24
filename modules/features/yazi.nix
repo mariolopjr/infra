@@ -1,6 +1,6 @@
 # Terminal file manager
 {
-  den.aspects.dev.provides.to-users.homeManager =
+  den.aspects.yazi.homeManager =
     { lib, ... }:
     let
       c = (import ./theme/_palette.nix).dark;

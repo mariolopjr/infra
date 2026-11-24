@@ -1,5 +1,5 @@
 {
-  den.aspects.mario.homeManager =
+  den.aspects.git.homeManager =
     { pkgs, ... }:
     {
       home.packages = [

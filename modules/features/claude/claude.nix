@@ -1,7 +1,7 @@
 # Claude Code user config (moved from chezmoi). ~/.claude itself stays mutable: Claude writes
 # projects/, plugins/ and settings.json there, so only individual files are linked.
 {
-  den.aspects.dev.provides.to-users.homeManager =
+  den.aspects.claude.homeManager =
     {
       config,
       lib,
@@ -33,7 +33,7 @@
     in
     {
       options.claude.settings = lib.mkOption {
-        type = lib.types.attrs;
+        type = (pkgs.formats.json { }).type; # mergeable: other modules add env, permissions, plugins
         description = "Top-level keys merged into ~/.claude/settings.json on activation.";
       };
 
@@ -73,7 +73,8 @@
             ".claude/skills/ponytail-review/SKILL.md".source = "${ponytail}/skills/ponytail-review/SKILL.md";
           };
 
-        claude.settings = {
+        # Scalars are defaults another module may override; lists (permissions, hooks) append.
+        claude.settings = lib.mapAttrsRecursive (_: v: if lib.isList v then v else lib.mkDefault v) {
           "$schema" = "https://json.schemastore.org/claude-code-settings.json";
           env = {
             CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS = "50";

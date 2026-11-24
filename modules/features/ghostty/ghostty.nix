@@ -1,5 +1,5 @@
 {
-  den.aspects.dev.provides.to-users.homeManager =
+  den.aspects.ghostty.homeManager =
     { lib, pkgs, ... }:
     let
       darwin = pkgs.stdenv.hostPlatform.isDarwin;

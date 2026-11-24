@@ -6,10 +6,7 @@
     os =
       { pkgs, ... }:
       {
-        environment.systemPackages = with pkgs; [
-          discord
-          ncdu
-        ];
+        environment.systemPackages = [ pkgs.ncdu ];
         fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
       };
     darwin =
