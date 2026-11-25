@@ -18,6 +18,7 @@
       den.aspects.workstation
       den.aspects.mario-keys
       den.aspects.rex
+      den.aspects.beets
     ];
 
     nixos =
