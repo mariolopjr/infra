@@ -33,6 +33,18 @@
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
           PermitRootLogin = "no";
+          # AEAD only: integrity comes from the cipher, so sshd skips MAC negotiation
+          Ciphers = [
+            "chacha20-poly1305@openssh.com"
+            "aes256-gcm@openssh.com" # Rex iOS has no chacha20
+          ];
+          # Rex iOS requires a MAC match even though AEAD ciphers never use one
+          Macs = [
+            "hmac-sha2-512-etm@openssh.com"
+            "hmac-sha2-256-etm@openssh.com"
+            "umac-128-etm@openssh.com"
+            "hmac-sha2-256"
+          ];
         };
       };
       services.fwupd.enable = true;
