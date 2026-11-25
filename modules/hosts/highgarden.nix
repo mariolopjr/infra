@@ -44,6 +44,25 @@ in
           pkgs.emptyFile
         else
           throw "highgarden: mario's home should have rex and the shared nvim, without the dev aspect";
+
+      # Plain HTTP stays on loopback; the LAN only sees Caddy's TLS, from a CA that survives reboots.
+      checks.lan-tls =
+        let
+          cfg = inputs.self.nixosConfigurations.highgarden.config;
+          vhosts = cfg.services.caddy.virtualHosts;
+        in
+        if
+          cfg.services.navidrome.settings.Address == "127.0.0.1"
+          && (cfg.services.homebridge.uiSettings.host or null) == "127.0.0.1"
+          && vhosts ? "music.highgarden.lan"
+          && vhosts ? "homebridge.highgarden.lan"
+          && builtins.any (
+            d: d.directory == "/var/lib/caddy"
+          ) cfg.preservation.preserveAt."/persist".directories
+        then
+          pkgs.emptyFile
+        else
+          throw "highgarden: navidrome and the homebridge UI should sit on loopback behind caddy, with /var/lib/caddy persisted";
     };
 
   den.aspects.highgarden = {
@@ -55,7 +74,12 @@ in
       den.aspects.rex
     ];
     nixos =
-      { lib, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         imports = with inputs.nixos-raspberrypi.nixosModules; [
           inputs.home-manager.nixosModules.home-manager
@@ -123,6 +147,12 @@ in
             mode = "0700";
           }
           {
+            directory = "/var/lib/caddy"; # local CA root: devices trust it once
+            user = "caddy";
+            group = "caddy";
+            mode = "0700";
+          }
+          {
             directory = "/srv/music";
             user = "mario";
             group = "users";
@@ -133,10 +163,24 @@ in
           ".local/state/nvim" # undo, shada
         ];
 
+        services.caddy = {
+          enable = true;
+          globalConfig = "skip_install_trust"; # the system trust store is read-only; clients trust the root
+          virtualHosts."music.highgarden.lan".extraConfig = ''
+            tls internal
+            reverse_proxy 127.0.0.1:${toString config.services.navidrome.settings.Port}
+          '';
+          virtualHosts."homebridge.highgarden.lan".extraConfig = ''
+            tls internal
+            reverse_proxy 127.0.0.1:${toString config.services.homebridge.uiSettings.port}
+          '';
+        };
+        services.homebridge.uiSettings.host = "127.0.0.1";
+
         services.navidrome = {
           enable = true;
           settings = {
-            Address = "0.0.0.0";
+            Address = "127.0.0.1";
             MusicFolder = "/srv/music";
             EnableInsightsCollector = false;
             EnableExternalServices = false; # Last.fm, Spotify, ListenBrainz: blocked by egress anyway
